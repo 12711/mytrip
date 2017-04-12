@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.UserLogMapper">
+    <resultMap id="userLogMap" type="UserLog">
+        <id column="l_id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="create_time" property="createDate"></result>
+        <result column="modify_time" property="modifyDate"></result>
+        <result column="hotnum" property="hotNum"></result>
+    </resultMap>
+    <resultMap id="userLogUserMap" type="UserLog">
+        <id column="l_id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="create_time" property="createDate"></result>
+        <result column="modify_time" property="modifyDate"></result>
+        <result column="hotnum" property="hotNum"></result>
+        <association property="userInfo" column="u_id"
+                     select="com.lsm.trip.mappers.UserInfoMapper.getUserInfo"/>
+    </resultMap>
+
+    <insert id="insertLog" parameterType="UserLog">
+       INSERT  INTO userlog(title,content,create_time,u_id)
+       VALUES (#{title},#{content},sysdate(),#{uid})
+   </insert>
+
+    <select id="getLogsByUserId" parameterType="Integer" resultMap="userLogMap">
+       SELECT * FROM userlog WHERE u_id=#{id}
+    </select>
+
+    <select id="getLog" parameterType="Integer" resultMap="userLogUserMap">
+          SELECT  *from userlog where l_id=#{id}
+    </select>
+    <select id="getLogsOrderByHotNum" resultMap="userLogMap">
+         SELECT  *FROM userlog ORDER BY hotnum DESC LIMIT 0,10
+    </select>
+</mapper>

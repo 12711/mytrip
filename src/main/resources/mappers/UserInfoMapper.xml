@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.UserInfoMapper">
+   <insert id="insertUserInfo" parameterType="UserInfo" useGeneratedKeys="true" keyColumn="u_i_id" keyProperty="uIID">
+        INSERT  INTO userinfo(
+       <trim  suffixOverrides="," >
+        u_id,
+        <if test="realName!=null">realName,</if>
+        <if test="phone!=null">phone,</if>
+       <if test="mail!=null">mail,</if>
+       <if test="address!=null">address,</if>
+       <if test="workAddress!=null">jobAddress,</if>
+       <if test="birthdady!=null">birthdady,</if>
+       <if test="sex!=null">sex,</if>
+       <if test="filexPhone!=null">filexPhone,</if>
+       <if test="qq!=null">qq</if>
+       </trim>
+        )VALUES (
+       <trim  suffixOverrides="," >
+            #{uId},
+           <if test="realName!=null">#{realName},</if>
+           <if test="phone!=null">#{phone},</if>
+           <if test="mail!=null">#{mail},</if>
+           <if test="address!=null">#{address},</if>
+           <if test="workAddress!=null">#{workAddress},</if>
+           <if test="birthdady!=null">#{birthdady},</if>
+           <if test="sex!=null">#{sex},</if>
+           <if test="filexPhone!=null">#{filexPhone},</if>
+           <if test="qq!=null">#{qq}</if>
+       </trim>
+       )
+   </insert>
+     <resultMap id="userInfoMap" type="UserInfo">
+         <id column="u_i_id" property="uIID"></id>
+         <result column="birthday" property="birthdady"/>
+         <result column="sex" property="sex"/>
+         <result column="mypig" property="mypig"/>
+         <result column="u_id" property="uId"/>
+         <result column="realname" property="realName"/>
+     </resultMap>
+    <select id="getUserInfo" parameterType="int" resultMap="userInfoMap">
+        SELECT *FROM userInfo WHERE u_id=#{id}
+    </select>
+</mapper>

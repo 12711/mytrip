@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.UserAlbumMapper">
+
+    <resultMap id="userAlbuMap" type="Album">
+        <id column="al_id" property="id"></id>
+        <result column="u_id" property="uid"></result>
+        <result column="album_name" property="name"></result>
+        <result column="album_des" property="desc"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="modify_time" property="modifyTime"></result>
+        <result column="type" property="type"></result>
+        <result column="cover" property="cover"></result>
+        <result column="hotnum" property="hotnum"></result>
+        <association property="userShowInfo" column="u_id" select="com.lsm.trip.mappers.UserMapper.getUserInfo">
+        </association>
+    </resultMap>
+
+
+    <insert id="addAlbum" parameterType="Album" >
+        INSERT  INTO album(u_id,album_name,album_des,create_time,type)
+        VALUES (#{uid},#{name},#{desc},sysdate(),#{type})
+    </insert>
+
+    <select id="getAlbumsByUid" parameterType="Integer" resultMap="userAlbuMap">
+          SELECT *FROM album where u_id=#{id}
+    </select>
+    
+    <select id="getAlbumByAlId" parameterType="Integer" resultMap="userAlbuMap">
+        SELECT *FROM album where al_id=#{id}
+    </select>
+    <update id="updateAlbum" parameterType="Album">
+        UPDATE album set cover=#{cover} where al_id=#{id}
+    </update>
+
+    <select id="getAlbums" resultMap="userAlbuMap">
+        SELECT *FROM album ORDER BY hotnum DESC limit 0,4
+    </select>
+    <update id="updateHotnum" parameterType="int">
+        UPDATE album SET hotnum=hotnum+1 where al_id=#{id}
+    </update>
+</mapper>

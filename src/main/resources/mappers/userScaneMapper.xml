@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.UserScaneMapper">
+    <insert id="addScane" parameterType="UserScane">
+       INSERT INTO userscane(u_id,s_name,introduce,s_img,address,ticket,favourable,opentime)
+       VALUES (#{uid},#{sName},#{introduce},#{sImg},#{address},#{ticket},#{favourable},#{opentime})
+   </insert>
+    <resultMap id="scaneMap" type="UserScane">
+        <id column="s_id" property="sid"></id>
+        <result column="u_id" property="uid"/>
+        <result column="s_name" property="sName"/>
+        <result column="introduce" property="introduce"/>
+        <result column="s_img" property="sImg"/>
+        <result column="address" property="address"/>
+        <result column="ticket" property="ticket"/>
+        <result column="favourable" property="favourable"/>
+        <result column="opentime" property="opentime"/>
+    </resultMap>
+
+    <select id="getUserScane" parameterType="int" resultMap="scaneMap">
+        SELECT *FROM userscane WHERE s_id=#{id}
+    </select>
+
+    <select id="getScanesByUid" parameterType="int" resultMap="scaneMap">
+        SELECT *FROM userscane WHERE u_id=#{uid}
+    </select>
+
+</mapper>

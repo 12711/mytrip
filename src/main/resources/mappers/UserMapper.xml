@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.UserMapper">
+        <resultMap id="userMap" type="User">
+            <id column="u_id" property="uid"></id>
+            <result column="username" property="userName"></result>
+            <result column="password" property="passWord"></result>
+        </resultMap>
+       <resultMap id="showInfo" type="UserShowInfo">
+           <id column="u_id" property="uid"></id>
+           <result column="username" property="userName"></result>
+           <result column="password" property="passWord"></result>
+
+           <result column="realname" property="realName"></result>
+           <result column="phone" property="phone"></result>
+
+           <result column="mail" property="mail"></result>
+           <result column="address" property="address"></result>
+
+           <result column="jobaddress" property="workAddress"></result>
+
+           <result column="mypig" property="mypig"></result>
+           <result column="birthday" property="birthday"></result>
+
+           <result column="filexPhone" property="filexPhone"></result>
+           <result column="qq" property="qq"></result>
+
+           <result column="hotnum" property="hotnum"></result>
+           <result column="sign" property="sign"></result>
+
+       </resultMap>
+
+        <select id="getUserByNamePwd" parameterType="User" resultMap="userMap">
+            SELECT  u_id,username,password from user where username=#{userName} and password=#{passWord}
+        </select>
+        <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="uid" keyColumn="u_id">
+            INSERT  INTO  user
+            <set>
+                <if test="userName!=null">username=#{userName},</if>
+                <if test="passWord!=null">password=#{passWord}</if>
+            </set>
+        </insert>
+    <!--查询用户详细信息-->
+    <select id="getUserInfo" parameterType="int" resultMap="showInfo">
+          SELECT  u.u_id,username,password,realname,phone,mail,address,jobaddress,mypig,birthday,sex,filexPhone,qq
+          FROM  user u join userinfo ui on u.u_id=ui.u_id AND u.u_id=#{uid}
+    </select>
+
+    <!--修改用户的头像-->
+    <update id="changImg"  >
+        UPDATE userinfo set mypig=#{imgName} WHERE u_id=#{uid}
+    </update>
+
+    <!--检查用户名是否存在-->
+    <select id="checkUserName" parameterType="String" resultMap="userMap">
+        SELECT u_id,username,password FROM user where username=#{name}
+    </select>
+
+    <!--按照地主名模糊查询地主-->
+    <select id="userInfos" parameterType="PageHelpPojo" resultMap="showInfo">
+        SELECT  u.u_id,username,password,realname,phone,mail,address,jobaddress,mypig,birthday,sex,filexPhone,qq,hotnum,sign
+          FROM  user u join userinfo ui on u.u_id=ui.u_id AND u.username like concat('%',#{param},'%') limit #{pageIndex},#{pageSize}
+    </select>
+    <!--通过参数查询对应的数据条数用于分页-->
+    <select id="getTotleByParam" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM user as u where u.username LIKE concat('%',#{param},'%')
+    </select>
+</mapper>
