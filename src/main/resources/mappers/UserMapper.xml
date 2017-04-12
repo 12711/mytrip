@@ -28,6 +28,9 @@
            <result column="hotnum" property="hotnum"></result>
            <result column="sign" property="sign"></result>
 
+           <result column="province" property="province"></result>
+           <result column="city" property="city"></result>
+
        </resultMap>
 
         <select id="getUserByNamePwd" parameterType="User" resultMap="userMap">
@@ -63,6 +66,17 @@
     </select>
     <!--通过参数查询对应的数据条数用于分页-->
     <select id="getTotleByParam" parameterType="String" resultType="int">
-        SELECT COUNT(*) FROM user as u where u.username LIKE concat('%',#{param},'%')
+        SELECT COUNT(*) FROM user u join userinfo ui on u.u_id=ui.u_id AND u.username like concat('%',#{param},'%')
+    </select>
+
+    <!--通过地区查询地主-->
+    <select id="getUserInfoByAddr" parameterType="PageHelpPojo" resultMap="showInfo">
+        SELECT  city,province,u.u_id,username,password,realname,phone,mail,address,jobaddress,mypig,birthday,sex,filexPhone,qq,hotnum,sign
+          FROM  user u join userinfo ui on u.u_id=ui.u_id AND ui.city like concat('%',#{param},'%') limit #{pageIndex},#{pageSize}
+    </select>
+
+    <!--通过地区查询对应的数据条数用于分页-->
+    <select id="getTotleByParamAddr" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM user u join userinfo ui on u.u_id=ui.u_id AND ui.city like concat('%',#{param},'%')
     </select>
 </mapper>

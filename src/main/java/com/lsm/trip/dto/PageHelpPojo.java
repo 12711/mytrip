@@ -25,7 +25,7 @@ public class PageHelpPojo <T>{
     }
 
     public Integer getPageIndex() {
-        return pageIndex*(pageSize-1);
+        return (pageIndex-1)*(pageSize);
     }
 
     public void setPageIndex(Integer pageIndex) {

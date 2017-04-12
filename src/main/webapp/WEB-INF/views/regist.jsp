@@ -141,7 +141,7 @@
            /*确认密码*/
           $("#rePassword3").blur(function(){
               var repassword=$("#rePassword3").val();
-              if(repassword===oldpassword){
+              if(repassword===window.oldpassword){
 
                   $("#repasswordInfo").text("密码一致!");
                   $("#repasswordInfo").css("color","green");

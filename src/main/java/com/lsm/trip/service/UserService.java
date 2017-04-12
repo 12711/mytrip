@@ -22,4 +22,8 @@ public interface UserService {
      List<UserShowInfo> getUserInfos(PageHelpPojo<String> pageHelpPojo)throws Exception;
      //通过参数查询totle
      Integer getTotle(String param)throws Exception;
+     //通过city查询地主
+     List<UserShowInfo> getUsersByCity(PageHelpPojo<String> pageInfo)throws Exception;
+     //通过city查询地主数量
+     Integer getTotleByAddr(String param)throws Exception;
 }

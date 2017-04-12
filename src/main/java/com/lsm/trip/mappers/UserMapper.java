@@ -28,6 +28,10 @@ public interface UserMapper {
 
     //通过用户名模糊查询地主
     List<UserShowInfo> userInfos(PageHelpPojo<String> pageInfo)throws Exception;
+    //通过地区查询地主
+    List<UserShowInfo> getUserInfoByAddr(PageHelpPojo<String> pageInfo) throws Exception;
     //通过参数查询数据条数
     Integer getTotleByParam(@Param("param") String param)throws Exception;
+    //通过地区查询数据条数
+    Integer getTotleByParamAddr(@Param("param") String param)throws Exception;
 }

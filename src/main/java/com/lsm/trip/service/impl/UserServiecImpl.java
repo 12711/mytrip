@@ -56,4 +56,15 @@ class UserServiecImpl implements UserService {
     public Integer getTotle(String param) throws Exception {
         return userMapper.getTotleByParam(param);
     }
+
+    @Override
+    public List<UserShowInfo> getUsersByCity(PageHelpPojo<String> pageInfo) throws Exception {
+        return userMapper.getUserInfoByAddr(pageInfo);
+    }
+
+    @Override
+    public Integer getTotleByAddr(String param) throws Exception {
+        return userMapper.getTotleByParamAddr(param);
+    }
+
 }
