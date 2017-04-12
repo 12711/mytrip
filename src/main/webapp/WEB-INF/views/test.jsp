@@ -243,14 +243,7 @@
          console.dir(event);
          //获取当前点击的div所对应的用户的id
          var id=$(this).parent().children("input").val();
-         $.ajax({
-             url:"${pageContext.request.contextPath}/user/"+id,
-             type:'get',
-             dataType:'json',
-             success:function (data) {
-                 console.log(data);
-             }
-         });
+         location.href="${pageContext.request.contextPath}/trip/getUserById/"+id;
     });
 
 

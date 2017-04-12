@@ -45,7 +45,7 @@
         </insert>
     <!--查询用户详细信息-->
     <select id="getUserInfo" parameterType="int" resultMap="showInfo">
-          SELECT  u.u_id,username,password,realname,phone,mail,address,jobaddress,mypig,birthday,sex,filexPhone,qq
+          SELECT  city,province,u.u_id,username,password,realname,phone,mail,address,jobaddress,mypig,birthday,sex,filexPhone,qq,hotnum,sign
           FROM  user u join userinfo ui on u.u_id=ui.u_id AND u.u_id=#{uid}
     </select>
 
