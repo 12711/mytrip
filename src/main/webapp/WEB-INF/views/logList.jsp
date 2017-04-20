@@ -32,7 +32,8 @@
             <div class="col-sm-2" style="margin-left: 50px;"><span
                     style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>日志</h3></span>
             </div>
-            <div class="col-sm-7 "></div>
+            <div class="col-sm-2 " style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><a href="${pageContext.request.contextPath}/log/inter/writelog">写日志</a></div>
+            <div class="col-sm-5 "></div>
             <div class="col-sm-2 hidden-md" style="margin-top: 20px"><a
                     href="#">返回日志列表</a></div>
         </div>

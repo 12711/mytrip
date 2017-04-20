@@ -113,7 +113,7 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-        return "redirect:inter/showUserInfo";
+        return "redirect:showUserInfo";
     }
 
     /*跳转注册页面*/
@@ -144,7 +144,7 @@ public class UserController {
         userInfo.setSex(userShowInfo.getSex());
         try {
             userInfoService.addUserInfo(userInfo);
-            return "redirect:showUserInfo";
+            return "redirect:index";
         } catch (Exception e) {
             model.put("errInfo", "服务器神游中...");
             return "regist";

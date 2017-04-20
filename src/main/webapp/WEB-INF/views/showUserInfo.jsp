@@ -82,7 +82,7 @@
                        <div style="width: 126px;height: 126px;border-radius: 20px;border: 1px solid gray" >
                          <img style="height: 120px;width: 120px;margin-top: 2px;margin-left: 2px;border-radius: 20px" src="${pageContext.request.contextPath}/img/${userInfo.mypig}" /><br/>
                        </div>
-                     <form style="margin-left: 20px" action="${pageContext.request.contextPath}/user/changeImg" method="post" enctype="multipart/form-data">
+                     <form style="margin-left: 20px" action="${pageContext.request.contextPath}/user/inter/changeImg" method="post" enctype="multipart/form-data">
                           <input type="file"  name="pig"/>
                           <input type="submit"  value="上传图片">
                        </form>

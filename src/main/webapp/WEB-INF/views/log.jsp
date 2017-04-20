@@ -56,15 +56,10 @@
                        ${userLog.title}
                    </h2>
                    <span style="margin-left: 10px">${userLog.createDate}  阅读量(${userLog.hotNum})</span>
-                   <span style="margin-left: 10px"><a href="${pageContext.request.contextPath}/log/writelog">写日志</a> </span>
+                   <span style="margin-left: 10px"><a href="${pageContext.request.contextPath}/log/inter/writelog">写日志</a> </span>
                </div>
                <%--日志正文--%>
                <div class="row">
-                     <%--<div class="row">
-                         <div class="col-md-2 .hidden-sm"></div>
-                         <div class="col-md-8"><h1 style="text-align: center">${userLog.title}</h1></div>
-                         <div class="col-md-2 .hidden-sm"></div>
-                     </div>--%>
                     <div class="row">
                         <div class="col-md-12 column" style="min-height:200px;">
                             ${userLog.content}

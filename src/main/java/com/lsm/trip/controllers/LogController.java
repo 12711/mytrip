@@ -32,7 +32,7 @@ public class LogController {
     @Autowired
     UserLogService userLogService;
 
-    @RequestMapping(value = "/writelog",method = RequestMethod.GET)
+    @RequestMapping(value = "/inter/writelog",method = RequestMethod.GET)
     public String testWriteLog(){
         return "writeLog";
     }
