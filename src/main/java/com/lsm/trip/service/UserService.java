@@ -26,4 +26,6 @@ public interface UserService {
      List<UserShowInfo> getUsersByCity(PageHelpPojo<String> pageInfo)throws Exception;
      //通过city查询地主数量
      Integer getTotleByAddr(String param)throws Exception;
+     //修改密码
+     void updatePwd(User user)throws Exception;
 }

@@ -79,6 +79,10 @@
     <select id="getTotleByParamAddr" parameterType="String" resultType="int">
         SELECT COUNT(*) FROM user u join userinfo ui on u.u_id=ui.u_id AND ui.city like concat('%',#{param},'%')
     </select>
-
+    
+    <!--修改密码-->
+   <update id="updatePWD" parameterType="User">
+       UPDATE  user SET password=#{passWord} WHERE u_id=#{uid}
+   </update>
 
 </mapper>

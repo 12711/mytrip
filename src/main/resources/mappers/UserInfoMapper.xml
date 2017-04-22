@@ -48,14 +48,14 @@
         <set>
             <if test="phone!=null">phone=#{phone},</if>
             <if test="mail!=null">mail=#{mail},</if>
-            <if test="phone!=null">address=#{address},</if>
+            <if test="address!=null">address=#{address},</if>
             <if test="workAddress!=null">jobaddress=#{workAddress},</if>
             <if test="birthday!=null">birthday=#{birthday},</if>
             <if test="sex!=null">sex=#{sex},</if>
             <if test="filexPhone!=null">filexPhone=#{filexPhone},</if>
             <if test="qq!=null">qq=#{qq},</if>
-            <if test="city!=null">city=#{city},</if>
-            <if test="province!=null">province=#{province}</if>
+            <if test="city!=null and city!=''">city=#{city},</if>
+            <if test="province!=null and province!=''">province=#{province}</if>
         </set>
         WHERE u_id=#{uid}
     </update>

@@ -67,4 +67,8 @@ class UserServiecImpl implements UserService {
         return userMapper.getTotleByParamAddr(param);
     }
 
+    @Override
+    public void updatePwd(User user) throws Exception {
+        userMapper.updatePWD(user);
+    }
 }

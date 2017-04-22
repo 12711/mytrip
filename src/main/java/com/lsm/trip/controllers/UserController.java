@@ -64,6 +64,7 @@ public class UserController {
         } else {
             //登录成功
             UserShowInfo userShowInfo = userService.getUserInfo(result.getUid());
+            System.out.print("pro===="+userShowInfo.getProvince());
             model.addAttribute("userInfo", userShowInfo);
             return "1";
         }
@@ -206,6 +207,24 @@ public class UserController {
             e.printStackTrace();
         }
         return "showUserInfo";
+    }
+    //更新用户账号密码
+    @RequestMapping(value = "/inter/updateuser",method = RequestMethod.POST)
+    @ResponseBody
+    public String updateUser(User user,HttpServletRequest request,ModelMap modelMap){
+         HttpSession session=request.getSession();
+         UserShowInfo userShowInfo=(UserShowInfo) session.getAttribute("userInfo");
+         user.setUid(userShowInfo.getUid());
+        try {
+            userService.updatePwd(user);
+            session.removeAttribute("userInfo");
+            modelMap.remove("userInfo");
+            return "1";
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "0";
     }
 
 }
