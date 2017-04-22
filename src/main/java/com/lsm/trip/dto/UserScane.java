@@ -14,6 +14,15 @@ public class UserScane {
     private String ticket;
     private String favourable;//优惠政策
     private String opentime;
+    private String shortDesc;//对景点的简要描述
+
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
 
     public String getsImg() {
         return sImg;

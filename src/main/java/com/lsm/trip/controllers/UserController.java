@@ -146,6 +146,7 @@ public class UserController {
             userInfoService.addUserInfo(userInfo);
             return "redirect:index";
         } catch (Exception e) {
+            e.printStackTrace();
             model.put("errInfo", "服务器神游中...");
             return "regist";
         }
@@ -186,6 +187,25 @@ public class UserController {
         List<UserLog> userLogList = userLogService.getLogsOrderByHotNum();
 
         return userLogList;
+    }
+
+    //修改用户信息
+    @RequestMapping(value = "/inter/updateUserInfo",method = RequestMethod.POST)
+    public String updateInfo(UserShowInfo userShowInfo,ModelMap model,HttpServletRequest request){
+        HttpSession session=request.getSession();
+        Integer uid=((UserShowInfo)session.getAttribute("userInfo")).getUid();
+
+        System.out.print("==uid="+uid);
+        System.out.print("==UserShowInfo="+userShowInfo.getBirthday());
+        try {
+            userShowInfo.setUid(uid);
+            userInfoService.updateUserInfo(userShowInfo);
+            UserShowInfo userShowInfoAfterUpdate = userService.getUserInfo(uid);
+            model.addAttribute("userInfo", userShowInfoAfterUpdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "showUserInfo";
     }
 
 }

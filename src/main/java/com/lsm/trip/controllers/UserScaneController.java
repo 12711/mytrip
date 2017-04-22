@@ -75,4 +75,8 @@ public class UserScaneController {
         }
         return "showScanes";
     }
+    @RequestMapping(value = "/inter/toWriteScane",method = RequestMethod.GET)
+    public String toWriteScane(){
+           return "writeScane";
+    }
 }

@@ -108,6 +108,8 @@ public class UploadImgController {
         try {
             imges = userImgService.getImgesByAlId(id);
             map.put("imges", imges);
+            Album album = albumService.getAlbumByAlId(id);
+            map.put("album", album);
             map.put("alid",id);
         } catch (Exception e) {
             e.printStackTrace();

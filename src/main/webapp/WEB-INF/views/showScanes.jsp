@@ -34,7 +34,8 @@
             <div class="col-sm-2" style="margin-left: 50px;"><span
                     style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>我发布的景点</h3></span>
             </div>
-            <div class="col-sm-7 "></div>
+            <div class="col-sm-2"><a href="${pageContext.request.contextPath}/scane/inter/toWriteScane">发布新景点</a></div>
+            <div class="col-sm-5"></div>
             <div class="col-sm-2 hidden-md" style="margin-top: 20px"><a
                     href="${pageContext.request.contextPath}/user/index">返回首页</a>
             </div>

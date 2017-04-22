@@ -9,6 +9,7 @@ import com.lsm.trip.service.UserInfoService;
 import com.lsm.trip.service.UserLogService;
 import com.lsm.trip.service.UserScaneService;
 import com.lsm.trip.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,17 +45,17 @@ public class TripController {
         if ("p".equals(pageHelpPojo.getType())) {
             try {
                 userShowInfos = userService.getUserInfos(pageHelpPojo);
-                pageResponsePojo=returnResp(pageHelpPojo,userShowInfos);
+                pageResponsePojo = returnResp(pageHelpPojo, userShowInfos);
                 pageResponsePojo.setTotle(userService.getTotle(pageHelpPojo.getParam()));
             } catch (Exception e) {
                 pageResponsePojo.setMessage(e.getMessage());
                 e.printStackTrace();
             }
-        }else if("d".equals(pageHelpPojo.getType())) {
+        } else if ("d".equals(pageHelpPojo.getType())) {
             try {
-                userShowInfos=userService.getUsersByCity(pageHelpPojo);
+                userShowInfos = userService.getUsersByCity(pageHelpPojo);
 
-                pageResponsePojo=returnResp(pageHelpPojo,userShowInfos);
+                pageResponsePojo = returnResp(pageHelpPojo, userShowInfos);
                 pageResponsePojo.setTotle(userService.getTotleByAddr(pageHelpPojo.getParam()));
             } catch (Exception e) {
                 pageResponsePojo.setMessage(e.getMessage());
@@ -77,9 +78,9 @@ public class TripController {
                 System.out.println("content--" + content);
                 totle = userService.getTotle(content);
                 System.out.println("totle--" + totle);
-            }else if("d".equals(type)){
+            } else if ("d".equals(type)) {
                 System.out.println("content-d-" + content);
-                totle=userService.getTotleByAddr(content);
+                totle = userService.getTotleByAddr(content);
                 System.out.println("totle--d-" + totle);
             }
             model.addAttribute("totle", totle);
@@ -91,30 +92,35 @@ public class TripController {
         return "test";
     }
 
-    public PageResponsePojo<UserShowInfo> returnResp(PageHelpPojo<String> pageHelpPojo,List<UserShowInfo> userShowInfos)throws Exception{
-        PageResponsePojo pageResponsePojo=new PageResponsePojo();
+    public PageResponsePojo<UserShowInfo> returnResp(PageHelpPojo<String> pageHelpPojo, List<UserShowInfo> userShowInfos) throws Exception {
+        PageResponsePojo pageResponsePojo = new PageResponsePojo();
         for (UserShowInfo user : userShowInfos) {
             getRankImg(user);
         }
-            pageResponsePojo.setRows(userShowInfos);
+        pageResponsePojo.setRows(userShowInfos);
         return pageResponsePojo;
     }
-    @RequestMapping(value = "/getUserById/{id}",method = RequestMethod.GET)
-  public String getUserById(@PathVariable("id") Integer id,ModelMap model){
+
+    @RequestMapping(value = "/getUserById/{id}", method = RequestMethod.GET)
+    public String getUserById(@PathVariable("id") Integer id, ModelMap model) {
         try {
-            UserShowInfo userShowInfo=userService.getUserInfo(id);
+            UserShowInfo userShowInfo = userService.getUserInfo(id);
             getRankImg(userShowInfo);
-            List<UserScane> userScane=userScaneService.getUserScanesByUid(id);
-            model.addAttribute("userScane",userScane);
-            model.addAttribute("userShowInfo",userShowInfo);
+            List<UserScane> userScane = userScaneService.getUserScanesByUid(id);
+            model.addAttribute("userScane", userScane);
+            model.addAttribute("userShowInfo", userShowInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "showonedz";
     }
 
-    public UserShowInfo getRankImg(UserShowInfo user){
+    public UserShowInfo getRankImg(UserShowInfo user) {
         Integer hotnum = user.getHotnum();
+        //当用户在没有hotnum时给他赋初值为0
+        if (hotnum == null) {
+            hotnum = 0;
+        }
         Double rank = hotnum / 1000.0;
         if (rank <= 0.1) {
             user.setRank("1rankd.png");
@@ -137,6 +143,6 @@ public class TripController {
         } else {
             user.setRank("10rankd.png");
         }
-     return user;
+        return user;
     }
 }

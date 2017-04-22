@@ -79,4 +79,6 @@
     <select id="getTotleByParamAddr" parameterType="String" resultType="int">
         SELECT COUNT(*) FROM user u join userinfo ui on u.u_id=ui.u_id AND ui.city like concat('%',#{param},'%')
     </select>
+
+
 </mapper>

@@ -13,7 +13,7 @@ public class UserInfo {
     private String address;
     private String workAddress;
     private String mypig;//头像
-    private String birthdady;//生日
+    private String birthday;//生日
     private String sex;//性别
     private String filexPhone;//固话
     private String qq;//qq
@@ -30,12 +30,12 @@ public class UserInfo {
         this.mypig = mypig;
     }
 
-    public String getBirthdady() {
-        return birthdady;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setBirthdady(String birthdady) {
-        this.birthdady = birthdady;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getSex() {

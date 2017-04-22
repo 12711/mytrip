@@ -34,4 +34,6 @@ public interface UserMapper {
     Integer getTotleByParam(@Param("param") String param)throws Exception;
     //通过地区查询数据条数
     Integer getTotleByParamAddr(@Param("param") String param)throws Exception;
+
+
 }

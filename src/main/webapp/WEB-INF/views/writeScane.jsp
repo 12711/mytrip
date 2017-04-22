@@ -27,6 +27,10 @@
                         <input type="file" name="sImgF" id="sImgF"/>
                     </div>
                     <div class="form-group">
+                        <label for="address">简单描述</label>
+                        <input type="text" class="form-control" name="shortDesc" id="shortDesc"/>
+                    </div>
+                    <div class="form-group">
                         <label for="introduce">景点介绍<small style="font-weight:100">(请注意排版)</small></label>
                         <input type="text" class="form-control" id="introduce1"/>
                         <div id="introduceTest" style="display: none">
