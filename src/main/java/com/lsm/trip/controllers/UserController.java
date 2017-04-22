@@ -140,6 +140,7 @@ public class UserController {
       /*获取用户id以便于插入一条心的userinfo记录*/
         Integer uid = user.getUid();
         UserInfo userInfo = new UserInfo();
+        userInfo.setRealName(userShowInfo.getRealName());
         userInfo.setuId(uid);
         userInfo.setPhone(userShowInfo.getPhone());
         userInfo.setSex(userShowInfo.getSex());

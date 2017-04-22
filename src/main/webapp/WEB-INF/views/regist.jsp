@@ -46,6 +46,14 @@
                        </div>
                        <label class="col-sm-4" id="repasswordInfo" style="margin-left: 15px;margin-top: 8px"></label>
                    </div>
+                   <div class="form-group">
+                       <label class="col-sm-2"></label>
+                       <label for="realName" class="col-sm-2 control-label">姓名:</label>
+                       <div class="col-sm-3">
+                           <input type="text" class="form-control" required name="realName" id="realName13" />
+                       </div>
+                       <label class="col-sm-4" id="realName" style="margin-left: 15px;margin-top: 8px"></label>
+                   </div>
 
                    <div class="form-group">
                        <label class="col-sm-2"></label>
@@ -86,6 +94,7 @@
    </div>
    <script>
        /*检查注册用户是否已经存在*/
+       window.nameflag=false;
        $(function () {
             $("#inputEmail3").change(function () {
                  var name=$("#inputEmail3").val();
@@ -100,11 +109,12 @@
                              if(data==="1"){
                                  $("#nameInfo").text("**用户名可用!");
                                  $("#nameInfo").css("color","green");
+                                 nameflag=true;
                              }else {
                                  console.log("用户已存在")
                                  $("#nameInfo").text("**用户已存在!");
                                  $("#nameInfo").css("color","red");
-
+                                 nameflag=false;
                              }
                          }
                      });
@@ -167,10 +177,10 @@
 
        /*当输入信息不全防止表单提交*/
        function fromForm() {
-           if($("#inputEmail3").val()!==""&&$("#inputPassword3").val()!==""&&$("#rePassword3").val()!==""&&$("#phone").val!==""){
+           if($("#realName13").val()!==""&&nameflag&&$("#inputEmail3").val()!==""&&$("#inputPassword3").val()!==""&&$("#rePassword3").val()!==""&&$("#phone").val!==""){
                return true;
            }else{
-               alert("请完整填写注册内容!");
+               alert("注册内容未填写完整或者你的用户名已存在!");
                return false;
            }
        }
