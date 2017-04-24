@@ -101,7 +101,7 @@ public class UploadImgController {
         }
         return "showImg";
     }
-
+   //普通查询相册
     @RequestMapping(value = "/showImg/{id}", method = RequestMethod.GET)
     public String showImg(@PathVariable("id") Integer id, ModelMap map) {
         List<Imges> imges = null;
@@ -110,6 +110,7 @@ public class UploadImgController {
             map.put("imges", imges);
             Album album = albumService.getAlbumByAlId(id);
             map.put("album", album);
+            map.put("name", null);
             map.put("alid",id);
         } catch (Exception e) {
             e.printStackTrace();

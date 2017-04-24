@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-sm-7 "></div>
                 <div class="col-sm-2 hidden-md" style="margin-top: 20px"><a
-                        href="#">返回日志列表</a></div>
+                        href="#">返回相册列表</a></div>
             </div>
             <div class="col-sm-7" style="margin-top: 20px" id="albunBtn">
                 <div class="col-sm-5"><a href="#modal-container-907337" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span>新建相册</a></div>
