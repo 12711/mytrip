@@ -10,6 +10,9 @@
 <html>
 <head>
     <title>地主详情</title>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/bootstrappage/bootstrap-pagination.min.css"></link>
+    <script src="${pageContext.request.contextPath}/bootstrappage/bootstrap-pagination.min.js"></script>
     <style>
         #showimg {
             width: 136px;
@@ -76,10 +79,12 @@
             </div>
             <div class="row" style="padding-left: 0px;padding-right: 10px;">
                 <div style="background-color: white;height: 45px">
-                    <a href="#" class="active"
-                       style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;left: 25%;">他的主页</a>
+                    <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
+                       style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;left: 25%;" >他的主页</a>
+                    <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex"
+                       style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 45%;">热门相册</a>
                     <a href="#"
-                       style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 65%;">热门相册</a>
+                       style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 65%;">对他评论</a>
                 </div>
             </div>
             <div class="row" style="margin-top: 20px;">
@@ -174,12 +179,13 @@
 
                 </div>
                 <%--发布的景点--%>
-                <div class="col-md-9" style="height: 400px;">
+                <div class="col-md-9" style="height: 460px;">
+                   <div class="row">
                     <div id="showScaneList">
                         <div class="col-md-1" style="height: 400px;">
                         </div>
                         <div class="col-md-11"
-                             style="height: 400px;padding-left: 0px">
+                             style="height: 450px;padding-left: 0px">
                             <c:forEach items="${userScane}" var="scane">
                             <div class="row" style="margin-right: -20px;margin-top:20px;background-color: white">
                                 <div style="margin-bottom: 10px;">
@@ -191,14 +197,57 @@
                                 </div>
                             </div>
                             </c:forEach>
+                            <div class="row">
+                                <ul class="pagination">
+                                    <li><a href="javaScript:void(0);" onclick="prepage()">上一页</a></li>
+                                    <li class="active"><span id="pageIndex">${pageIndex}</span></li>
+                                    <li><span id="totle">共${totle}页</span></li>
+                                    <li><a href="javaScript:void(0);" onclick="nextpage()">下一页</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                   </div>
+
                 </div>
             </div>
         </div>
         <div class="col-md-1 hidden-sm"></div>
     </div>
 </div>
+<script>
+       $(function () {
+           var demo = BootstrapPagination($("#demo1"), {
+               //记录总数。
+               total: 10,
+               //当前页索引编号。从其开始（从0开始）的整数。
+               pageIndex: 0,
+               //当分页更改后引发此事件。
+               pageChanged: function (pageIndex, pageSize) {
+
+               }
+           });
+       });
+
+       function prepage(obj) {
+
+           var pageIndex=$("#pageIndex").text();
+            if(pageIndex===null||pageIndex===''||pageIndex==='1'){
+                 return;
+            }else{
+                location.href='${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=${pageIndex-1}'
+            }
+       }
+
+       function nextpage() {
+           var pageIndex=$("#pageIndex").text();
+           if(pageIndex===null||pageIndex===''||pageIndex==='${totle}'){
+               return;
+           }else{
+               location.href='${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=${pageIndex+1}'
+           }
+       }
+</script>
 </body>
 <%@ include file="footer.jsp" %>
 </html>

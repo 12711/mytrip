@@ -56,4 +56,10 @@ public class AlbumServiceImpl  implements AlbumService{
     public void updateAlbum(Integer id) throws Exception{
         userAlbumMapper.updateHotnum(id);
     }
+
+    @Override
+    public List<Album> getHotAlbum(Integer uid) throws Exception {
+
+        return userAlbumMapper.getHotAlbumByUid(uid);
+    }
 }

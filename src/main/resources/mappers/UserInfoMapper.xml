@@ -32,7 +32,7 @@
    </insert>
      <resultMap id="userInfoMap" type="UserInfo">
          <id column="u_i_id" property="uIID"></id>
-         <result column="birthday" property="birthdady"/>
+         <result column="birthday" property="birthday"/>
          <result column="sex" property="sex"/>
          <result column="mypig" property="mypig"/>
          <result column="u_id" property="uId"/>

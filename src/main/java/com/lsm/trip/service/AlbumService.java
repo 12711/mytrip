@@ -29,4 +29,6 @@ public interface AlbumService {
     List<Album> getAlbums();
     //点赞
     void updateAlbum(Integer id)throws Exception;
+    //通过用户ID查询该用户的热门相册
+    List<Album> getHotAlbum(Integer uid)throws Exception;
 }

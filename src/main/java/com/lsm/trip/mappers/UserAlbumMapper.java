@@ -30,5 +30,7 @@ public interface UserAlbumMapper {
     List<Album> getAlbums();
     //修改相册hotnum
     void updateHotnum(@Param("id") Integer id) throws Exception;
+    //查询某个用户的热门相册
+    List<Album> getHotAlbumByUid(@Param("uid") Integer uid)throws Exception;
 
 }

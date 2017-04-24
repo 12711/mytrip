@@ -4,6 +4,7 @@
  */
 package com.lsm.trip.service.impl;
 
+import com.lsm.trip.dto.PageHelpPojo;
 import com.lsm.trip.dto.UserScane;
 import com.lsm.trip.mappers.UserScaneMapper;
 import com.lsm.trip.service.UserScaneService;
@@ -35,5 +36,15 @@ public class UserScaneServiceImpl implements UserScaneService {
     @Override
     public List<UserScane> getUserScanesByUid(Integer id) throws Exception {
         return userScaneMapper.getScanesByUid(id);
+    }
+
+    @Override
+    public Integer getScaneNum(PageHelpPojo<Integer> pageHelpPojo) throws Exception {
+        return userScaneMapper.countScane(pageHelpPojo);
+    }
+
+    @Override
+    public List<UserScane> getScanes(PageHelpPojo<Integer> pageHelpPojo) throws Exception {
+        return userScaneMapper.getScaneByPage(pageHelpPojo);
     }
 }

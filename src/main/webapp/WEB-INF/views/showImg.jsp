@@ -42,17 +42,19 @@
                     <span style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>我的相册</h3></span>
                     </c:if>
                     <c:if test="${!t}">
-                        <span style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>${name}的相册</h3></span>
+                        <span style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>他的相册</h3></span>
                     </c:if>
                 </div>
-                <c:if test="${name==userInfo.userName}">
+                <c:if test="${name==null}">
                   <div class="col-sm-1" style="margin-top: 20px"><a href="javaScript:void(0);"  onclick="batchDelete()">批量删除</a></div>
                 </c:if>
                 <div class="col-sm-4 "></div>
+            <c:if test="${name==null}">
                 <div class="col-sm-2 hidden-md" style="margin-top: 20px"><a
                         href="${pageContext.request.contextPath}/album/inter/getAlbums">返回相册列表</a></div>
                 <div class="col-md-2 hidden-sm" style="margin-top: 20px"><a href="javaScript:void(0);" onclick="support('${alid}')">点赞</a>&nbsp;(<span id="hotnum">${album.hotnum}</span>)</div>
             </div>
+            </c:if>
         </div>
         <div class="row" style="padding-left:20px">
             <div class="docs-galley">

@@ -5,10 +5,7 @@
 package com.lsm.trip.controllers;
 
 import com.lsm.trip.dto.*;
-import com.lsm.trip.service.UserInfoService;
-import com.lsm.trip.service.UserLogService;
-import com.lsm.trip.service.UserScaneService;
-import com.lsm.trip.service.UserService;
+import com.lsm.trip.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -33,6 +31,8 @@ public class TripController {
     UserLogService userLogService;
     @Autowired
     UserScaneService userScaneService;
+    @Autowired
+    AlbumService albumService;
 
     @RequestMapping(value = "/getUserLogAddr", method = RequestMethod.GET)
     @ResponseBody
@@ -102,17 +102,52 @@ public class TripController {
     }
 
     @RequestMapping(value = "/getUserById/{id}", method = RequestMethod.GET)
-    public String getUserById(@PathVariable("id") Integer id, ModelMap model) {
+    public String getUserById(@PathVariable("id") Integer id, ModelMap model, HttpServletRequest request,@RequestParam("pageIndex") Integer pageIndex) {
         try {
             UserShowInfo userShowInfo = userService.getUserInfo(id);
             getRankImg(userShowInfo);
-            List<UserScane> userScane = userScaneService.getUserScanesByUid(id);
+           // List<UserScane> userScane = userScaneService.getUserScanesByUid(id);
+          PageHelpPojo<Integer> pageHelpPojo=new PageHelpPojo();
+          pageHelpPojo.setParam(pageIndex);
+          //用户通过点击地主进去这个界面是pageIndex默认赋值为-1
+            if(pageIndex==null||(-1==pageIndex)){
+                pageIndex=1;
+            }
+
+            pageHelpPojo.setPageIndex(pageIndex);
+            pageHelpPojo.setPageSize(3);
+            pageHelpPojo.setParam(id);
+            List<UserScane> userScane = userScaneService.getScanes(pageHelpPojo);
+            Integer count=userScaneService.getScaneNum(pageHelpPojo);
+            Integer totle=count%3==0?count/3:count/3+1;
+            System.out.print("--totle--="+totle);
+            model.addAttribute("pageIndex",pageIndex);
+            request.getSession().setAttribute("uid",id);
             model.addAttribute("userScane", userScane);
             model.addAttribute("userShowInfo", userShowInfo);
+            model.addAttribute("totle",totle);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "showonedz";
+    }
+
+    //点击主页的热门相册
+    @RequestMapping(value = "/getAlbumInIndex",method = RequestMethod.GET)
+    public String getHotAlbumInIndex(HttpServletRequest request,ModelMap model){
+        Integer uid=(Integer) request.getSession().getAttribute("uid");
+        List<Album> albums=null;
+        System.out.print("热门相册-----"+uid);
+        try {
+            UserShowInfo userShowInfo = userService.getUserInfo(uid);
+            getRankImg(userShowInfo);
+            albums=albumService.getHotAlbum(uid);
+            model.addAttribute("albums",albums);
+            model.addAttribute("userShowInfo", userShowInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "showonedzablum";
     }
 
     public UserShowInfo getRankImg(UserShowInfo user) {

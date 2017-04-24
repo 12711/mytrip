@@ -4,6 +4,7 @@
  */
 package com.lsm.trip.service;
 
+import com.lsm.trip.dto.PageHelpPojo;
 import com.lsm.trip.dto.UserScane;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface UserScaneService {
     UserScane getUserScaneById(Integer id)throws  Exception;
     //通过用户ID查询多个景点
     List<UserScane> getUserScanesByUid(Integer id) throws Exception;
+    //通过用户ID查询景点数量
+    Integer getScaneNum(PageHelpPojo<Integer> pageHelpPojo)throws Exception;
+    //通过用户ID分页查询景点
+    List<UserScane> getScanes(PageHelpPojo<Integer> pageHelpPojo)throws Exception;
 }

@@ -25,6 +25,10 @@
     <select id="getAlbumsByUid" parameterType="Integer" resultMap="userAlbuMap">
           SELECT *FROM album where u_id=#{id}
     </select>
+
+    <select id="getHotAlbumByUid" parameterType="Integer" resultMap="userAlbuMap">
+        SELECT *FROM album where u_id=#{uid} ORDER BY hotnum DESC limit 0,4
+    </select>
     
     <select id="getAlbumByAlId" parameterType="Integer" resultMap="userAlbuMap">
         SELECT *FROM album where al_id=#{id}

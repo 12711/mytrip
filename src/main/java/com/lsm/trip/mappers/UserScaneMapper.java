@@ -4,6 +4,7 @@
  */
 package com.lsm.trip.mappers;
 
+import com.lsm.trip.dto.PageHelpPojo;
 import com.lsm.trip.dto.UserScane;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,8 @@ public interface UserScaneMapper {
     List<UserScane> getScanesByUid(@Param("uid") Integer id)throws Exception;
     //通过ID查询打那个景点
     UserScane getUserScane(@Param("id") Integer id)throws Exception;
+    //通過用户ID查询总页数
+    Integer countScane(PageHelpPojo pageHelpPojo)throws Exception;
+    //通过用户ID分页查询景点
+    List<UserScane> getScaneByPage(PageHelpPojo pageHelpPojo)throws Exception;
 }

@@ -27,4 +27,12 @@
         SELECT *FROM userscane WHERE u_id=#{uid}
     </select>
 
+    <select id="countScane" parameterType="PageHelpPojo" resultType="int">
+        SELECT count(*) FROM userscane WHERE u_id=#{param}
+    </select>
+
+    <select id="getScaneByPage" parameterType="PageHelpPojo" resultMap="scaneMap">
+        SELECT *FROM userscane WHERE u_id=#{param} limit #{pageIndex},#{pageSize}
+    </select>
+
 </mapper>
