@@ -13,7 +13,7 @@ public class TestController {
 
     @RequestMapping(value = "/test",method = RequestMethod.GET)
     public String testView(){
-        return "showUserInfo";
+        return "showonedzcomment";
     }
     @RequestMapping(value = "/testmain",method = RequestMethod.GET)
     public String testMainView(){

@@ -150,7 +150,7 @@ public class TripController {
         return "showonedzablum";
     }
 
-    public UserShowInfo getRankImg(UserShowInfo user) {
+    public static  UserShowInfo getRankImg(UserShowInfo user) {
         Integer hotnum = user.getHotnum();
         //当用户在没有hotnum时给他赋初值为0
         if (hotnum == null) {

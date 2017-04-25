@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.UserEvaluateMapper">
+        <insert id="addEvaluate" parameterType="UserEvaluate" useGeneratedKeys="true" keyColumn="e_id" keyProperty="eid">
+               INSERT INTO userevaluate(u_id,author,content,e_time)
+               VALUES (#{uid},#{author},#{content},sysdate())
+        </insert>
+
+       <select id="countNum" parameterType="int" resultType="int">
+           SELECT COUNT(*) FROM userevaluate WHERE u_id=#{uid}
+       </select>
+
+    <resultMap id="evaluateMap" type="UserEvaluate">
+        <id column="e_id" property="eid"></id>
+        <result column="u_id" property="uid"></result>
+        <result column="content" property="content"></result>
+        <result column="author" property="author"></result>
+        <result column="e_time" property="eTime"></result>
+    </resultMap>
+
+    <select id="getEvaluates" parameterType="PageHelpPojo" resultMap="evaluateMap">
+
+        SELECT *FROM userevaluate WHERE u_id=#{param} limit #{pageIndex},#{pageSize}
+
+    </select>
+
+</mapper>

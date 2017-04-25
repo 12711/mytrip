@@ -13,6 +13,7 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/bootstrappage/bootstrap-pagination.min.css"></link>
     <script src="${pageContext.request.contextPath}/bootstrappage/bootstrap-pagination.min.js"></script>
+    <script src="${pageContext.request.contextPath}/ck/ckeditor/ckeditor.js"></script>
     <style>
         #showimg {
             width: 136px;
@@ -87,17 +88,27 @@
             </div>
             <div class="row" style="padding-left: 0px;padding-right: 10px;">
                 <div style="background-color: white;height: 45px">
-                    <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
-                       style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;left: 25%;" >他的主页</a>
-                    <a href="#"
-                       style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 45%;">热门相册</a>
-                    <a href="#"
-                       style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 65%;">对他评论</a>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3">
+                        <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
+                           style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;" >他的主页</a>
+                    </div>
+                    <div  class="col-sm-3">
+                            <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex"
+                               style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">热门相册</a>
+                    </div>
+                    <div class="col-sm-3">
+                        <div style="border-bottom: 3px solid #eb7350;height: 45px;width: 60px">
+                        <a href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage"
+                           style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">对他评论</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-md-3"
-                     style="background-color:white;height: 400px;padding-left: 0px">
+                     style="background-color:white;height: 450px;padding-left: 0px">
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10"
@@ -185,6 +196,42 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10"
+                             style="border-bottom: 1px dashed gainsboro">
+                            <div style="height: 130px">
+                                <a href="#modal-container-996611" data-toggle="modal" style="position: relative;top: 12px;"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;留下您对他的评价吧</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="modal-container-996611" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        写写对他的评价
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="${pageContext.request.contextPath}/evaluate/inter/addevaluate">
+                                        <input type="hidden" value="${uid}" name="uid">
+                                        <textarea id="editor" name="content">
+                                        </textarea>
+                                    <script type="text/javascript">
+                                        var ckeditor= CKEDITOR.replace("content");
+                                    </script>
+                                        <input class="btn btn-danger" value="提交" type="submit">
+                                    </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
                 <%--发布的景点--%>
@@ -197,18 +244,43 @@
                                  style="padding-left: 0px">
 
                                     <div class="row" style="height: 500px;background-color: white">
-                                        <c:forEach items="${albums}" var="album">
-
-                                            <div class="col-sm-5 col-sm-offset-1">
-                                                <div id="albumCss" >
-                                                    <span style="font-size: 20px;color: white">${album.name}</span>
+                                        <div class="row" style="height: 500px;background-color: white">
+                                            <c:forEach items="${evaluates}" var="evaluate">
+                                            <div class="col-sm-12" style="border-top: 1px darkgray solid">
+                                                <div class="col-sm-1">
+                                                    <div  style="margin-top: 20px;height: 50px;width: 50px;overflow: hidden;border-radius: 25px;">
+                                                        <img style="height: 50px;width: 50px;" src="${pageContext.request.contextPath}/img/my.gif">
+                                                    </div>
                                                 </div>
-                                                <div style="width: 200px;height: 200px; cursor:pointer" onclick="showAlbum(${album.id})">
-                                                    <img src="${pageContext.request.contextPath}/album/${album.cover}">
+                                                <div class="col-sm-6" style="margin-top: 35px">
+                                                    <span>${evaluate.author}</span>
+                                                    <span style="font-size: 5px;color: darkgray">发表于${evaluate.eTime}</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12" >
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-11">
+                                                    <div>
+                                                        <span>${evaluate.content}</span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            </c:forEach>
 
-                                        </c:forEach>
+                                            <div class="row">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-5">
+                                                  <ul class="pagination">
+                                                    <li><a href="javaScript:void(0);" onclick="prepage()">上一页</a></li>
+                                                    <li class="active"><span id="pageIndex">${pageIndex}</span></li>
+                                                    <li><span id="totle">共${totle}页</span></li>
+                                                    <li><a href="javaScript:void(0);" onclick="nextpage()">下一页</a></li>
+                                                  </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                             </div>
@@ -222,29 +294,35 @@
     </div>
 </div>
 <script>
-    function showAlbum(obj) {
-        location.href="${pageContext.request.contextPath}/img/showImg1/"+obj+"?name="+"--1";
+    function prepage(obj) {
+
+        var pageIndex=$("#pageIndex").text();
+        if(pageIndex===null||pageIndex===''||pageIndex==='1'){
+            return;
+        }else{
+            location.href='${pageContext.request.contextPath}/evaluate/getEvaluateByPage?pageIndex=${pageIndex-1}'
+        }
     }
 
-    function supportuser(obj) {
-        $.ajax({
-            url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
-            type:'post',
-            success:function (data) {
-                if("1"===data){
-                    var hotnum=$("#userhotnum").text();
-                    console.log("999999999999999="+hotnum)
-                    if(hotnum==='undefined'){
-                        hotnum=0;
-                    }
-                    var finalHotnum=hotnum*1+1;
-                    console.log("999999999999999====="+finalHotnum)
-                    $("#userhotnum").text(finalHotnum);
-                }else {
-                    alert("点赞失败....")
-                }
-            }
+    function nextpage() {
+        var pageIndex=$("#pageIndex").text();
+        if(pageIndex===null||pageIndex===''||pageIndex==='${totle}'){
+            return;
+        }else{
+            location.href='${pageContext.request.contextPath}/evaluate/getEvaluateByPage?pageIndex=${pageIndex+1}'
+        }
+    }
+
+    $(function () {
+        $("#sumbitEvent").click(function () {
+            affirm();
         });
+    });
+    function  affirm() {
+        if(confirm("是否在检查以下内容,提交后不能修改!")){
+            return true;
+        }
+        return false;
     }
 </script>
 </body>

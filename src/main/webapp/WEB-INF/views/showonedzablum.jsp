@@ -87,12 +87,22 @@
             </div>
             <div class="row" style="padding-left: 0px;padding-right: 10px;">
                 <div style="background-color: white;height: 45px">
-                    <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
-                       style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;left: 25%;" >他的主页</a>
-                    <a href="#"
-                       style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 45%;">热门相册</a>
-                    <a href="#"
-                       style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 65%;">对他评论</a>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3">
+                            <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
+                               style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;" >他的主页</a>
+                    </div>
+                    <div  class="col-sm-3">
+                        <div style="border-bottom: 3px solid #eb7350;height: 45px;width: 60px">
+                        <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex"
+                           style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">热门相册</a>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage"
+                           style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">对他评论</a>
+                    </div>
                 </div>
             </div>
             <div class="row" style="margin-top: 20px;">
