@@ -57,6 +57,14 @@
             -webkit-line-clamp: 3;
             overflow: hidden;
         }
+        #albumCss{
+            z-index: 200;
+            position: relative;
+            top: 203px;
+            background-color: rgba(0, 0, 0, 0.6);
+            width: 204px;
+            text-align: center;
+        }
 
     </style>
 </head>
@@ -73,9 +81,7 @@
                              src="${pageContext.request.contextPath}/img/${userShowInfo.mypig}">
                     </div>
                 </div>
-                <div id="showname">
-                    <h3><span>${userShowInfo.userName}</span></h3>
-                </div>
+                <div id="showname"><h3><span>${userShowInfo.userName}</span></h3></div>
                 <div id="showsign"><span>${userShowInfo.sign}</span>
                 </div>
             </div>
@@ -83,7 +89,7 @@
                 <div style="background-color: white;height: 45px">
                     <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
                        style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;left: 25%;" >他的主页</a>
-                    <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex"
+                    <a href="#"
                        style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 45%;">热门相册</a>
                     <a href="#"
                        style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;left: 65%;">对他评论</a>
@@ -104,7 +110,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6"><span
-                                        style="font-size: 10px;position: relative;top: 20px;">${userShowInfo.userName}</span>
+                                        style="font-size: 15px;position: relative;top: 20px;">${userShowInfo.userName}</span>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +122,8 @@
                             <div style="height: 65px">
                                 <span class="glyphicon glyphicon-map-marker"
                                       style="position: relative;top: 14px;"></span>
-                                <span style="font-size: 10px;position: relative;top: 12px">信誉等级</span><span style="font-size: 10px;position: relative;top: 12px;left: 20px;"><a href="javaScript:void(0);" onclick="supportuser('${userShowInfo.uid}')"><span class="glyphicon glyphicon-thumbs-up"></span>(<span id="userhotnum">${userShowInfo.hotnum}</span>)</a></span>
+                                <span style="font-size: 10px;position: relative;top: 12px;">信誉等级</span>
+                                <span style="font-size: 10px;position: relative;top: 12px;left: 20px;"><a href="javaScript:void(0);" onclick="supportuser('${userShowInfo.uid}')"><span class="glyphicon glyphicon-thumbs-up"></span>(<span id="userhotnum">${userShowInfo.hotnum}</span>)</a></span>
                                 <img src="${pageContext.request.contextPath}/img/rank/${userShowInfo.rank}"
                                      style="position: relative;top: 12px;">
                             </div>
@@ -181,35 +188,32 @@
 
                 </div>
                 <%--发布的景点--%>
-                <div class="col-md-9" style="height: 460px;">
-                   <div class="row">
-                    <div id="showScaneList">
-                        <div class="col-md-1" style="height: 400px;">
-                        </div>
-                        <div class="col-md-11"
-                             style="height: 450px;padding-left: 0px">
-                            <c:forEach items="${userScane}" var="scane">
-                            <div class="row" style="margin-right: -20px;margin-top:20px;background-color: white">
-                                <div style="margin-bottom: 10px;">
-                                <div style="height: 35px;background-color: #71afd6;"><span style="font-size: 20px">${scane.sName}</span></div>
-                                   <div  style="width: 100%;">
-                                      &nbsp;&nbsp;&nbsp;
-                                       <span>${scane.shortDesc}</span><a href="${pageContext.request.contextPath}/scane/getScane/${scane.sid}">>>了解更多</a>
-                                   </div>
-                                </div>
+                <div class="col-md-9" style="height: 510px;">
+                    <div class="row">
+                        <div id="showScaneList">
+                            <div class="col-md-1" style="height: 400px;">
                             </div>
-                            </c:forEach>
-                            <div class="row">
-                                <ul class="pagination">
-                                    <li><a href="javaScript:void(0);" onclick="prepage()">上一页</a></li>
-                                    <li class="active"><span id="pageIndex">${pageIndex}</span></li>
-                                    <li><span id="totle">共${totle}页</span></li>
-                                    <li><a href="javaScript:void(0);" onclick="nextpage()">下一页</a></li>
-                                </ul>
+                            <div class="col-md-11"
+                                 style="padding-left: 0px">
+
+                                    <div class="row" style="height: 500px;background-color: white">
+                                        <c:forEach items="${albums}" var="album">
+
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                                <div id="albumCss" >
+                                                    <span style="font-size: 20px;color: white">${album.name}</span>
+                                                </div>
+                                                <div style="width: 200px;height: 200px; cursor:pointer" onclick="showAlbum(${album.id})">
+                                                    <img src="${pageContext.request.contextPath}/album/${album.cover}">
+                                                </div>
+                                            </div>
+
+                                        </c:forEach>
+                                    </div>
+
                             </div>
                         </div>
                     </div>
-                   </div>
 
                 </div>
             </div>
@@ -218,58 +222,30 @@
     </div>
 </div>
 <script>
-       $(function () {
-           var demo = BootstrapPagination($("#demo1"), {
-               //记录总数。
-               total: 10,
-               //当前页索引编号。从其开始（从0开始）的整数。
-               pageIndex: 0,
-               //当分页更改后引发此事件。
-               pageChanged: function (pageIndex, pageSize) {
+    function showAlbum(obj) {
+        location.href="${pageContext.request.contextPath}/img/showImg1/"+obj+"?name="+"--1";
+    }
 
-               }
-           });
-       });
-
-       function prepage(obj) {
-
-           var pageIndex=$("#pageIndex").text();
-            if(pageIndex===null||pageIndex===''||pageIndex==='1'){
-                 return;
-            }else{
-                location.href='${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=${pageIndex-1}'
+    function supportuser(obj) {
+        $.ajax({
+            url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
+            type:'post',
+            success:function (data) {
+                if("1"===data){
+                    var hotnum=$("#userhotnum").text();
+                    console.log("999999999999999="+hotnum)
+                    if(hotnum==='undefined'){
+                        hotnum=0;
+                    }
+                    var finalHotnum=hotnum*1+1;
+                    console.log("999999999999999====="+finalHotnum)
+                    $("#userhotnum").text(finalHotnum);
+                }else {
+                    alert("点赞失败....")
+                }
             }
-       }
-
-       function nextpage() {
-           var pageIndex=$("#pageIndex").text();
-           if(pageIndex===null||pageIndex===''||pageIndex==='${totle}'){
-               return;
-           }else{
-               location.href='${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=${pageIndex+1}'
-           }
-       }
-       
-       function supportuser(obj) {
-           $.ajax({
-                url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
-               type:'post',
-               success:function (data) {
-                  if("1"===data){
-                      var hotnum=$("#userhotnum").text();
-                      console.log("999999999999999="+hotnum)
-                      if(hotnum==='undefined'){
-                          hotnum=0;
-                      }
-                     var finalHotnum=hotnum*1+1;
-                      console.log("999999999999999====="+finalHotnum)
-                      $("#userhotnum").text(finalHotnum);
-                  }else {
-                      alert("点赞失败....")
-                  }
-               }
-               });
-       }
+        });
+    }
 </script>
 </body>
 <%@ include file="footer.jsp" %>

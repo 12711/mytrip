@@ -12,7 +12,8 @@ public interface UserInfoMapper {
     //通过ID查询用户详细信息
     UserInfo getUserInfo(@Param("id") Integer id);
     //更新用户信息
-    //更新用户信息
     void updateUserInfo(UserShowInfo userShowInfo)throws Exception;
+    //给用户点赞
+    void supportUser(@Param("uid")Integer uid)throws Exception;
 
 }

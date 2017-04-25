@@ -59,4 +59,8 @@
         </set>
         WHERE u_id=#{uid}
     </update>
+
+    <update id="supportUser" parameterType="int">
+        UPDATE userinfo SET hotnum=hotnum+1 WHERE u_id=#{uid}
+    </update>
 </mapper>

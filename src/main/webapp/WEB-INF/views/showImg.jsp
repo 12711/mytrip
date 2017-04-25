@@ -52,9 +52,10 @@
             <c:if test="${name==null}">
                 <div class="col-sm-2 hidden-md" style="margin-top: 20px"><a
                         href="${pageContext.request.contextPath}/album/inter/getAlbums">返回相册列表</a></div>
+            </c:if>
                 <div class="col-md-2 hidden-sm" style="margin-top: 20px"><a href="javaScript:void(0);" onclick="support('${alid}')">点赞</a>&nbsp;(<span id="hotnum">${album.hotnum}</span>)</div>
             </div>
-            </c:if>
+
         </div>
         <div class="row" style="padding-left:20px">
             <div class="docs-galley">

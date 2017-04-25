@@ -24,4 +24,9 @@ public class UserInfoServiceImpl  implements UserInfoService{
         System.out.print("-service-"+userInfo.getBirthday());
         userInfoMapper.updateUserInfo(userInfo);
     }
+
+    @Override
+    public void supportUser(Integer uid) throws Exception {
+        userInfoMapper.supportUser(uid);
+    }
 }

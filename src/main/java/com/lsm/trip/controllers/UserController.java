@@ -228,4 +228,18 @@ public class UserController {
         return "0";
     }
 
+    //给用户点赞
+    @RequestMapping(value = "/supportUser/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public String supportUser(@PathVariable("id")Integer id){
+        try {
+            userInfoService.supportUser(id);
+            return "1";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "0";
+        }
+
+    }
+
 }

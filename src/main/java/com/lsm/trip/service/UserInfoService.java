@@ -10,4 +10,6 @@ public interface UserInfoService {
     Integer addUserInfo(UserInfo userInfo) throws Exception;
     //修改用户信息
     void updateUserInfo(UserShowInfo userInfo) throws Exception;
+    //给用户点赞
+    void supportUser(Integer uid)throws Exception;
 }
