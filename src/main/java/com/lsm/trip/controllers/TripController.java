@@ -54,7 +54,7 @@ public class TripController {
         } else if ("d".equals(pageHelpPojo.getType())) {
             try {
                 userShowInfos = userService.getUsersByCity(pageHelpPojo);
-
+                System.out.println("--通过地区查询是否为空--"+userShowInfos.size());
                 pageResponsePojo = returnResp(pageHelpPojo, userShowInfos);
                 pageResponsePojo.setTotle(userService.getTotleByAddr(pageHelpPojo.getParam()));
             } catch (Exception e) {

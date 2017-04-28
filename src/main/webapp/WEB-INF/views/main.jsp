@@ -71,7 +71,6 @@
                 <select class="btn btn-default" style="font-size: 17px;height: 40px;"
                         name="type">
                     <option value="p">地主</option>
-                    <option value="c">日志</option>
                     <option value="d">地区</option>
                 </select>
                 <input type="text" class="btn btn-default" style="height: 40px;"
@@ -103,7 +102,7 @@
                 <div class="carousel-inner">
                     <div class="item">
                         <img alt=""
-                             src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/1600/500/sports/1/default.jpg"/>
+                             src="${pageContext.request.contextPath}/img/default%20(2).jpg"/>
                         <div class="carousel-caption">
                             <h4>
                                 First Thumbnail label
@@ -118,7 +117,7 @@
                     </div>
                     <div class="item">
                         <img alt=""
-                             src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/1600/500/sports/2/default.jpg"/>
+                             src="${pageContext.request.contextPath}/img/default.jpg"/>
                         <div class="carousel-caption">
                             <h4>
                                 Second Thumbnail label
@@ -133,7 +132,7 @@
                     </div>
                     <div class="item active">
                         <img alt=""
-                             src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/1600/500/sports/3/default.jpg"/>
+                             src="${pageContext.request.contextPath}/img/default%20(1).jpg"/>
                         <div class="carousel-caption">
                             <h4>
                                 Third Thumbnail label

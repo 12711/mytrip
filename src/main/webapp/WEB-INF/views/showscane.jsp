@@ -62,6 +62,7 @@
             height: 95px;
         }
     </style>
+    <script src="${pageContext.request.contextPath}/ck/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 <div class="container-fluid" style="background-color: #F2F2F2;padding-left: 0px;padding-right: 0px">
@@ -113,7 +114,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <div class="spot_info">
+            <div class="spot_info" style="height: 900px">
                 <h3>门票及开放时间</h3>
                 <h4>门票</h4>
                 ${userScane.ticket}
@@ -121,11 +122,81 @@
                 ${userScane.opentime}
                 <h3>优惠政策</h3>
                 ${userScane.favourable}
+                <h3>攻略详情
+
+                    <c:if test="${userScane.uid ==userInfo.uid}">
+                      <a style="margin-left: 160px;" href="#modal-container-37989" data-toggle="modal" title="发布攻略"><span class="glyphicon glyphicon-pencil"></span></a>
+                    </c:if>
+                </h3>
+
+                <div class="modal fade" id="modal-container-37989" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    发布关于${userScane.sName}的攻略
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form" id="radierFrom">
+                                    <input type="hidden" name="sid" value="${userScane.sid}">
+                                    <input type="hidden" name="author" value="${userInfo.userName}">
+                                    <div class="form-group">
+                                        <label for="title" class="col-sm-2 control-label">标题</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入一个关于攻略的标题">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="content" class="col-sm-2 control-label">内容</label>
+                                        <div class="col-sm-10">
+                                           <textarea id="content" name="content"></textarea>
+                                            <script>
+                                                var ckeditor= CKEDITOR.replace("content");
+                                            </script>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" id="radierSubmit" class="btn btn-primary">保存</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <c:forEach items="${radiers}" var="radier" varStatus="r">
+                    <div style="margin-top: 15px">
+                       ${r.count}.<a href="">${radier.title}</a>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>
 
 </div>
+<script>
+    $(function () {
+        $("#radierSubmit").click(function () {
+             var text=CKEDITOR.instances.content.getData();
+             var form=$("#radierFrom").serialize();
+             form+=text;
+             $.ajax({
+                 url:'${pageContext.request.contextPath}/radier/addRadier',
+                 data:form,
+                 dataType:'json',
+                 type:'post',
+                 success:function (data) {
+                     location.href="${pageContext.request.contextPath}/scane/getScane/${userScane.sid}"
+                 }
+             });
+
+        });
+    })
+
+</script>
 </body>
 <%@include file="footer.jsp" %>
 </html>

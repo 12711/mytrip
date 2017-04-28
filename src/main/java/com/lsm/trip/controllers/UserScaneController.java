@@ -4,8 +4,10 @@
  */
 package com.lsm.trip.controllers;
 
+import com.lsm.trip.dto.Radiers;
 import com.lsm.trip.dto.UserScane;
 import com.lsm.trip.dto.UserShowInfo;
+import com.lsm.trip.service.RadiersService;
 import com.lsm.trip.service.UserScaneService;
 import com.lsm.trip.triputils.ImgUpload;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ import java.util.List;
 public class UserScaneController {
     @Autowired
     UserScaneService userScaneService;
+    @Autowired
+    RadiersService radiersService;
 
     @RequestMapping(value = "/inter/addScaner", method = RequestMethod.POST)
     public String addUserScane(@RequestParam("sImgF") MultipartFile file, UserScane userScane, HttpServletRequest request) {
@@ -55,7 +59,9 @@ public class UserScaneController {
     public String getOneUserScane(@PathVariable("id") Integer id, ModelMap map) {
         try {
             UserScane userScane = userScaneService.getUserScaneById(id);
+            List<Radiers> radiers=radiersService.getRadiersBySid(id);
             map.addAttribute("userScane", userScane);
+            map.addAttribute("radiers",radiers);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("查询景点失败...");

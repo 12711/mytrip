@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.RaiderMapper">
+
+ <insert id="insertReadiers" parameterType="Radiers" useGeneratedKeys="true" keyColumn="r_id" keyProperty="rid">
+     INSERT INTO raiders(s_id,title,content,posttime,updatetime,author)
+     VALUES (#{sid},#{title},#{content},sysdate(),sysdate(),#{author})
+ </insert>
+
+    <resultMap id="raiders" type="Radiers" >
+        <id column="r_id" property="rid"></id>
+        <result column="s_id" property="sid"></result>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="posttime" property="posttime"></result>
+        <result column="updatetime" property="updatetime"></result>
+        <result column="author" property="author"></result>
+    </resultMap>
+
+    <select id="getReadiers" parameterType="int" resultMap="raiders">
+        SELECT *FROM raiders WHERE s_id=#{sid}
+    </select>
+
+    <select id="getRadiersByrid" parameterType="int" resultMap="raiders">
+        SELECT *FROM   raiders WHERE r_id=#{rid}
+    </select>
+ </mapper>

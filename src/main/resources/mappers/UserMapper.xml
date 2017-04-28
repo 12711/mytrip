@@ -72,7 +72,7 @@
     <!--通过地区查询地主-->
     <select id="getUserInfoByAddr" parameterType="PageHelpPojo" resultMap="showInfo">
         SELECT  city,province,u.u_id,username,password,realname,phone,mail,address,jobaddress,mypig,birthday,sex,filexPhone,qq,hotnum,sign
-          FROM  user u join userinfo ui on u.u_id=ui.u_id AND ui.city like concat('%',#{param},'%') limit #{pageIndex},#{pageSize}
+          FROM  user u join userinfo ui on u.u_id=ui.u_id AND ui.province like concat('%',#{param},'%') limit #{pageIndex},#{pageSize}
     </select>
 
     <!--通过地区查询对应的数据条数用于分页-->
