@@ -35,4 +35,8 @@
         SELECT *FROM userscane WHERE u_id=#{param} limit #{pageIndex},#{pageSize}
     </select>
 
+    <delete id="batchDeleteScane" parameterType="int">
+        DELETE FROM userscane WHERE s_id=#{sid}
+    </delete>
+
 </mapper>

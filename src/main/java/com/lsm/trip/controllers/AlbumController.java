@@ -11,10 +11,7 @@ import com.lsm.trip.service.impl.AlbumServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -73,5 +70,37 @@ public class AlbumController {
             System.out.println("更新album,hotnum失败");
             return "0";
         }
+    }
+
+    @RequestMapping(value = "/batchDeleteAlbum",method = RequestMethod.POST)
+    @ResponseBody
+    public String [] batchDeleteAlbum(@RequestParam("ids") String ids){
+        System.out.print("ids=="+ids);
+        String [] id=ids.split(",");
+        String [] hasDelete=new String[2];
+        hasDelete[0]="";
+        for(String id1:id) {
+            try {
+                albumService.deleteAlbum(Integer.parseInt(id1));
+                //封装已经删除的相册ID
+                hasDelete[0]+=id1+",";
+            } catch (Exception e) {
+                e.printStackTrace();
+                //表示删除出现异常
+                hasDelete[1]+="0";
+            }
+        }
+        return hasDelete;
+    }
+
+    @RequestMapping(value = "/updateAlbum",method = RequestMethod.POST)
+    public String updateAlbum(Album album){
+      System.out.println("album.name---"+album.getName());
+        try {
+            albumService.updateAlbumAll(album);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "forward:inter/getAlbums";
     }
 }

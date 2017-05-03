@@ -15,5 +15,7 @@ public interface RadiersService {
     List<Radiers> getRadiersBySid(Integer sid)throws Exception;
     //通过攻略ID查询攻略
     Radiers getRaiders(Integer rid)throws Exception;
+    //修改攻略
+    void updateRaiders(Radiers radiers)throws Exception;
 
 }

@@ -26,4 +26,6 @@ public interface UserScaneMapper {
     Integer countScane(PageHelpPojo pageHelpPojo)throws Exception;
     //通过用户ID分页查询景点
     List<UserScane> getScaneByPage(PageHelpPojo pageHelpPojo)throws Exception;
+    //批量删除景点
+    void batchDeleteScane(@Param("sid") Integer sid)throws Exception;
 }

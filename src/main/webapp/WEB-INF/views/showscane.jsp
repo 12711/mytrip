@@ -167,9 +167,76 @@
                     </div>
 
                 </div>
+
                 <c:forEach items="${radiers}" var="radier" varStatus="r">
-                    <div style="margin-top: 15px">
-                       ${r.count}.<a href="">${radier.title}</a>
+                    <div style="margin-top: 25px">
+                       <div class="col-md-10">
+                         ${r.count}.<a href="#modal-container-see-${radier.rid}"  data-toggle="modal">${radier.title}</a>
+                       </div>
+                        <c:if test="${userScane.uid ==userInfo.uid}">
+                        <div class="col-md-2"><a href="#modal-container-update-${r.count}" id="updateRadier" title="修改攻略" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span></a></div>
+                        </c:if>
+                        <div class="modal fade"  id="modal-container-update-${r.count}" aria-hidden="true" role="dialog" aria-labelledby="myModalLabel2">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="min-height: 400px;">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div >
+                                            <form id="updateForm" action="${pageContext.request.contextPath}/radier/updateRadier" method="post" onsubmit="return test()">
+                                            <div  style="margin-left: 20px">
+                                                <div class="form-group">
+                                                    <label for="title" class="col-sm-2 control-label">标题</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control"  name="title" value="${radier.title}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="margin-top: 20px">
+                                                    <label for="content" class="col-sm-2 control-label">内容</label>
+                                                    <div class="col-sm-10">
+                                                <textarea id="lsm${r.count}" name="content" id="updatecontent"></textarea>
+                                                <div id="ti${r.count}" style="display: none">${radier.content}</div>
+                                                <script>
+                                                    var ckeditor= CKEDITOR.replace("lsm${r.count}");
+                                                     var content=$("#ti${r.count}").html();
+                                                    CKEDITOR.instances.lsm${r.count}.setData(content);
+                                                </script>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="sid" value="${radier.sid}">
+                                                <input type="hidden" name="rid" value="${radier.rid}">
+                                            </div>
+                                            <div class="modal-footer" style="border-top:none">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="submit" id="radierupdate" class="btn btn-primary">修改</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modal-container-see-${radier.rid}" aria-hidden="true" role="dialog" aria-labelledby="myModalLabel1">
+
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="min-height: 400px;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <h3>${radier.title}<span style="margin-left: 20px;font-size: 10px;color: gainsboro">${radier.author}发表于${radier.posttime}</span></h3>
+                                    </div>
+                                    <div >
+                                        <div id="radierContent"  style="margin-left: 20px">
+                                            <span >${radier.content}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </c:forEach>
             </div>
@@ -180,6 +247,7 @@
 <script>
     $(function () {
         $("#radierSubmit").click(function () {
+            console.log("sfddsfasd");
              var text=CKEDITOR.instances.content.getData();
              var form=$("#radierFrom").serialize();
              form+=text;
@@ -193,8 +261,18 @@
                  }
              });
 
+
         });
-    })
+
+    });
+
+    function test() {
+        console.log($("#updateForm").find("input"));
+        console.log($($("#updateForm").find("input")[0]).val());
+        console.log($($("#updateForm").find("input")[0]).val().length);
+        return false;
+    }
+
 
 </script>
 </body>

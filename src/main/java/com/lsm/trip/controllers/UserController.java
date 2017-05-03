@@ -55,9 +55,10 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
-    public String login(User user, Model model) throws Exception {
+    public String login(User user, Model model,HttpServletRequest request) throws Exception {
         System.out.println("user==" + user);
         User result = userService.login(user);
+        HttpSession session=request.getSession();
         if (result == null) {
             //登录失败
             return "0";
@@ -66,6 +67,15 @@ public class UserController {
             UserShowInfo userShowInfo = userService.getUserInfo(result.getUid());
             System.out.print("pro===="+userShowInfo.getProvince());
             model.addAttribute("userInfo", userShowInfo);
+            //当用户输入密码三次错误进行验证码校验
+            if(user.getCount()>=3){
+                String code=(String) session.getAttribute("code");
+                if(user.getCode().equalsIgnoreCase(code)){
+                    return "1";
+                }else{
+                    return "0";
+                }
+            }
             return "1";
         }
 

@@ -24,4 +24,9 @@
     <select id="getRadiersByrid" parameterType="int" resultMap="raiders">
         SELECT *FROM   raiders WHERE r_id=#{rid}
     </select>
+    
+    <update id="updateRadier" parameterType="Radiers">
+         UPDATE raiders SET title=#{title},content=#{content},updatetime=#{updatetime}
+         WHERE r_id=#{rid}
+    </update>
  </mapper>

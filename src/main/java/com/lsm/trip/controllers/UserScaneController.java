@@ -10,13 +10,11 @@ import com.lsm.trip.dto.UserShowInfo;
 import com.lsm.trip.service.RadiersService;
 import com.lsm.trip.service.UserScaneService;
 import com.lsm.trip.triputils.ImgUpload;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,4 +83,26 @@ public class UserScaneController {
     public String toWriteScane(){
            return "writeScane";
     }
+
+    @RequestMapping(value = "/batchDeleteScane",method = RequestMethod.POST)
+    @ResponseBody
+    public String [] batchDeleteScane(@Param("ids") String ids){
+        System.out.println("Scane ids==="+ids);
+        String [] sids=ids.split(",");
+        String [] sidsDelete=new String[2];
+        sidsDelete[0]="";
+        for(String sid:sids){
+            Integer sid1=Integer.parseInt(sid);
+            try {
+                userScaneService.batchDeleteScane(sid1);
+                sidsDelete[0]+=sid;
+            } catch (Exception e) {
+                e.printStackTrace();
+                sidsDelete[1]="0";
+            }
+        }
+        return sidsDelete;
+
+    }
+
 }

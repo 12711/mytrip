@@ -47,4 +47,9 @@ public class UserScaneServiceImpl implements UserScaneService {
     public List<UserScane> getScanes(PageHelpPojo<Integer> pageHelpPojo) throws Exception {
         return userScaneMapper.getScaneByPage(pageHelpPojo);
     }
+
+    @Override
+    public void batchDeleteScane(Integer sid) throws Exception {
+        userScaneMapper.batchDeleteScane(sid);
+    }
 }

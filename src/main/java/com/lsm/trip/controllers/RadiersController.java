@@ -29,4 +29,19 @@ public class RadiersController {
             return "0";
         }
     }
+
+
+    @RequestMapping(value = "/updateRadier",method = RequestMethod.POST)
+    public String updateRadier(Radiers radiers){
+        System.out.print("sid="+radiers.getSid()+"|| rid="+radiers.getRid());
+        try {
+            radiersService.updateRaiders(radiers);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/scane/getScane/"+radiers.getSid();
+    }
+
+
 }

@@ -43,4 +43,14 @@
     <update id="updateHotnum" parameterType="int">
         UPDATE album SET hotnum=hotnum+1 where al_id=#{id}
     </update>
+
+    <delete id="deleteAlbum" parameterType="int">
+        DELETE FROM album WHERE al_id=#{aid}
+    </delete>
+
+    <update id="updateAll" parameterType="Album" >
+        UPDATE album SET album_name=#{name},album_des=#{desc},modify_time=#{modifyTime}
+        WHERE al_id=#{id}
+    </update>
+
 </mapper>

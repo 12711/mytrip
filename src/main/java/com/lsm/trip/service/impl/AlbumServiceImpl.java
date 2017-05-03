@@ -43,7 +43,7 @@ public class AlbumServiceImpl  implements AlbumService{
     }
 
     @Override
-    public void updateAlbum(Album album) {
+    public void updateAlbum(Album album)throws Exception {
         userAlbumMapper.updateAlbum(album);
     }
 
@@ -61,5 +61,15 @@ public class AlbumServiceImpl  implements AlbumService{
     public List<Album> getHotAlbum(Integer uid) throws Exception {
 
         return userAlbumMapper.getHotAlbumByUid(uid);
+    }
+
+    @Override
+    public void deleteAlbum(Integer aid) throws Exception {
+        userAlbumMapper.deleteAlbum(aid);
+    }
+
+    @Override
+    public void updateAlbumAll(Album album) throws Exception {
+        userAlbumMapper.updateAll(album);
     }
 }

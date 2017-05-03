@@ -56,6 +56,9 @@
         .blur {
             border: 1px solid red;
         }
+        .green {
+            border: 1px solid green;
+        }
     </style>
 </head>
 
@@ -105,18 +108,19 @@
                                     <input type="password" class="form-control" name="passWord" required="required" id="passWord" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10" style="margin-left: 12%; ">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox"/>记住我</label>
-                                    </div>
-                                </div>
+                            <div class="form-group" style="width: 450px;display: none" id="codeGroup">
+                                        <label  for="code" class="col-sm-2 control-label">验证码</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="code" id="code">
+                                        </div>
+                                        <div  class="col-sm-3" style="margin-left: -17px"><img src="${pageContext.request.contextPath}/code/getCodeImg" onclick="refresh(this)" id="codeIng"></div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10" style="margin-left: 12%; ">
                                     <input  id="tologin" class="btn btn-danger" style="width:300px;height: 45px;" value="登录">
                                 </div>
                             </div>
+                            <input type="hidden" name="count"  id="count">
                         </form>
 
                     </div>
@@ -131,8 +135,8 @@
     </div>
 </div>
 
-<div class="row " id="header2" style="height: 176px">
-    <div class="col-lg-1 "> </div>
+<div class="row " id="header2" style="height: 176px;">
+    <div class="col-lg-1 " > </div>
     <div class="col-lg-3 col-md-3 hidden-sm " id="logoEvent">
         <img alt="logo "  src="${pageContext.request.contextPath}/img/logo.png " />
     </div>
@@ -158,9 +162,32 @@
 </div>
 <script>
    $(function(){
+
+       $("#code").change(function () {
+           $.ajax({
+               url:"${pageContext.request.contextPath}/code/checkCode",
+               data:{"code":$("#code").val()},
+               dataType:'json',
+               type:'get',
+               success:function(data){
+                   if(data==="0"){
+                       $("#code").removeClass("green");
+                       $("#code").addClass("blur");
+                   }else{
+                       $("#code").removeClass("blur");
+                       $("#code").addClass("green");
+                   }
+               }
+           });
+
+       });
+
+
         window.user={
             userName:null,
-            passWord:null
+            passWord:null,
+            count:0,
+            code:null
         };
         $("#logoEvent").click(function(){
              location.href="${pageContext.request.contextPath}/user/index"
@@ -177,13 +204,17 @@
                $("#tologin").trigger("click");
            }
        });
+       window.count=0;
        //登录表单的提交
       $("#tologin").click(function(){
 
           var userName=$("#userName").val();
           var passWord=$("#passWord").val();
+          var code=$("#code").val();
           user.passWord=passWord;
           user.userName=userName;
+          user.count=window.count;
+          user.code=code;
             if(userName==''&&passWord==''){
                 alert("用户名密码不能为空!");
             }else if(userName==''){
@@ -201,9 +232,18 @@
                     ContextType:'json',
                     dataType:'json',
                     success:function(data){
+                       $("#count").val(count);
+                       console.log("$('#count').val(count)=="+$("#count").val())
                        if(data==='0'){
                           $("#message").text("账号不正确或者密码错误,请重新登录!");
                           $("#message").css("color","red");
+                          count+=1;
+                          console.log("count=="+count)
+                          if(count>=3){
+                              $("#codeGroup").css("display","block");
+                          }
+                          $("#codeIng")[0].src="${pageContext.request.contextPath}/code/getCodeImg?t="+new Date().getTime();
+
                        }else if(data==='1'){
                            console.log();
                            var path="${thePath}";
@@ -231,5 +271,10 @@
       });
    });
 
+
+   function refresh(obj) {
+       console.log(obj);
+       obj.src="${pageContext.request.contextPath}/code/getCodeImg?t="+new Date().getTime();
+   }
 </script>
 

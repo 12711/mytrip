@@ -16,4 +16,6 @@ public interface RaiderMapper {
     void insertReadiers(Radiers radiers)throws Exception;
     //通过攻略ID查询单条攻略
     Radiers getRadiersByrid(@Param("rid") Integer rid)throws Exception;
+    //修改攻略
+    void updateRadier(Radiers radiers)throws Exception;
 }

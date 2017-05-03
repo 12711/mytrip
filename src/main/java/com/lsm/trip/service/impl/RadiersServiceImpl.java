@@ -29,4 +29,9 @@ public class RadiersServiceImpl implements RadiersService {
     public Radiers getRaiders(Integer rid) throws Exception {
         return raiderMapper.getRadiersByrid(rid);
     }
+
+    @Override
+    public void updateRaiders(Radiers radiers) throws Exception {
+        raiderMapper.updateRadier(radiers);
+    }
 }

@@ -8,6 +8,24 @@ public class User {
     private Integer uid;
     private String userName;
     private String passWord;
+    private String code;//用于接受用户输入的验证码
+    private int count;//用户接受用户输入密码错误的次数
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     @Override
     public String toString() {
@@ -15,6 +33,8 @@ public class User {
                 "uid=" + uid +
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
+                ", code='" + code + '\'' +
+                ", count=" + count +
                 '}';
     }
 

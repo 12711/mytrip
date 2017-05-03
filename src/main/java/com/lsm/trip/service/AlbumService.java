@@ -24,11 +24,15 @@ public interface AlbumService {
     //通过相册ID查询相册
     Album getAlbumByAlId(Integer id);
     //更新相册
-    void updateAlbum(Album album);
+    void updateAlbum (Album album) throws Exception;
     //通过hotnum排序查询相册
     List<Album> getAlbums();
     //点赞
     void updateAlbum(Integer id)throws Exception;
     //通过用户ID查询该用户的热门相册
     List<Album> getHotAlbum(Integer uid)throws Exception;
+    //删除相册
+    void deleteAlbum(Integer aid)throws  Exception;
+    //更新相册名字,秒速
+    void updateAlbumAll(Album album)throws Exception;
 }
