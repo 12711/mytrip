@@ -104,5 +104,43 @@ public class UserScaneController {
         return sidsDelete;
 
     }
+    @RequestMapping(value = "/toupdateScane/{sid}",method = RequestMethod.GET)
+    public String toUpdateScane(@PathVariable("sid") Integer id,ModelMap map){
+        try {
+            UserScane userScane = userScaneService.getUserScaneById(id);
+            List<Radiers> radiers=radiersService.getRadiersBySid(id);
+            map.addAttribute("userScane", userScane);
+            return "updateScane";
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("查询景点失败...");
+            return "forward:/inter/getScanes";
+        }
+
+    }
+
+    @RequestMapping(value = "/inter/updateScane",method = RequestMethod.POST)
+    public String updateScane(@RequestParam("sImgF") MultipartFile file,UserScane scane,ModelMap map,HttpServletRequest request){
+      System.out.println("sid===="+scane.getSid());
+        System.out.println("sImg===="+scane.getsImg());
+        UserScane userScaneForException=null;
+        String fileName=file.getOriginalFilename();
+        System.out.println("fileName===="+fileName);
+        String realPath=request.getServletContext().getRealPath("img");
+
+        try {
+            ImgUpload.uploadImg(fileName,realPath,file);
+            scane.setsImg(fileName);
+            userScaneForException = userScaneService.getUserScaneById(scane.getSid());
+            userScaneService.updateScane(scane);
+            return "redirect:/scane/inter/getScanes";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            scane.setsImg(userScaneForException.getsImg());
+            map.addAttribute("userScane", scane);
+            return "updateScane";
+        }
+    }
 
 }

@@ -68,12 +68,13 @@
 <div class="container-fluid" style="background-color: #F2F2F2;padding-left: 0px;padding-right: 0px">
     <div class="row-fluid" style="height:100px;background-color: white">
         <div class="col-sm-1"></div>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <div class="col-sm-12">
                 <h1>${userScane.sName}</h1>
             </div>
             <div class="col-sm-12">地址:${userScane.address}</div>
         </div>
+        <div class="col-sm-3" style="margin-top: 60px;"><a href="${pageContext.request.contextPath}/trip/getUserById/${userScane.uid}?pageIndex=-1">返回主页>></a></div>
     </div>
     <div class="row-fluid"
          style="margin-left: 0px;margin-right:0px;;margin-top: 20px">

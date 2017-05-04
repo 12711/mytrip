@@ -65,8 +65,8 @@
                                <script type="text/javascript">
                                   var ckeditor= CKEDITOR.replace("log");
                                </script>
-                              <button  type="submit" class="btn-danger">提交</button>
-                              <button  type="reset" class="btn-warning">取消</button>
+                              <button  type="submit" class="btn btn-danger">提交</button>
+                              <button  type="reset" class="btn btn-warning">取消</button>
 
                     </div>
                 </div>

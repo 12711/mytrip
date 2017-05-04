@@ -39,4 +39,10 @@
         DELETE FROM userscane WHERE s_id=#{sid}
     </delete>
 
+    <update id="updateScane" parameterType="UserScane">
+        UPDATE userscane SET s_name=#{sName},introduce=#{introduce},s_img=#{sImg},
+        address=#{address},ticket=#{ticket},favourable=#{favourable},opentime=#{opentime},
+        shortDesc=#{shortDesc} WHERE s_id=#{sid}
+    </update>
+
 </mapper>

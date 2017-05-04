@@ -52,4 +52,9 @@ public class UserScaneServiceImpl implements UserScaneService {
     public void batchDeleteScane(Integer sid) throws Exception {
         userScaneMapper.batchDeleteScane(sid);
     }
+
+    @Override
+    public void updateScane(UserScane scane) throws Exception {
+        userScaneMapper.updateScane(scane);
+    }
 }

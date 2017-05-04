@@ -45,14 +45,24 @@
                         <span style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>他的相册</h3></span>
                     </c:if>
                 </div>
-                <c:if test="${name==null}">
-                  <div class="col-sm-1" style="margin-top: 20px"><a href="javaScript:void(0);"  onclick="batchDelete()">批量删除</a></div>
-                </c:if>
-                <div class="col-sm-4 "></div>
-            <c:if test="${name==null}">
-                <div class="col-sm-2 hidden-md" style="margin-top: 20px"><a
-                        href="${pageContext.request.contextPath}/album/inter/getAlbums">返回相册列表</a></div>
-            </c:if>
+
+                  <div class="col-sm-1" style="margin-top: 20px"><c:if test="${name==null}"><a href="javaScript:void(0);"  onclick="batchDelete()">批量删除</a></c:if></div>
+
+                <div class="col-sm-2"></div>
+
+                <div class="col-sm-2 hidden-md" style="margin-top: 20px">
+                    <c:if test="${name==null}">
+                      <a href="${pageContext.request.contextPath}/album/inter/getAlbums">返回相册列表</a>
+                    </c:if>
+                </div>
+
+
+                    <div class="col-sm-2 hidden-md" style="margin-top: 20px">
+                        <c:if test="${name!=null}">
+                        <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex">返回他的热门相册</a>
+                        </c:if>
+                            </div>
+
                 <div class="col-md-2 hidden-sm" style="margin-top: 20px"><a href="javaScript:void(0);" onclick="support('${alid}')">点赞</a>&nbsp;(<span id="hotnum">${album.hotnum}</span>)</div>
             </div>
 
@@ -75,7 +85,7 @@
             </div>
         </div>
         <div class="row" style="margin-top: 20px;padding: 5px;display: none" id="batchBtn">
-            <input type="button" style="margin-left: 30px;" class="btn btn-danger" onclick="deleteBtn()" value="删除"><input type="button" style="margin-left: 10px" class="btn btn-info" value="取消">
+            <input type="button" style="margin-left: 30px;" class="btn btn-danger" onclick="deleteBtn()" value="删除"><input type="button" id="imgcancleAction" style="margin-left: 10px" class="btn btn-info" value="取消">
         </div>
     </div>
 </head>
@@ -140,6 +150,15 @@
             }
         });
     }
+
+    $(function () {
+        $("#imgcancleAction").click(function () {
+            var logs=$(".checkboximg:checked");
+            for(var i=0 ; i<logs.length;i++){
+                $(logs[i]).attr("checked",false)
+            }
+        });
+    })
 </script>
 
 </body>

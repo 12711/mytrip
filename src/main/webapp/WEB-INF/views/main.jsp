@@ -73,7 +73,7 @@
                     <option value="p">地主</option>
                     <option value="d">地区</option>
                 </select>
-                <input type="text" class="btn btn-default" style="height: 40px;"
+                <input type="text" class="btn btn-default" style="text-align: left;height: 40px;"
                        name="content">
                 <button style="height: 40px;width: 45px;margin-left: 10px;background-color:#3A9D9A;border: none">
                     <span class="glyphicon glyphicon-search"

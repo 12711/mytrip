@@ -15,6 +15,9 @@
             -webkit-line-clamp: 3;
             overflow: hidden;
         }
+        #dizhuform .btn-default:hover, .btn-default:active, .btn-default:visited, .btn-default:focus {
+            background-color: white;
+        }
     </style>
 </head>
 <body style="background-color: #f2f2f2">
@@ -30,7 +33,7 @@
                     <option value="c">日志</option>
                     <option value="d">地区</option>
                 </select>
-                <input type="text" class="btn btn-default" style="height: 40px;"
+                <input type="text" class="btn btn-default" style="text-align: left;height: 40px;"
                        name="content" id="content">
                 <button id="formsub" style="height: 40px;width: 45px;margin-left: 10px;background-color:#3A9D9A;border: none">
                     <span class="glyphicon glyphicon-search"

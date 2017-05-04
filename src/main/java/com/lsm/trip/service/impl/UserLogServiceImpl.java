@@ -34,7 +34,7 @@ public class UserLogServiceImpl implements UserLogService {
 
     @Override
     public void deleteLogByid(Integer id) throws Exception{
-
+       userLogMapper.deleteLog(id);
     }
 
     @Override

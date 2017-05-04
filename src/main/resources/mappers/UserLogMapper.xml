@@ -36,4 +36,8 @@
     <select id="getLogsOrderByHotNum" resultMap="userLogMap">
          SELECT  *FROM userlog ORDER BY hotnum DESC LIMIT 0,10
     </select>
+
+    <delete id="deleteLog" parameterType="int" >
+        DELETE FROM userlog WHERE l_id=#{id}
+    </delete>
 </mapper>

@@ -53,7 +53,8 @@
                              style="width: 316px;height: 200px;">
                         <span class="tit">${scane.sName}</span>
                     </a>
-                    <input style="display: none;position: absolute;top: 5px;left: 80%;z-index: 100" type="checkbox" value="${scane.sid}" class="scaneCheck" ">
+                    <input style="display: none;position: absolute;top: 5px;left: 80%;z-index: 100" type="checkbox" value="${scane.sid}" class="scaneCheck">
+                    <a href="${pageContext.request.contextPath}/scane/toupdateScane/${scane.sid}" style="position: absolute;left: 20px;top: 7px;" title="修改景点"><span style="color: black;" class="glyphicon glyphicon-list"></span></a>
                 </div>
             </div>
            </c:forEach>
@@ -74,6 +75,13 @@
 </div>
 <script>
     $(function () {
+
+        $("#caleneScaneBtn").click(function () {
+            var logs=$(".scaneCheck:checked");
+            for(var i=0 ; i<logs.length;i++){
+                $(logs[i]).attr("checked",false)
+            }
+        });
         window.flag=false;
          $("#batchDeleteScane").click(function () {
              if(!window.flag){

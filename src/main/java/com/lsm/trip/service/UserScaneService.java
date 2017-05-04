@@ -27,4 +27,6 @@ public interface UserScaneService {
     List<UserScane> getScanes(PageHelpPojo<Integer> pageHelpPojo)throws Exception;
     //删除制定ID
     void batchDeleteScane(Integer sid)throws Exception;
+    //更新景点
+    void  updateScane(UserScane scane)throws Exception;
 }

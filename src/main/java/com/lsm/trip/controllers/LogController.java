@@ -11,10 +11,7 @@ import com.lsm.trip.service.UserLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -86,5 +83,26 @@ public class LogController {
             e.printStackTrace();
         }
         return "logList";
+    }
+
+    @RequestMapping(value = "inter/deleteLog",method = RequestMethod.POST)
+    @ResponseBody
+    public String [] deleteLog(@RequestParam("ids") String ids){
+      System.out.println("log   ids==="+ids);
+      String [] repsString=new String[2];
+      repsString[0]="";
+      String [] idArray=ids.split(",");
+      for(String idString :idArray){
+
+          try {
+              Integer idInt=Integer.parseInt(idString);
+              userLogService.deleteLogByid(idInt);
+              repsString[0]+=idInt+",";
+          } catch (Exception e) {
+              e.printStackTrace();
+              repsString[1]="0";
+          }
+      }
+      return repsString;
     }
 }
