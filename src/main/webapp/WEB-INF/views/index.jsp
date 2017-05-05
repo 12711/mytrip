@@ -59,6 +59,16 @@
         .green {
             border: 1px solid green;
         }
+        #pass-button-new1 {
+            width: 100px;
+            height: 32px;
+            border: 1px solid #ccc;
+            background: #f7f7f7;
+            color: #666;
+            line-height: 32px;
+            margin-left: -20px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -76,7 +86,7 @@
         <c:if test="${userInfo==null}">
             <a id="modal-964764" href="#modal-container-964764" data-toggle="modal" >登录</a>
             <a href="${pageContext.request.contextPath}/user/toregist" style="margin-top: 10px; ">注册</a>
-            <a href="# " style="margin-top: 10px; ">忘记密码</a>
+            <a href="#forget" style="margin-top: 10px; " data-toggle="modal">忘记密码</a>
         </c:if>
         <c:if test="${userInfo!=null}">
             <img style="width: 30px;height: 30px;margin-top: -5px" src="${pageContext.request.contextPath}/img/${userInfo.mypig}">
@@ -84,6 +94,54 @@
             <a href="${pageContext.request.contextPath}/user/inter/showUserInfo " style="margin-top: 10px; ">个人信息</a>
             <a href="${pageContext.request.contextPath}/user/logout">注销</a>
         </c:if>
+            <div class="modal fade" id="forget" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:500px ">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabelforget">
+                                <span>找回密码</span>
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal"  id="forgetform" role="form"  style="width: 700px; ">
+                                <div class="form-group" style="width: 450px; ">
+                                    <div class="col-sm-1"></div>
+                                   <div class="col-sm-10 ">
+                                        <input type="text" class="form-control" placeholder="请输入你的用户名" name="userName" id="userforgetName" />
+                                    </div>
+                                </div>
+                                <div class="form-group" style="width: 450px; ">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10 ">
+                                        <input type="text" class="form-control" placeholder="请输入你的密码" name="passWord" id="userforgetpwd" />
+                                    </div>
+                                </div>
+                                <div class="form-group" style="width: 450px; ">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-4 ">
+                                        <input type="text" class="form-control"  name="code" id="userforgetcode" />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="pass-button-timer" id="pass-button-new1">发送验证码</div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div style="margin-top: 5px;margin-left: -40px;">
+                                           <span style="color: green;" id="afterSendInfo"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="width: 450px; ">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <input type="button" style="height: 40px" class="form-control btn btn-danger"  value="提交" id="userforgetsumbit" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="modal fade" id="modal-container-964764" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" style="width:500px ">
@@ -162,6 +220,55 @@
 </div>
 <script>
    $(function(){
+       //发送验证码
+       $("#pass-button-new1").click(function () {
+           var userName=$("#userforgetName").val();
+           if(userName===''){
+               alert("请输入你的用户名!");
+               return;
+           }
+           $.ajax({
+               url:"${pageContext.request.contextPath}/user/sendCode",
+               data:{"userName":userName},
+               type:"get",
+               dataType:"json",
+               success:function (data) {
+                   if(data==="1"){
+                       $("#afterSendInfo").html("验证码已发送");
+                   }
+               }
+           });
+       });
+
+       //输入验证码修改密码
+       $("#userforgetsumbit").click(function () {
+           var userName=$("#userforgetName").val();
+           var pwd=$("#userforgetpwd").val();
+           var code=$("#userforgetcode").val();
+           if(userName===""||pwd===""||code===""){
+               alert("请填写所有信息!");
+               return;
+           }
+           var formData=$("#forgetform").serialize();
+           $.ajax({
+               url:"${pageContext.request.contextPath}/user/findPwd",
+               data:formData,
+               dataType:"json",
+               type:"get",
+               success:function (data) {
+                   if(data==="1"){
+                       alert("修改成功!");
+                       location.href="${pageContext.request.contextPath}/user/index";
+                   }else if(data=="0"){
+                       alert("修改失败,请检查您的账号!");
+                   }else{
+                       alert("验证码错误!");
+                       $("#userforgetcode").css("border-color","red");
+                   }
+               }
+           });
+       });
+
 
        $("#code").change(function () {
            $.ajax({

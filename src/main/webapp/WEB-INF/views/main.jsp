@@ -184,18 +184,15 @@
                     <c:forEach items="${album}" var="a">
                         <div class="col-md-6" style="height: 340px">
                             <div class="thumbnail">
-                                <div style="height: 200px;overflow: hidden" onclick="clickImg(${a.id},'${a.userShowInfo.userName}')">
-                                <img alt="300x200" style="width: 100%;height: auto"
+                                <div style="width: 323px;height: 200px;overflow: hidden" onclick="clickImg(${a.id},'${a.userShowInfo.userName}')">
+                                <img alt="300x200" style="width: 100%;height: auto" title="${a.desc}"
                                      src="${pageContext.request.contextPath}/album/${a.cover}"/>
                                 </div>
                                 <div >
                                     <h3>
                                         ${a.name}
-                                        <span style="    position: absolute;right: 35px;">${a.userShowInfo.userName}</span>
+                                        <span style="font-size: 10px;color:grey">${a.userShowInfo.userName}发表于${a.createTime}</span>
                                     </h3>
-                                    <p style="">
-                                        ${a.desc}
-                                    </p>
 
                                 </div>
                             </div>

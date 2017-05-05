@@ -49,7 +49,7 @@
            <c:if test="${userLog.uid==userInfo.uid}" var="t">
            <div class="col-sm-2 .hidden-md" style="margin-top: 20px"><a href="${pageContext.request.contextPath}/log/inter/logList">返回日志列表</a></div>
            </c:if>
-           <c:if test="${!t}">
+           <c:if test="${!t&&uid!=null}">
                <div class="col-sm-2 .hidden-md" style="margin-top: 20px"><a href="${pageContext.request.contextPath}/log/getLogInIndex/${userLog.uid}?pageIndex=-1">返回他的日志</a></div>
 
            </c:if>

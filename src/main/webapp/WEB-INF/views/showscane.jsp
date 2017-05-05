@@ -74,7 +74,9 @@
             </div>
             <div class="col-sm-12">地址:${userScane.address}</div>
         </div>
+        <c:if test="${uid!=null}">
         <div class="col-sm-3" style="margin-top: 60px;"><a href="${pageContext.request.contextPath}/trip/getUserById/${userScane.uid}?pageIndex=-1">返回主页>></a></div>
+        </c:if>
     </div>
     <div class="row-fluid"
          style="margin-left: 0px;margin-right:0px;;margin-top: 20px">

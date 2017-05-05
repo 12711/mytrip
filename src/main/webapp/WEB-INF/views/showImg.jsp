@@ -58,7 +58,7 @@
 
 
                     <div class="col-sm-2 hidden-md" style="margin-top: 20px">
-                        <c:if test="${name!=null}">
+                        <c:if test="${name!=null&&uid!=null}">
                         <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex">返回他的热门相册</a>
                         </c:if>
                             </div>
