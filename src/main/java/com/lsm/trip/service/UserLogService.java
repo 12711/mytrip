@@ -4,6 +4,7 @@
  */
 package com.lsm.trip.service;
 
+import com.lsm.trip.dto.PageHelpPojo;
 import com.lsm.trip.dto.UserLog;
 
 import java.util.List;
@@ -27,4 +28,8 @@ public interface UserLogService {
     UserLog getLogByid(Integer id)throws Exception;
     //查询日志通过hotnum排序
     List<UserLog> getLogsOrderByHotNum();
+    //通过UID查询前四的热门日志
+    List<UserLog> getLogsByUid(PageHelpPojo pageHelpPojo)throws Exception;
+    //查询日志数量
+    Integer countLog(PageHelpPojo<Integer> pageHelpPojo)throws Exception;
 }

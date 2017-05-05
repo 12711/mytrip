@@ -48,7 +48,7 @@
                    </div>
                    <div class="form-group">
                        <label class="col-sm-2"></label>
-                       <label for="realName" class="col-sm-2 control-label">姓名:</label>
+                       <label for="realName" class="col-sm-2 control-label">真实姓名:</label>
                        <div class="col-sm-3">
                            <input type="text" class="form-control" required name="realName" id="realName13" />
                        </div>

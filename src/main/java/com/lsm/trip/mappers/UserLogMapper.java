@@ -4,6 +4,7 @@
  */
 package com.lsm.trip.mappers;
 
+import com.lsm.trip.dto.PageHelpPojo;
 import com.lsm.trip.dto.UserLog;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +29,8 @@ public interface UserLogMapper {
     List<UserLog> getLogsByUserId(@Param("id") Integer id);
     //查询日志按hotnum排序
     List<UserLog> getLogsOrderByHotNum();
+    //通过UID分页查询
+    List<UserLog> getLogsByUid(PageHelpPojo pageHelpPojo)throws Exception;
+    //查询日志的数量
+    Integer countLogByUid(PageHelpPojo<Integer> pageHelpPojo)throws Exception;
 }

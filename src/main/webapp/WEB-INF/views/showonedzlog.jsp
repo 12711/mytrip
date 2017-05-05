@@ -13,6 +13,7 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/bootstrappage/bootstrap-pagination.min.css"></link>
     <script src="${pageContext.request.contextPath}/bootstrappage/bootstrap-pagination.min.js"></script>
+    <script src="${pageContext.request.contextPath}/ck/ckeditor/ckeditor.js"></script>
     <style>
         #showimg {
             width: 136px;
@@ -60,9 +61,9 @@
         #albumCss{
             z-index: 200;
             position: relative;
-            top: 200px;
+            top: 203px;
             background-color: rgba(0, 0, 0, 0.6);
-            width: 200px;
+            width: 204px;
             text-align: center;
         }
 
@@ -89,31 +90,31 @@
                 <div style="background-color: white;height: 45px">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-2">
-                            <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
-                               style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;" >他的主页</a>
+                        <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
+                           style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;" >他的主页</a>
                     </div>
                     <div  class="col-sm-2">
-                        <div style="border-bottom: 3px solid #eb7350;height: 45px;width: 60px">
-                        <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex"
-                           style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">热门相册</a>
-                        </div>
-
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage"
-                           style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">对他评论</a>
+                            <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex"
+                               style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">热门相册</a>
                     </div>
                     <div class="col-sm-2">
                         <div >
-                            <a href="${pageContext.request.contextPath}/log/getLogInIndex/${userShowInfo.uid}?pageIndex=-1"
+                        <a href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage"
+                           style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">对他评论</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div style="border-bottom: 3px solid #eb7350;height: 45px;width: 60px">
+                            <a href="#"
                                style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">他的日志</a>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-md-3"
-                     style="background-color:white;height: 400px;padding-left: 0px">
+                     style="background-color:white;height: 450px;padding-left: 0px">
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10"
@@ -188,16 +189,16 @@
                              style="border-bottom: 1px dashed gainsboro">
                             <div style="height: 130px">
                                 <span class="glyphicon glyphicon-list"
-                                      style="position: relative;top: 18px;"></span><span
-                                    style="position: relative;top: 18px;left: 2px;">联系方式:</span><br/>
-                                <span style="font-size: 10px;position: relative;top: 18px;">(电话)</span><span
-                                    style="position: relative;top: 20px;">${userShowInfo.filexPhone}</span><br/>
-                                <span style="font-size: 10px;position: relative;top: 18px;">(手机)</span><span
-                                    style="position: relative;top: 20px;">${userShowInfo.phone}</span><br/>
-                                <span style="font-size: 10px;position: relative;top: 18px;">(qq)</span><span
-                                    style="position: relative;top: 20px;">${userShowInfo.qq}</span><br/>
-                                <span style="font-size: 10px;position: relative;top: 18px;">(邮箱)</span><span
-                                    style="position: relative;top: 20px;">${userShowInfo.mail}</span>
+                                      style="position: relative;top: 14px;"></span><span
+                                    style="position: relative;top: 12px;left: 2px;">联系方式:</span><br/>
+                                <span style="font-size: 10px;position: relative;top: 12px;">(电话)</span><span
+                                    style="position: relative;top: 12px;">${userShowInfo.filexPhone}</span><br/>
+                                <span style="font-size: 10px;position: relative;top: 12px;">(手机)</span><span
+                                    style="position: relative;top: 12px;">${userShowInfo.phone}</span><br/>
+                                <span style="font-size: 10px;position: relative;top: 12px;">(qq)</span><span
+                                    style="position: relative;top: 12px;">${userShowInfo.qq}</span><br/>
+                                <span style="font-size: 10px;position: relative;top: 12px;">(邮箱)</span><span
+                                    style="position: relative;top: 12px;">${userShowInfo.mail}</span>
                             </div>
                         </div>
                     </div>
@@ -212,19 +213,34 @@
                             <div class="col-md-11"
                                  style="padding-left: 0px">
 
-                                    <div class="row" style="height: 500px;background-color: white">
-                                        <c:forEach items="${albums}" var="album">
+                                    <div class="row" style="height: 500px;">
 
-                                            <div class="col-sm-5 col-sm-offset-1">
-                                                <div id="albumCss" >
-                                                    <span style="font-size: 20px;color: white">${album.name}</span>
+                                            <c:forEach items="${logs}" var="log">
+                                                <div class="row" style="margin-right: -20px">
+
+                                                    <div class="col-sm-12">
+                                                    <div style="width: 98%;;background: white;;margin-bottom: 10px;">
+                                                        <div style="height: 35px;background-color: #71afd6;"><span style="font-size: 20px">${log.title}</span></div>
+                                                        <div  style="width: 100%;">
+                                                            &nbsp;&nbsp;&nbsp;
+
+                                                            <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis">
+                                                            <span>&nbsp;&nbsp;${log.content}</span>
+                                                            </div><a href="${pageContext.request.contextPath}/log/getOneLog/${log.id}">>>了解更多</a>
+                                                        </div>
+                                                    </div>
+                                                    </div>
                                                 </div>
-                                                <div style="overflow: hidden;width: 200px;height: 200px; cursor:pointer;" onclick="showAlbum(${album.id})">
-                                                    <img src="${pageContext.request.contextPath}/album/${album.cover}">
-                                                </div>
+                                            </c:forEach>
+                                            <div class="row">
+                                                <ul class="pagination" style="margin-left: 20px;">
+                                                    <li><a href="javaScript:void(0);" onclick="prepage()">上一页</a></li>
+                                                    <li class="active"><span id="pageIndex">${pageIndex}</span></li>
+                                                    <li><span id="totle">共${totle}页</span></li>
+                                                    <li><a href="javaScript:void(0);" onclick="nextpage()">下一页</a></li>
+                                                </ul>
                                             </div>
 
-                                        </c:forEach>
                                     </div>
 
                             </div>
@@ -238,29 +254,35 @@
     </div>
 </div>
 <script>
-    function showAlbum(obj) {
-        location.href="${pageContext.request.contextPath}/img/showImg1/"+obj+"?name="+"--1";
+    function prepage(obj) {
+
+        var pageIndex=$("#pageIndex").text();
+        if(pageIndex===null||pageIndex===''||pageIndex==='1'){
+            return;
+        }else{
+            location.href='${pageContext.request.contextPath}/log/getLogInIndex/${userShowInfo.uid}?pageIndex=${pageIndex-1}'
+        }
     }
 
-    function supportuser(obj) {
-        $.ajax({
-            url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
-            type:'post',
-            success:function (data) {
-                if("1"===data){
-                    var hotnum=$("#userhotnum").text();
-                    console.log("999999999999999="+hotnum)
-                    if(hotnum==='undefined'){
-                        hotnum=0;
-                    }
-                    var finalHotnum=hotnum*1+1;
-                    console.log("999999999999999====="+finalHotnum)
-                    $("#userhotnum").text(finalHotnum);
-                }else {
-                    alert("点赞失败....")
-                }
-            }
+    function nextpage() {
+        var pageIndex=$("#pageIndex").text();
+        if(pageIndex===null||pageIndex===''||pageIndex==='${totle}'){
+            return;
+        }else{
+            location.href='${pageContext.request.contextPath}/log/getLogInIndex/${userShowInfo.uid}?pageIndex=${pageIndex+1}'
+        }
+    }
+
+    $(function () {
+        $("#sumbitEvent").click(function () {
+            affirm();
         });
+    });
+    function  affirm() {
+        if(confirm("是否在检查以下内容,提交后不能修改!")){
+            return true;
+        }
+        return false;
     }
 </script>
 </body>

@@ -4,6 +4,7 @@
  */
 package com.lsm.trip.service.impl;
 
+import com.lsm.trip.dto.PageHelpPojo;
 import com.lsm.trip.dto.UserLog;
 import com.lsm.trip.mappers.UserLogMapper;
 import com.lsm.trip.service.UserLogService;
@@ -29,7 +30,7 @@ public class UserLogServiceImpl implements UserLogService {
 
     @Override
     public void modifyLog(UserLog userLog) throws Exception{
-
+     userLogMapper.modifyLog(userLog);
     }
 
     @Override
@@ -51,5 +52,15 @@ public class UserLogServiceImpl implements UserLogService {
     @Override
     public List<UserLog> getLogsOrderByHotNum() {
         return userLogMapper.getLogsOrderByHotNum();
+    }
+
+    @Override
+    public List<UserLog> getLogsByUid(PageHelpPojo pageHelpPojo) throws Exception {
+        return userLogMapper.getLogsByUid(pageHelpPojo);
+    }
+
+    @Override
+    public Integer countLog(PageHelpPojo<Integer> pageHelpPojo) throws Exception {
+        return userLogMapper.countLogByUid(pageHelpPojo);
     }
 }

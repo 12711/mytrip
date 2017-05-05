@@ -12,6 +12,7 @@
     </resultMap>
     <resultMap id="userLogUserMap" type="UserLog">
         <id column="l_id" property="id"></id>
+        <result column="u_id" property="uid"></result>
         <result column="title" property="title"></result>
         <result column="content" property="content"></result>
         <result column="create_time" property="createDate"></result>
@@ -40,4 +41,14 @@
     <delete id="deleteLog" parameterType="int" >
         DELETE FROM userlog WHERE l_id=#{id}
     </delete>
+    <update id="modifyLog" parameterType="UserLog">
+        UPDATE userlog SET hotnum=hotnum+1 WHERE l_id=#{id}
+    </update>
+    <select id="getLogsByUid" parameterType="PageHelpPojo" resultMap="userLogMap">
+        SELECT * FROM userlog WHERE u_id=#{param} limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="countLogByUid" parameterType="PageHelpPojo" resultType="int">
+         SELECT COUNT(*) FROM userlog WHERE u_id=#{param}
+    </select>
 </mapper>

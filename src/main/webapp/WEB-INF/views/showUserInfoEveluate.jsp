@@ -40,148 +40,56 @@
     <div class="col-sm-8" style="margin-left: -30px">
         <div class="tabbable" id="tabs-637123">
             <ul class="nav nav-tabs" style="margin-top: 5px">
-                <li class="active">
-                    <a href="#panel-772339" data-toggle="tab">基本信息</a>
+
+                <li  class="active">
+                    <a href="#panel-568572"  data-toggle="tab">查看评论</a>
                 </li>
-                <li>
-                    <a href="#panel-568572" data-toggle="tab">联系方式</a>
-                </li>
-                <li>
-                    <a href="#panel-568573" data-toggle="tab">修改密码</a>
-                </li>
+
             </ul>
             <div class="tab-content">
 
-                <div class="tab-pane active" id="panel-772339" style="height: 300px">
-                    <div class="col-sm-7">
-                        <form action="${pageContext.request.contextPath}/user/inter/updateUserInfo" method="post">
-                            <div class="col-sm-12" style="margin-top: 20px"><span>用户名</span><input class="form-control"
-                                                                                                   type="text"
-                                                                                                   name="userName"
-                                                                                                   disabled
-                                                                                                   value="${userInfo.userName}">
+                <div class="tab-pane active" id="panel-568572" style="height: 300px">
+                <c:forEach items="${evaluates}" var="evaluate">
+                    <div class="col-sm-12" style="border-top: 1px darkgray solid">
+                        <div class="col-sm-1">
+                            <div  style="margin-top: 20px;height: 50px;width: 50px;overflow: hidden;border-radius: 25px;">
+                                <img style="height: 50px;width: 50px;" src="${pageContext.request.contextPath}/img/my.gif">
                             </div>
-                            <div class="col-sm-12" style="margin-top: 20px"><span>真实姓名</span><input class="form-control"
-                                                                                                    type="text"
-                                                                                                    name="realName"
-                                                                                                    disabled
-                                                                                                    value="${userInfo.realName}">
-                            </div>
-                            <div class="col-sm-12" style="margin-top: 20px"><span>性别</span>
+                        </div>
+                        <div class="col-sm-6" style="margin-top: 35px">
+                            <span>${evaluate.author}</span>
+                            <span style="font-size: 5px;color: darkgray">发表于${evaluate.eTime}</span>
+                        </div>
 
-                                <select class="form-control" name="sex">
-                                    <c:if test="${userInfo.sex=='男'}" var="t">
-                                        <option value="男" selected>男</option>
-                                        <option value="女">女</option>
-                                    </c:if>
-                                    <c:if test="${!t}">
-                                        <option value="女" selected>女</option>
-                                        <option value="男">男</option>
-                                    </c:if>
-                                </select>
-                            </div>
-                            <div class="col-sm-12" style="margin-top: 20px"><span>生日</span><input class="form-control"
-                                                                                                  type="text"
-                                                                                                  name="birthday"
-                                                                                                  id="birthday"
-                                                                                                  value="${userInfo.birthday}">
-                            </div>
-                            <div class="col-sm-12" style="margin-top: 20px">
-                                <span>省</span>
-
-                                <select class="form-control" id="province" name="province">
-
-                                </select>
-
-                                <span>市</span>
-
-                                <select class="form-control" id="city" name="city">
-                                    <option value="">--请选择市--</option>
-                                </select>
-
-                            </div>
-                            <div class="col-sm-12" style="margin-top: 20px"><span>详细地址</span>
-                                <input class="form-control" type="text" name="address"
-                                       value="${userInfo.address}">
-                            </div>
-                            <div class="col-sm-12" style="margin-top: 20px"><span>工作地址</span><input class="form-control"
-                                                                                                    type="text"
-                                                                                                    name="workAddress"
-                                                                                                    value="${userInfo.workAddress}">
-                            </div>
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-4" style="margin-top: 20px">
-                                <input type="submit" class="btn btn-danger" value="修改">
-                                <input type="reset" class="btn btn-primary" value="取消">
-                            </div>
-                        </form>
                     </div>
-                    <div class="col-sm-5" style="margin-top: 10px">
-                        <div style="width: 126px;height: 126px;border-radius: 20px;border: 1px solid gray">
-                            <img id="UserImg"
-                                 style="height: 120px;width: 120px;margin-top: 2px;margin-left: 2px;border-radius: 20px"
-                                 src="${pageContext.request.contextPath}/img/${userInfo.mypig}"/><br/>
+                    <div class="col-sm-12" >
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-11">
+                            <div>
+                                <span>${evaluate.content}</span>
+                            </div>
                         </div>
-                        <form style="margin-left: 20px" action="${pageContext.request.contextPath}/user/inter/changeImg"
-                              method="post" enctype="multipart/form-data">
-                            <input type="file" name="pig" id="sImgF"/>
-                            <input type="submit" value="上传图片">
-                        </form>
                     </div>
-                </div>
-                <div class="tab-pane" id="panel-568572" style="height: 300px">
+                </c:forEach>
 
-                    <form action="${pageContext.request.contextPath}/user/inter/updateUserInfo" method="post">
-                        <div class="col-sm-12" style="margin-top: 20px;width: 400px"><span>手机</span>
-                            <input class="form-control" type="text" name="phone"
-                                   value="${userInfo.phone}">
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-5">
+                            <ul class="pagination">
+                                <li><a href="javaScript:void(0);" onclick="prepage()">上一页</a></li>
+                                <li class="active"><span id="pageIndex">${pageIndex}</span></li>
+                                <li><span id="totle">共${totle}页</span></li>
+                                <li><a href="javaScript:void(0);" onclick="nextpage()">下一页</a></li>
+                            </ul>
                         </div>
-                        <div class="col-sm-12" style="margin-top: 20px;width: 400px"><span>邮箱</span>
-                            <input class="form-control" type="text" name="mail" value="${userInfo.mail}">
-                        </div>
-                        <div class="col-sm-12" style="margin-top: 20px;width: 400px"><span>固话</span>
-                            <input class="form-control" type="text" name="filexPhone"
-                                   value="${userInfo.filexPhone}">
-                        </div>
-                        <div class="col-sm-12" style="margin-top: 20px;width: 400px"><span>qq</span>
-                            <input class="form-control" type="text" name="qq" value="${userInfo.qq}">
-                        </div>
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-4" style="margin-top: 20px">
-                            <input type="submit" class="btn btn-danger" value="修改">
-                            <input type="reset" class="btn btn-primary" value="取消">
-                        </div>
-                    </form>
-                </div>
-                <div class="tab-pane" id="panel-568573" style="height: 300px">
-                    <form class="form-horizontal" id="pwdUpdate" role="form" style="margin-top: 20px"
-                          action="/user/inter/updateuser" method="post">
-                        <div class="form-group">
-                            <label for="old" class="col-sm-2 control-label">请输入原来的密码:</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" style="width:400px" type="password" id="old"
-                                       placeholder="请输入原来密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="new" class="col-sm-2 control-label">请输入新密码:</label>
-                            <div class="col-sm-10">
-                                <input type="text" style="width:400px" class="form-control" name="passWord" id="new"
-                                       placeholder="请输入新密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <input type="button" id="updatepwd" class="btn btn-danger" value="修改">
-                                <input type="reset" class="btn btn-primary" value="取消">
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+
                 </div>
             </div>
-
         </div>
     </div>
+    </div>
+   </div>
 </div>
 <jsp:include page="footer.jsp" flush="true"></jsp:include>
 
@@ -325,6 +233,25 @@
         });
 
     });
+
+    function prepage(obj) {
+
+        var pageIndex=$("#pageIndex").text();
+        if(pageIndex===null||pageIndex===''||pageIndex==='1'){
+            return;
+        }else{
+            location.href='${pageContext.request.contextPath}/evaluate/getEvaluateByPage/${userInfo.uid}?pageIndex=${pageIndex-1}'
+        }
+    }
+
+    function nextpage() {
+        var pageIndex=$("#pageIndex").text();
+        if(pageIndex===null||pageIndex===''||pageIndex==='${totle}'){
+            return;
+        }else{
+            location.href='${pageContext.request.contextPath}/evaluate/getEvaluateByPage/${userInfo.uid}?pageIndex=${pageIndex+1}'
+        }
+    }
 
 
 </script>

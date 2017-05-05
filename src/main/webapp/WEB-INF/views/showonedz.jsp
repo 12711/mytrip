@@ -82,21 +82,27 @@
             <div class="row" style="padding-left: 0px;padding-right: 10px;">
                 <div style="background-color: white;height: 45px">
                     <div class="col-sm-2"></div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div style="border-bottom: 3px solid #eb7350;height: 45px;width: 60px">
 
                             <a href="${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=-1" class="active"
                                style="-webkit-tap-highlight-color: rgba(0,0,0,0);text-decoration: none;cursor: auto;margin-top: 15px;position: relative;top: 15px;" >他的主页</a>
                         </div>
                     </div>
-                    <div  class="col-sm-3">
+                    <div  class="col-sm-2">
                         <a href="${pageContext.request.contextPath}/trip/getAlbumInIndex"
                            style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">热门相册</a>
 
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <a href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage"
                            style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">对他评论</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <div >
+                            <a href="${pageContext.request.contextPath}/log/getLogInIndex/${userShowInfo.uid}?pageIndex=-1"
+                               style="text-decoration: none;cursor: auto; margin-top: 15px;position: relative;top: 15px;">他的日志</a>
+                        </div>
                     </div>
                 </div>
             </div>

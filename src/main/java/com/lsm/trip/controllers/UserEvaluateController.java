@@ -5,9 +5,11 @@ import com.lsm.trip.dto.UserEvaluate;
 import com.lsm.trip.dto.UserShowInfo;
 import com.lsm.trip.service.UserEvaluateService;
 import com.lsm.trip.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,5 +68,24 @@ public class UserEvaluateController {
             e.printStackTrace();
         }
         return "showonedzcomment";
+    }
+
+    @RequestMapping(value = "/getEvaluateByPage/{uid}", method = RequestMethod.GET)
+    public String getSelfEvaluateByPage(@RequestParam(defaultValue = "1", name = "pageIndex") Integer pageIndex, @PathVariable("uid") Integer uid, ModelMap modelMap, HttpServletRequest request) {
+        PageHelpPojo<Integer> pageHelpPojo = new PageHelpPojo<Integer>();
+        pageHelpPojo.setPageSize(4);
+        pageHelpPojo.setPageIndex(pageIndex);
+        pageHelpPojo.setParam(uid);
+
+        modelMap.addAttribute("pageIndex", pageIndex);
+        try {
+            Integer totle = userEvaluateService.getCount(pageHelpPojo.getParam());
+            List<UserEvaluate> evaluates = userEvaluateService.getEvaluateByPage(pageHelpPojo);
+            modelMap.addAttribute("totle", totle%4==0?totle/4:totle/4+1);
+            modelMap.addAttribute("evaluates", evaluates);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "showUserInfoEveluate";
     }
 }

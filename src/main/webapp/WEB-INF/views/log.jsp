@@ -31,13 +31,13 @@
            <div class="col-sm-1" ></div>
            <div class="col-sm-8" style="margin-left: -20px" id="headtitle">
                <div class="row">
-                   <div class="col-sm-6"><span id="username" style="font-size: 20px">${userInfo.userName}</span></div>
+                   <div class="col-sm-6"><span id="username" style="font-size: 20px">${showRank.userName}</span></div>
                </div>
                <div class="row" >
-                   <div class="col-sm-6"><label>信誉等级:</label>~等级高~</div>
+                   <div class="col-sm-6"><label>信誉等级:</label><img src="${pageContext.request.contextPath}/img/rank/${showRank.rank}" alt=""></div>
                </div>
                <div class="row" >
-                   <div class="col-sm-12"><label>签名:</label>~做事之前将所有的流程先弄清楚将会事半功倍~</div>
+                   <div class="col-sm-12"><label>签名:</label>${showRank.sign}</div>
                </div>
            </div>
        </div>
@@ -46,7 +46,13 @@
        <div class="row" style="margin-top: 20px;color: #2e6da4;background-color: #fffbe4">
            <div class="col-sm-2" style="margin-left: 50px;"><span style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>日志</h3></span></div>
            <div class="col-sm-7 .hidden-md"></div>
+           <c:if test="${userLog.uid==userInfo.uid}" var="t">
            <div class="col-sm-2 .hidden-md" style="margin-top: 20px"><a href="${pageContext.request.contextPath}/log/inter/logList">返回日志列表</a></div>
+           </c:if>
+           <c:if test="${!t}">
+               <div class="col-sm-2 .hidden-md" style="margin-top: 20px"><a href="${pageContext.request.contextPath}/log/getLogInIndex/${userLog.uid}?pageIndex=-1">返回他的日志</a></div>
+
+           </c:if>
        </div>
        <div>
            <div class="col-md-12 column">

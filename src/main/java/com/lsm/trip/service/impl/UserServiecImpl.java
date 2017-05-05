@@ -71,4 +71,9 @@ class UserServiecImpl implements UserService {
     public void updatePwd(User user) throws Exception {
         userMapper.updatePWD(user);
     }
+
+    @Override
+    public UserShowInfo getUserByUsername(UserShowInfo userShowInfo) throws Exception {
+        return userMapper.getUserByUserName(userShowInfo);
+    }
 }

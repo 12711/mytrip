@@ -28,4 +28,6 @@ public interface UserService {
      Integer getTotleByAddr(String param)throws Exception;
      //修改密码
      void updatePwd(User user)throws Exception;
+     //通过用户名查询用户
+     UserShowInfo getUserByUsername(UserShowInfo userShowInfo)throws Exception;
 }

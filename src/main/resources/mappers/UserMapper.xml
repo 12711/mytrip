@@ -85,4 +85,9 @@
        UPDATE  user SET password=#{passWord} WHERE u_id=#{uid}
    </update>
 
+    <select id="getUserByUserName" parameterType="UserShowInfo" resultMap="showInfo">
+        SELECT  city,province,u.u_id u_id,username,password,realname,phone,mail,address,jobaddress,mypig,birthday,sex,filexPhone,qq,hotnum,sign
+          FROM  user u join userinfo ui on u.u_id=ui.u_id AND username=#{userName}
+    </select>
+
 </mapper>

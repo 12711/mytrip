@@ -8,6 +8,8 @@ import com.lsm.trip.service.AlbumService;
 import com.lsm.trip.service.UserInfoService;
 import com.lsm.trip.service.UserLogService;
 import com.lsm.trip.service.UserService;
+import com.lsm.trip.triputils.PhoneCode;
+import com.lsm.trip.triputils.Verification;
 import com.mysql.jdbc.StringUtils;
 import org.apache.commons.fileupload.util.Streams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -248,6 +250,49 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return "0";
+        }
+
+    }
+    //发送验证码到手机
+    @RequestMapping(value = "/sendCode",method = RequestMethod.GET)
+    @ResponseBody
+    public String forgetPwd(UserShowInfo user,HttpServletRequest request){
+        System.out.println("--you userName---"+user.getUserName());
+        System.out.println("--you getPhone---"+user.getPhone());
+        String code=Verification.getRandCode(4);
+        System.out.println("短信验证码是:"+code);
+        try {
+            user = userService.getUserByUsername(user);
+            PhoneCode.sendCode(user.getPhone(),code,user.getUserName());
+            request.getSession().setAttribute("messageCode",code);
+            return "1";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "0";
+        }
+
+    }
+
+    //忘记密码
+    @RequestMapping(value = "/findPwd",method = RequestMethod.GET)
+    @ResponseBody
+    public String forgetPwd(User user,HttpServletRequest request){
+        String code=(String)request.getSession().getAttribute("messageCode");
+        UserShowInfo userShowInfo=new UserShowInfo();
+        userShowInfo.setUserName(user.getUserName());
+
+        if(code.equalsIgnoreCase(user.getCode())){
+            try {
+                userShowInfo = userService.getUserByUsername(userShowInfo);
+                user.setUid(userShowInfo.getUid());
+                userService.updatePwd(user);
+                return "1";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "0";
+            }
+        }else{
+            return "-1";
         }
 
     }
