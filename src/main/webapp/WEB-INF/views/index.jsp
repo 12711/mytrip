@@ -11,10 +11,12 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-datetimepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sweetalert.css">
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="${pageContext.request.contextPath}/js/sweetalert.min.js"></script>
 
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
@@ -105,6 +107,7 @@
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal"  id="forgetform" role="form"  style="width: 700px; ">
+                                <div class="row"><div class="col-sm-1"></div><div class="col-sm-10"style="margin-left:-20px;margin-bottom: 10px;"><span id="passwordInfo"></span></div></div>
                                 <div class="form-group" style="width: 450px; ">
                                     <div class="col-sm-1"></div>
                                    <div class="col-sm-10 ">
@@ -224,7 +227,7 @@
        $("#pass-button-new1").click(function () {
            var userName=$("#userforgetName").val();
            if(userName===''){
-               alert("请输入你的用户名!");
+               swal("错误!", "请输入你的用户名!", "error");
                return;
            }
            $.ajax({
@@ -245,8 +248,8 @@
            var userName=$("#userforgetName").val();
            var pwd=$("#userforgetpwd").val();
            var code=$("#userforgetcode").val();
-           if(userName===""||pwd===""||code===""){
-               alert("请填写所有信息!");
+           if(userName===""||pwd===""||code===""||forgetflag==false){
+               swal("错误!", "请正确填写所有信息!", "error");
                return;
            }
            var formData=$("#forgetform").serialize();
@@ -257,16 +260,29 @@
                type:"get",
                success:function (data) {
                    if(data==="1"){
-                       alert("修改成功!");
+                       swal("Good!", "修改成功!", "success");
                        location.href="${pageContext.request.contextPath}/user/index";
                    }else if(data=="0"){
-                       alert("修改失败,请检查您的账号!");
+                       swal("OMG!", "修改失败,请检查您的账号!", "error");
                    }else{
-                       alert("验证码错误!");
+                       swal("OMG!", "验证码错误!", "error");
                        $("#userforgetcode").css("border-color","red");
                    }
                }
            });
+       });
+        window.forgetflag=false;
+       $("#userforgetpwd").change(function(){
+           var password=$("#userforgetpwd").val();
+           if(password.length<6){
+               $("#passwordInfo").text("密码不能小于6位,请重新输入!");
+               $("#passwordInfo").css("color","red");
+               forgetflag=false;
+           }else{
+               $("#passwordInfo").text("密码格式正确!");
+               $("#passwordInfo").css("color","green");
+               forgetflag=true;
+           }
        });
 
 
@@ -323,12 +339,12 @@
           user.count=window.count;
           user.code=code;
             if(userName==''&&passWord==''){
-                alert("用户名密码不能为空!");
+                swal("用户名密码不能为空!");
             }else if(userName==''){
-                alert("请输入用户名!");
+                swal("用户名密码不能为空!");
                 $("#userName").addClass("blur");
             }else if(passWord==''){
-                alert("密码不能为空!");
+                swal("密码不能为空!");
                 $("#passWord").addClass("blur");
             }else{
                 var url="${pageContext.request.contextPath}/user/login"
