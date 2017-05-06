@@ -128,7 +128,8 @@
                 <h3>攻略详情
 
                     <c:if test="${userScane.uid ==userInfo.uid}">
-                      <a style="margin-left: 160px;" href="#modal-container-37989" data-toggle="modal" title="发布攻略"><span class="glyphicon glyphicon-pencil"></span></a>
+                      <a style="margin-left: 100px;" href="#modal-container-37989" data-toggle="modal" title="发布攻略"><span class="glyphicon glyphicon-pencil"></span></a>
+                      <a href="javaScript:void(0)"style="margin-left: 40px;"  id="todeleteRadier"  title="删除攻略" ><span class="glyphicon glyphicon-trash"></span></a>
                     </c:if>
                 </h3>
 
@@ -148,7 +149,7 @@
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">标题</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入一个关于攻略的标题">
+                                            <input type="text" class="form-control" id="title" required name="title" placeholder="请输入一个关于攻略的标题">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -172,12 +173,13 @@
                 </div>
 
                 <c:forEach items="${radiers}" var="radier" varStatus="r">
-                    <div style="margin-top: 25px">
+                    <div style="margin-top: 25px" id="${radier.rid}">
                        <div class="col-md-10">
                          ${r.count}.<a href="#modal-container-see-${radier.rid}"  data-toggle="modal">${radier.title}</a>
                        </div>
                         <c:if test="${userScane.uid ==userInfo.uid}">
-                        <div class="col-md-2"><a href="#modal-container-update-${r.count}" id="updateRadier" title="修改攻略" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span></a></div>
+                        <div class="col-md-2 updateRadier" style="display: block"><a href="#modal-container-update-${r.count}"  title="修改攻略" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span></a></div>
+                        <div class="col-md-2 deleteRadier" style="display: none"><input type="hidden"   value="${radier.rid}"><span class="glyphicon glyphicon-trash deleteButton" ></span></div>
                         </c:if>
                         <div class="modal fade"  id="modal-container-update-${r.count}" aria-hidden="true" role="dialog" aria-labelledby="myModalLabel2">
                             <div class="modal-dialog">
@@ -248,10 +250,60 @@
 
 </div>
 <script>
+
     $(function () {
+        $(".deleteButton").click(function () {
+            var $span=$(this);
+            var rid=$span.prev().val();
+            swal({
+                title: "您确定要删除吗？",
+                text: "您确定要删除这条数据？",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonText: "是的，我要删除",
+                confirmButtonColor: "#ec6c62"
+            }, function() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/radier/deleteRadier/"+rid,
+                    type: "post",
+                    dataType:"json"
+                }).done(function(data) {
+                    if(data==="1"){
+                        swal("操作成功!", "已成功删除数据！", "success");
+                        $("#"+rid).remove();
+                    }else{
+                        swal("OMG", "删除操作失败了!", "error");
+                    }
+
+                });
+            });
+        });
+
+        window.deleteRadierflag=false;
+        $("#todeleteRadier").click(function () {
+            if(!deleteRadierflag){
+                $(".deleteRadier").css("display","block");
+                $(".updateRadier").css("display","none");
+                deleteRadierflag=true;
+            }else{
+                $(".deleteRadier").css("display","none");
+                $(".updateRadier").css("display","block");
+                deleteRadierflag=false;
+            }
+
+        });
+
+
+
         $("#radierSubmit").click(function () {
             console.log("sfddsfasd");
              var text=CKEDITOR.instances.content.getData();
+             var title=$("#title").val();
+             if(text===""||title===""){
+                 swal("错误","请填写所有内容","error");
+                 return;
+             }
              var form=$("#radierFrom").serialize();
              form+=text;
              $.ajax({

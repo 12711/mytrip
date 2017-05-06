@@ -34,4 +34,9 @@ public class RadiersServiceImpl implements RadiersService {
     public void updateRaiders(Radiers radiers) throws Exception {
         raiderMapper.updateRadier(radiers);
     }
+
+    @Override
+    public void deleteRadier(Integer rid) throws Exception {
+        raiderMapper.deleteRadier(rid);
+    }
 }

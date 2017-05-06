@@ -17,5 +17,7 @@ public interface RadiersService {
     Radiers getRaiders(Integer rid)throws Exception;
     //修改攻略
     void updateRaiders(Radiers radiers)throws Exception;
+    //删除攻略
+    void deleteRadier(Integer rid) throws Exception;
 
 }

@@ -29,4 +29,8 @@
          UPDATE raiders SET title=#{title},content=#{content},updatetime=#{updatetime}
          WHERE r_id=#{rid}
     </update>
+
+    <delete id="deleteRadier" parameterType="int" >
+        DELETE FROM raiders WHERE r_id=#{rid}
+    </delete>
  </mapper>

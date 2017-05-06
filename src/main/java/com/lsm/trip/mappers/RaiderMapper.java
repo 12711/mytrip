@@ -18,4 +18,6 @@ public interface RaiderMapper {
     Radiers getRadiersByrid(@Param("rid") Integer rid)throws Exception;
     //修改攻略
     void updateRadier(Radiers radiers)throws Exception;
+    //删除一天攻略
+    void  deleteRadier(@Param("rid") Integer rid)throws Exception;
 }
