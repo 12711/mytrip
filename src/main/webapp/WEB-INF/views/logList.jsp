@@ -45,14 +45,14 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
             <div class="row"
-                 style="border-bottom:1px dashed #dedede;"></div>
+                 style="border-top:1px dashed #dedede;height: 20px;"></div>
             <div class="hidden-sm col-md-1"><input type="checkbox" value="${log.id}" class="logCheck" style="display: none;width: 15px;height: 15px;margin-top: 20px;"></div>
             <div class="hidden-sm col-md-1"><img
                     style="height: 54px;width: 54px;border-radius: 2px;border: #3a9d9a 3px solid;"
                     src="${pageContext.request.contextPath}/img/${userInfo.mypig}"></div>
             <div class="col-sm-9">
                 <label class="col-sm-12"><a href="${pageContext.request.contextPath}/log/getOneLog/${log.id}">${log.title}</a></label>
-                <span class="col-sm-12" style="overflow:hidden;height:50px;text-overflow :ellipsis">${log.content}</span>
+                <span class="col-sm-12" style="overflow:inherit;width:100%;word-break:break-all;text-overflow :ellipsis;display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3">${log.content}</span>
             </div>
         </div>
     </div>
@@ -115,6 +115,7 @@
         });
     });
 </script>
-<%@include file="footer.jsp" %>
+
 </body>
+<%@include file="footer.jsp" %>
 </html>

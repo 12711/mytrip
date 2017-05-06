@@ -132,6 +132,7 @@
                 <div class="tab-pane" id="panel-568572" style="height: 300px">
 
                     <form action="${pageContext.request.contextPath}/user/inter/updateUserInfo" method="post">
+                        <div class="row">
                         <div class="col-sm-12" style="margin-top: 20px;width: 400px"><span>手机</span>
                             <input class="form-control" type="text" name="phone"
                                    value="${userInfo.phone}">
@@ -146,10 +147,16 @@
                         <div class="col-sm-12" style="margin-top: 20px;width: 400px"><span>qq</span>
                             <input class="form-control" type="text" name="qq" value="${userInfo.qq}">
                         </div>
+                        <div class="col-sm-12" style="margin-top: 20px;width: 400px"><span>sign</span>
+                            <input class="form-control" type="text" name="sign" value="${userInfo.sign}">
+                        </div>
+                        </div>
+                        <div class="row">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-4" style="margin-top: 20px">
                             <input type="submit" class="btn btn-danger" value="修改">
                             <input type="reset" class="btn btn-primary" value="取消">
+                        </div>
                         </div>
                     </form>
                 </div>

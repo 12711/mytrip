@@ -49,7 +49,7 @@
         <div class="col-sm-7 ">
              <label class="col-sm-2" style="margin-top: 16px" >请输入标题:</label>
             <div class="col-sm-8" style="margin-top: 10px">
-                <input class="form-control" type="text" name="title" id="logtitle">
+                <input class="form-control" type="text" required name="title" id="logtitle">
             </div>
         </div>
         <div class="col-sm-2 .hidden-md" style="margin-top: 20px"><a href="${pageContext.request.contextPath}/log/inter/logList">返回日志列表</a></div>
@@ -59,8 +59,8 @@
                 <div class="grid-container">
                     <div class="grid-width-100">
 
-                            <textarea id="editor" name="log">
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <textarea id="editor" name="log" required>
+
                             </textarea>
                                <script type="text/javascript">
                                   var ckeditor= CKEDITOR.replace("log");
@@ -78,15 +78,16 @@
 <script>
     function  isNull() {
         var logTitle=$("#logtitle").val();
-        var content=$("#editor").val();
+        var content=ckeditor.getData();
         console.log(typeof logTitle);
+        console.log(content==="");
         console.log(typeof content);
         if(logTitle===""){
             $("#logtitle").css("border-color","red");
 
             return false;
         }
-        if(content===""){
+        if(ckeditor.getData()===""){
             $("#editor").css("border-color","red");
             return false;
         }

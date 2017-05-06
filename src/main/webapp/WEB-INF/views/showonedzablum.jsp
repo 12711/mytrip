@@ -254,6 +254,7 @@
                         hotnum=0;
                     }
                     var finalHotnum=hotnum*1+1;
+                    swal("成功","感谢你的支持","success");
                     console.log("999999999999999====="+finalHotnum)
                     $("#userhotnum").text(finalHotnum);
                 }else {

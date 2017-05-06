@@ -11,6 +11,16 @@ public class UserEvaluate {
     private String content;//内容
     private String eTime;//评论时间
 
+    private UserShowInfo userShowInfo;
+
+    public UserShowInfo getUserShowInfo() {
+        return userShowInfo;
+    }
+
+    public void setUserShowInfo(UserShowInfo userShowInfo) {
+        this.userShowInfo = userShowInfo;
+    }
+
     public UserEvaluate() {
     }
 

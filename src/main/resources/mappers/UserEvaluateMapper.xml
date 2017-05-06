@@ -16,6 +16,9 @@
         <result column="content" property="content"></result>
         <result column="author" property="author"></result>
         <result column="e_time" property="eTime"></result>
+        <association  select="com.lsm.trip.mappers.UserMapper.getUserByUserName" column="author"  property="userShowInfo">
+
+        </association>
     </resultMap>
 
     <select id="getEvaluates" parameterType="PageHelpPojo" resultMap="evaluateMap">

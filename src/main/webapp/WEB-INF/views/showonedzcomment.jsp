@@ -255,7 +255,7 @@
                                             <div class="col-sm-12" style="border-top: 1px darkgray solid">
                                                 <div class="col-sm-1">
                                                     <div  style="margin-top: 20px;height: 50px;width: 50px;overflow: hidden;border-radius: 25px;">
-                                                        <img style="height: 50px;width: 50px;" src="${pageContext.request.contextPath}/img/my.gif">
+                                                        <img style="height: 50px;width: 50px;" src="${pageContext.request.contextPath}/img/${evaluate.userShowInfo.mypig}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6" style="margin-top: 35px">
@@ -308,6 +308,28 @@
         }else{
             location.href='${pageContext.request.contextPath}/evaluate/getEvaluateByPage?pageIndex=${pageIndex-1}'
         }
+    }
+
+    function supportuser(obj) {
+        $.ajax({
+            url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
+            type:'post',
+            success:function (data) {
+                if("1"===data){
+                    var hotnum=$("#userhotnum").text();
+                    console.log("999999999999999="+hotnum)
+                    if(hotnum==='undefined'){
+                        hotnum=0;
+                    }
+                    var finalHotnum=hotnum*1+1;
+                    swal("成功","感谢你的支持","success");
+                    console.log("999999999999999====="+finalHotnum)
+                    $("#userhotnum").text(finalHotnum);
+                }else {
+                    alert("点赞失败....")
+                }
+            }
+        });
     }
 
     function nextpage() {

@@ -187,18 +187,18 @@
                                     </div>
                                     <div class="modal-body">
                                         <div >
-                                            <form id="updateForm" action="${pageContext.request.contextPath}/radier/updateRadier" method="post" onsubmit="return test()">
+                                            <form id="updateForm" action="${pageContext.request.contextPath}/radier/updateRadier" method="post" >
                                             <div  style="margin-left: 20px">
                                                 <div class="form-group">
                                                     <label for="title" class="col-sm-2 control-label">标题</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control"  name="title" value="${radier.title}">
+                                                        <input type="text" class="form-control"  required name="title" value="${radier.title}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style="margin-top: 20px">
                                                     <label for="content" class="col-sm-2 control-label">内容</label>
                                                     <div class="col-sm-10">
-                                                <textarea id="lsm${r.count}" name="content" id="updatecontent"></textarea>
+                                                <textarea id="lsm${r.count}" name="content" required id="updatecontent"></textarea>
                                                 <div id="ti${r.count}" style="display: none">${radier.content}</div>
                                                 <script>
                                                     var ckeditor= CKEDITOR.replace("lsm${r.count}");

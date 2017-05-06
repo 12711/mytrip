@@ -170,7 +170,8 @@
                     alert("新建相册成功");
                     $('#modal-container-907337').modal('hide');
                     $("#albumList").append("<div class='col-sm-2'><img style='margin-top:20px;height: 150px;width: 150px;border-radius: 2px;border: #3a9d9a 3px solid;' src='${pageContext.request.contextPath}/img/my.gif'><br/><span style='margin-left:50px'>"+$("#name").val()+"</span></div>");
-                },
+                    location.href="${pageContext.request.contextPath}/album/inter/getAlbums";
+                    },
                 error:function(errorInfo){
                     alert("新建失败");
                     console.log(errorInfo);

@@ -110,7 +110,7 @@
                         console.dir($template.children().children("div").children("div"))
                         $template.find(".myImg").attr("src",'${pageContext.request.contextPath}/img/'+row[i].mypig);
                         $template.find(".uname").text(row[i].userName);
-                        $template.find(".uaddr").text(row[i].city);
+                        $template.find(".uaddr").text(row[i].province);
                         $template.find(".rankImg").attr("src",'${pageContext.request.contextPath}/img/rank/'+row[i].rank);
                         $template.find(".usign").text(row[i].sign);
                         $template.append("<input type='hidden' value='"+row[i].uid+"'/>");

@@ -55,6 +55,7 @@
             <if test="filexPhone!=null">filexPhone=#{filexPhone},</if>
             <if test="qq!=null">qq=#{qq},</if>
             <if test="city!=null and city!=''">city=#{city},</if>
+            <if test="sign!=null and sign!=''">sign=#{sign},</if>
             <if test="province!=null and province!=''">province=#{province}</if>
         </set>
         WHERE u_id=#{uid}

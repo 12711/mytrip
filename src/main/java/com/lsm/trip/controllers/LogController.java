@@ -97,6 +97,11 @@ public class LogController {
         try {
             Integer uid=((UserShowInfo) session.getAttribute("userInfo")).getUid();
             userLogs=userLogService.getLogsById(uid);
+            for(int i=0;i<userLogs.size();i++){
+                String content=userLogs.get(i).getContent();
+                content=content.replaceAll("<p>|</p>","");
+                userLogs.get(i).setContent(content);
+            }
             map.put("userLogs",userLogs);
         } catch (Exception e) {
             System.out.println("查询日志失败...");

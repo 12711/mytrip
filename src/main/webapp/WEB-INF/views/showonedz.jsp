@@ -133,7 +133,7 @@
                             <div style="height: 65px">
                                 <span class="glyphicon glyphicon-map-marker"
                                       style="position: relative;top: 14px;"></span>
-                                <span style="font-size: 10px;position: relative;top: 12px">信誉等级</span><span style="font-size: 10px;position: relative;top: 12px;left: 20px;"><a href="javaScript:void(0);" onclick="supportuser('${userShowInfo.uid}')"><span class="glyphicon glyphicon-thumbs-up"></span>(<span id="userhotnum">${userShowInfo.hotnum}</span>)</a></span>
+                                <span style="font-size: 10px;position: relative;top: 12px">信誉等级</span><span style="font-size: 10px;position: relative;top: 12px;left: 20px;"><a href="javaScript:void(0)" onclick="supportuser('${userShowInfo.uid}')"><span class="glyphicon glyphicon-thumbs-up"></span>(<span id="userhotnum">${userShowInfo.hotnum}</span>)</a></span>
                                 <img src="${pageContext.request.contextPath}/img/rank/${userShowInfo.rank}"
                                      style="position: relative;top: 12px;">
                             </div>
@@ -235,6 +235,9 @@
     </div>
 </div>
 <script>
+    function ttt() {
+        console.log("ttt")
+    }
        function prepage(obj) {
 
            var pageIndex=$("#pageIndex").text();
@@ -253,27 +256,28 @@
                location.href='${pageContext.request.contextPath}/trip/getUserById/${uid}?pageIndex=${pageIndex+1}'
            }
        }
-       
-       function supportuser(obj) {
-           $.ajax({
-                url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
-               type:'post',
-               success:function (data) {
-                  if("1"===data){
-                      var hotnum=$("#userhotnum").text();
-                      console.log("999999999999999="+hotnum)
-                      if(hotnum==='undefined'){
-                          hotnum=0;
-                      }
-                     var finalHotnum=hotnum*1+1;
-                      console.log("999999999999999====="+finalHotnum)
-                      $("#userhotnum").text(finalHotnum);
-                  }else {
-                      alert("点赞失败....")
-                  }
-               }
+           function supportuser(obj) {
+               $.ajax({
+                   url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
+                   type:'post',
+                   success:function (data) {
+                       if("1"===data){
+                           var hotnum=$("#userhotnum").text();
+                           console.log("999999999999999="+hotnum)
+                           if(hotnum==='undefined'){
+                               hotnum=0;
+                           }
+                           var finalHotnum=hotnum*1+1;
+                           swal("成功","感谢你的支持","success");
+                           console.log("999999999999999====="+finalHotnum)
+                           $("#userhotnum").text(finalHotnum);
+                       }else {
+                           alert("点赞失败....")
+                       }
+                   }
                });
-       }
+           }
+
 </script>
 </body>
 <%@ include file="footer.jsp" %>

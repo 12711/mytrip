@@ -284,6 +284,27 @@
         }
         return false;
     }
+    function supportuser(obj) {
+        $.ajax({
+            url:'${pageContext.request.contextPath}/user/supportUser/'+obj,
+            type:'post',
+            success:function (data) {
+                if("1"===data){
+                    var hotnum=$("#userhotnum").text();
+                    console.log("999999999999999="+hotnum)
+                    if(hotnum==='undefined'){
+                        hotnum=0;
+                    }
+                    var finalHotnum=hotnum*1+1;
+                    swal("成功","感谢你的支持","success");
+                    console.log("999999999999999====="+finalHotnum)
+                    $("#userhotnum").text(finalHotnum);
+                }else {
+                    swal("错误","点赞失败....","error");
+                }
+            }
+        });
+    }
 </script>
 </body>
 <%@ include file="footer.jsp" %>
