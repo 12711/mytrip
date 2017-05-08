@@ -49,7 +49,7 @@
             <ul class="nav nav-tabs" style="margin-top: 5px">
 
                 <li  class="active">
-                    <a href="#panel-568572"  data-toggle="tab">查看评论</a>
+                    <a href="#panel-568572"  data-toggle="tab">查看预约</a>
                 </li>
 
             </ul>
@@ -98,7 +98,7 @@
                                            <div class='row'><div class=col-sm-4>qq</div><div class=col-sm-7>${orderScane.ykUser.qq}</div></div>
                                            <div class='row'><div class=col-sm-4>邮箱</div><div class=col-sm-7>${orderScane.ykUser.mail}</div></div>
 																	">
-                                        Popover
+                                        查看联系方式
                                     </a></td>
                                     <td>
                                         <c:if test="${orderScane.status==0}" >
@@ -149,7 +149,7 @@
             type: "warning",
             showCancelButton: true,
             closeOnConfirm: false,
-            confirmButtonText: "是的，我要删除",
+            confirmButtonText: "是的",
             confirmButtonColor: "#ec6c62"
         }, function() {
             location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/3/a";
@@ -162,7 +162,7 @@
             type: "warning",
             showCancelButton: true,
             closeOnConfirm: false,
-            confirmButtonText: "是的，我要删除",
+            confirmButtonText: "是的",
             confirmButtonColor: "#ec6c62"
         }, function() {
             location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/4/d";

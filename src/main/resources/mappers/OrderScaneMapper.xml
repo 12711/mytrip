@@ -30,12 +30,12 @@
     </update>
 
     <select id="count"  resultType="int">
-        SELECT count(*) FROM order_scane WHERE status=1 OR status=2 OR status=4
+        SELECT count(*) FROM order_scane WHERE status in(1,2,3)
     </select>
     
 
     <select id="getOrderScaneByPage" parameterType="PageHelpPojo" resultMap="orderScaneMap">
-        SELECT *FROM order_scane WHERE dz_id=#{param} and status=1 OR status=2 OR status=4 order by posttime limit #{pageIndex},#{pageSize}
+        SELECT *FROM order_scane WHERE dz_id=#{param} and status in(1,2,3) order by posttime limit #{pageIndex},#{pageSize}
     </select>
     
     <select id="gerOrderScanes" resultMap="orderScaneMap" >
