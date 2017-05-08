@@ -26,10 +26,14 @@
       <file-size-threshold>0</file-size-threshold>
     </multipart-config>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+  <listener >
+    <listener-class>com.lsm.trip.triputils.TimerToCkeckYuYue</listener-class>
+  </listener>
 
   <filter>
     <filter-name>encodingFilter</filter-name>

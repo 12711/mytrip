@@ -26,6 +26,7 @@
         alert("确认要上传这张图片!");
     }
 </script>
+<body>
 <div class="row " style="border:1px solid gray;border-bottom: none;margin-bottom: 20px;">
     <div class="col-sm-1"></div>
     <div class="col-sm-3 ">
@@ -36,10 +37,11 @@
             <hr style="width: 150px;margin-left: 0px"/>
             <li class="li_style"><a href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage/${userInfo.uid}">查看评论</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
-            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByidStatus/${userInfo.uid}">审批预约</a></li>
+            <li class="li_style"><a href=#">审批预约</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
             <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史预约记录</a></li>
-
+            <hr style="width: 150px;margin-left: 0px"/>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">我的预约记录</a></li>
         </ul>
     </div>
     <div class="col-sm-8" style="margin-left: -30px">
@@ -54,38 +56,66 @@
             <div class="tab-content">
 
                 <div class="tab-pane active" id="panel-568572" style="height: 300px">
-                <c:forEach items="${evaluates}" var="evaluate">
-                    <div class="col-sm-12" style="border-top: 1px darkgray solid">
-                        <div class="col-sm-1">
-                            <div  style="margin-top: 20px;height: 50px;width: 50px;overflow: hidden;border-radius: 25px;">
-                                <img style="height: 50px;width: 50px;" src="${pageContext.request.contextPath}/img/my.gif">
-                            </div>
-                        </div>
-                        <div class="col-sm-6" style="margin-top: 35px">
-                            <span>${evaluate.author}</span>
-                            <span style="font-size: 5px;color: darkgray">发表于${evaluate.eTime}</span>
-                        </div>
-
-                    </div>
-                    <div class="col-sm-12" >
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-11">
-                            <div>
-                                <span>${evaluate.content}</span>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-
                     <div class="row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-5">
-                            <ul class="pagination">
-                                <li><a href="javaScript:void(0);" onclick="prepage()">上一页</a></li>
-                                <li class="active"><span id="pageIndex">${pageIndex}</span></li>
-                                <li><span id="totle">共${totle}页</span></li>
-                                <li><a href="javaScript:void(0);" onclick="nextpage()">下一页</a></li>
-                            </ul>
+                        <div class="table-responsive">
+
+                            <div class="col-sm-10" style="margin-top: 20px;">
+                            <table class="table" style="font-size: 10px">
+                                <caption>预约审核</caption>
+                                <thead>
+                                <tr>
+                                    <th>景点名</th>
+                                    <th>游玩日期</th>
+                                    <th>预定日期</th>
+                                    <th>预约人</th>
+                                    <th>状态</th>
+                                    <th>查看</th>
+                                    <th>操作</th>
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${orderScanes}" var="orderScane">
+
+                                <tr>
+                                    <td>${orderScane.userScane.sName}</td>
+                                    <td>${orderScane.travleTime}</td>
+                                    <td>${orderScane.posttime}</td>
+                                    <td>${orderScane.ykUser.userName}</td>
+                                    <td>
+                                        <c:if test="${orderScane.status==0}">
+                                            等待审核
+                                        </c:if>
+                                        <c:if test="${orderScane.status==3}">
+                                            进行中
+                                        </c:if>
+
+                                    </td>
+                                    <td><a href="#" type="button" class="btn btn-warning showinfo" title=" <img style='width:100px;height:100px' src='${pageContext.request.contextPath}/img/${orderScane.ykUser.mypig}'>"
+                                           data-container="body" data-toggle="popover" data-content="<div class='row'><div class=col-sm-4>手机</div><div class=col-sm-7>${orderScane.ykUser.phone}</div></div>
+                                           <div class='row'><div class=col-sm-4>固话</div><div class=col-sm-7>${orderScane.ykUser.filexPhone}</div></div>
+                                           <div class='row'><div class=col-sm-4>qq</div><div class=col-sm-7>${orderScane.ykUser.qq}</div></div>
+                                           <div class='row'><div class=col-sm-4>邮箱</div><div class=col-sm-7>${orderScane.ykUser.mail}</div></div>
+																	">
+                                        Popover
+                                    </a></td>
+                                    <td>
+                                        <c:if test="${orderScane.status==0}" >
+                                        <input type="button" class="btn btn-default" value="同意" onclick="argee(${orderScane.order_id},${userInfo.uid})">
+                                        <input type="button" class="btn btn-danger" value="拒绝" onclick="refause(${orderScane.order_id},${userInfo.uid})">
+                                        </c:if>
+                                        <c:if test="${orderScane.status==3}">
+                                            <input type="button" class="btn btn-default" value="完成旅游" onclick="finsh(${orderScane.order_id},${userInfo.uid})">
+
+                                        </c:if>
+                                    </td>
+                                </tr>
+
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
                     </div>
 
@@ -93,12 +123,51 @@
             </div>
         </div>
     </div>
-    </div>
-   </div>
 </div>
+</body>
+</html>
 <jsp:include page="footer.jsp" flush="true"></jsp:include>
 
 <script>
+    function finsh(obj,uid) {
+        swal({
+            title: "注意",
+            text: "您确定已完成旅游吗？",
+            type: "warning",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            confirmButtonText: "是的",
+            confirmButtonColor: "#ec6c62"
+        }, function() {
+            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/2/a";
+        });
+    }
+    function argee(obj,uid) {
+        swal({
+            title: "注意",
+            text: "您确定要通过他的预约吗？",
+            type: "warning",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            confirmButtonText: "是的，我要删除",
+            confirmButtonColor: "#ec6c62"
+        }, function() {
+            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/3/a";
+        });
+    }
+    function refause(obj,uid) {
+        swal({
+            title: "注意",
+            text: "您确定要拒绝他的预约吗？",
+            type: "warning",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            confirmButtonText: "是的，我要删除",
+            confirmButtonColor: "#ec6c62"
+        }, function() {
+            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/4/d";
+        });
+    }
     //当用户选择照片是显示预览图
     $("#sImgF").change(function () {
         console.log($("#sImgF")[0].files[0]);
@@ -120,6 +189,7 @@
 
 
     $(function () {
+        $(".showinfo").popover({html : true });
         var province = $("#province")[0];
         var city = $("#city")[0];
         //初始化省

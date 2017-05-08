@@ -118,6 +118,41 @@
         </div>
         <div class="col-md-2">
             <div class="spot_info" style="height: 900px">
+                <h3>预约游玩</h3>
+                公告:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于地主可能收到较多的游玩预约,如果你想去此地游玩请提前预约之后等待地主的审核!
+                <a href="#orderScanemodel" data-toggle="modal">>>点击预约</a>
+                <div id="orderScanemodel" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" >
+                                    选择游玩日期
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                               <div class="row">
+                                   <div class="col-sm-1"></div>
+                                   <div class="col-sm-10">
+                                <form id="orderScaneInfo">
+                                    <input type="hidden" value="${userScane.sid}" name="sid" >
+                                    <input type="hidden" value="${userScane.uid}" name="dzuid">
+                                    <input type="hidden" value="${userInfo.uid}" name="ykuid" id="ykuid">
+                                    <input class="form-control" id="orderScaneDate" name="travleTime">
+                                </form>
+                                   </div>
+                                   <div class="col-sm-1"></div>
+                               </div>
+                                <div class="row">
+                                    <div class="col-sm-10 hidden-sm"></div>
+                                    <div class="col-md-1 ">
+                                       <input type="button" id="orderScaneSubmit"  class="btn btn-danger" value="提交">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <h3>门票及开放时间</h3>
                 <h4>门票</h4>
                 ${userScane.ticket}
@@ -244,7 +279,9 @@
                         </div>
                     </div>
                 </c:forEach>
+
             </div>
+
         </div>
     </div>
 
@@ -252,6 +289,49 @@
 <script>
 
     $(function () {
+        $("#orderScaneDate").change(function () {
+            var selectDate=$("#orderScaneDate").val();
+            var data=new Date(selectDate)
+            var nowDate=new Date();
+            if(data.getTime()-nowDate.getTime()<0){
+                swal("错误","请选择有效日期","error");
+                $("#orderScaneDate").val("");
+                return;
+            }
+        });
+        $("#orderScaneSubmit").click(function () {
+            var selectDate=$("#orderScaneDate").val();
+            if(selectDate===""){
+                swal("错误","请选择日期","error");
+                return ;
+            }else if($("#ykuid").val()===""){
+                swal("错误","你未登录","error");
+                return ;
+            } else{
+                $.ajax({
+                    url:"${pageContext.request.contextPath}/orderScane/inter/order",
+                    data:$("#orderScaneInfo").serialize(),
+                    type:"post",
+                    dataType:"json",
+                    success:function (data) {
+                        if(data==="0"){
+                            swal("成功","预约成功!","success");
+                            $("#orderScanemodel").modal('hide');
+                        }else{
+                            swal("失败","你已经预约或者别的错误","error");
+                            $("#orderScanemodel").modal('hide');
+                        }
+                    }
+                });
+            }
+
+        });
+        $("#orderScaneDate").datetimepicker({
+            minView: "month", //选择日期后，不会再跳转去选择时分秒
+            format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式
+            language: 'zh-CN', //汉化
+            autoclose:true //选择日期后自动关闭
+        });
         $(".deleteButton").click(function () {
             var $span=$(this);
             var rid=$span.prev().val();

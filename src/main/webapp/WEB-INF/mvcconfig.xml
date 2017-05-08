@@ -41,7 +41,7 @@
     <!--定义拦截器实现未登录无法进行一些操作-->
    <mvc:interceptors>
        <mvc:interceptor>
-           <mvc:mapping path="/*/inter/*"/>
+           <mvc:mapping path="/*/inter/**"/>
            <bean class="com.lsm.trip.interceptor.InterceptoForLogin"/>
        </mvc:interceptor>
    </mvc:interceptors>

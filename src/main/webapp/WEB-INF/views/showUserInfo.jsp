@@ -35,6 +35,11 @@
             <li class="li_style"><a href="${pageContext.request.contextPath}/user/inter/showUserInfo">个人信息</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
             <li class="li_style"><a href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage/${userInfo.uid}">查看评论</a></li>
+            <hr style="width: 150px;margin-left: 0px"/>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByidStatus/${userInfo.uid}">审批预约</a></li>
+            <hr style="width: 150px;margin-left: 0px"/>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史预约记录</a></li>
+
         </ul>
     </div>
     <div class="col-sm-8" style="margin-left: -30px">
@@ -202,14 +207,10 @@
     });
 
     $("#birthday").datetimepicker({
-        format: 'yyyy-mm-dd',
-
-        autoclose: true,
-        startView: 4,
-        minView: 4,
-        forceParse: false,
-        language: 'zh-CN',
-        todayBtn: true
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式
+        language: 'zh-CN', //汉化
+        autoclose:true //选择日期后自动关闭
     });
 
 
