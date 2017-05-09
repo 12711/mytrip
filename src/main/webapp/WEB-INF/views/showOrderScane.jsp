@@ -127,6 +127,7 @@
     </div>
 </div>
 </body>
+</body>
 </html>
 <jsp:include page="footer.jsp" flush="true"></jsp:include>
 

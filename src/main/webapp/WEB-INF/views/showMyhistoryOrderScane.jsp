@@ -68,7 +68,7 @@
                                     <th>景点名</th>
                                     <th>游玩日期</th>
                                     <th>预定日期</th>
-                                    <th>预约人</th>
+                                    <th>地主</th>
                                     <th>状态</th>
                                     <th>查看</th>
                                 </tr>
@@ -81,8 +81,11 @@
                                     <td>${orderScane.userScane.sName}</td>
                                     <td>${orderScane.travleTime}</td>
                                     <td>${orderScane.posttime}</td>
-                                    <td>${orderScane.ykUser.userName}</td>
+                                    <td>${orderScane.dzUser.userName}</td>
                                     <td>
+                                        <c:if test="${orderScane.status==0}">
+                                            审批中
+                                        </c:if>
                                         <c:if test="${orderScane.status==1}">
                                             已过期
                                         </c:if>
@@ -92,13 +95,17 @@
                                         <c:if test="${orderScane.status==4}">
                                             已拒绝
                                         </c:if>
+                                        <c:if test="${orderScane.status==3}">
+                                            已通过
+                                        </c:if>
+
 
                                     </td>
-                                    <td><a href="#" type="button" class="btn btn-warning showinfo" title=" <img style='width:100px;height:100px' src='${pageContext.request.contextPath}/img/${orderScane.ykUser.mypig}'>"
-                                           data-container="body" data-toggle="popover" data-content="<div class='row'><div class=col-sm-4>手机</div><div class=col-sm-7>${orderScane.ykUser.phone}</div></div>
-                                           <div class='row'><div class=col-sm-4>固话</div><div class=col-sm-7>${orderScane.ykUser.filexPhone}</div></div>
-                                           <div class='row'><div class=col-sm-4>qq</div><div class=col-sm-7>${orderScane.ykUser.qq}</div></div>
-                                           <div class='row'><div class=col-sm-4>邮箱</div><div class=col-sm-7>${orderScane.ykUser.mail}</div></div>
+                                    <td><a href="#" type="button" class="btn btn-warning showinfo" title=" <img style='width:100px;height:100px' src='${pageContext.request.contextPath}/img/${orderScane.dzUser.mypig}'>"
+                                           data-container="body" data-toggle="popover" data-content="<div class='row'><div class=col-sm-4>手机</div><div class=col-sm-7>${orderScane.dzUser.phone}</div></div>
+                                           <div class='row'><div class=col-sm-4>固话</div><div class=col-sm-7>${orderScane.dzUser.filexPhone}</div></div>
+                                           <div class='row'><div class=col-sm-4>qq</div><div class=col-sm-7>${orderScane.dzUser.qq}</div></div>
+                                           <div class='row'><div class=col-sm-4>邮箱</div><div class=col-sm-7>${orderScane.dzUser.mail}</div></div>
 																	">
                                         查看联系方式
                                     </a></td>

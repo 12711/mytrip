@@ -158,10 +158,10 @@
     </div>
 
 </div>
-<div class="row">
+<div class="row" >
     <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-        <hr/>
+    <div class="col-sm-8" >
+
     </div>
     <div class="col-sm-2"></div>
 </div>
@@ -171,10 +171,10 @@
     <%--热门相册--%>
     <div class="col-sm-10 " style="margin-left: -20px">
         <div class="col-sm-8">
-            <div class="col-md-12 column">
+            <div class="col-md-12 column" >
                 <div class="col-md-12 column">
                     <div class="page-header"
-                         style="margin-left: -10px;margin-top: -10px">
+                         style="margin-left: -10px;margin-top: -10px;border-bottom: 2px solid #fa7a20;">
                         <h1>
                             上榜相册
                         </h1>
@@ -185,17 +185,15 @@
                         <div class="col-md-6" style="height: 340px">
                             <div class="thumbnail">
                                 <div style="width: 323px;height: 200px;overflow: hidden" onclick="clickImg(${a.id},'${a.userShowInfo.userName}')">
-                                <img alt="300x200" style="width: 100%;height: auto" title="${a.desc}"
+                                <img alt="300x200" style="width: 100%;height: auto" title="${a.desc}" data-toggle="tooltip" data-placement="right" title="${a.desc}"
                                      src="${pageContext.request.contextPath}/album/${a.cover}"/>
                                 </div>
-                                <div >
-                                    <h3>
-                                        ${a.name}
-                                        <span style="font-size: 10px;color:grey">${a.userShowInfo.userName}发表于${a.createTime}</span>
-                                    </h3>
+                                <div style="margin-top: 20px"><a href="javaScript:;" rel="drevil" title="<img height='50' width='50' src='${pageContext.request.contextPath}/img/${a.userShowInfo.mypig}'><span style='position: relative;top: 20px;'>${a.userShowInfo.userName}<span>" data-content="<div class='row'><span>相册名:</span>${a.name}</div><div class='row'><span>创建于</span>${a.createTime}</div>" class="btn btn-warning">查看</a></div>
 
-                                </div>
                             </div>
+
+
+
                         </div>
                     </c:forEach>
                 </div>
@@ -205,7 +203,7 @@
         <div class="col-sm-4">
             <div class="row clearfix"
                  style="margin-left: 35px;border: 1px solid gainsboro;width: 250px;max-height: 668px;min-height: 450px;">
-                <div style="margin-left: 10px"><h1 style="text-underline:dash ">
+                <div style="margin-left: 10px;border-bottom: 2px solid #fa7a20;"><h1 style="text-underline:dash ">
                     热门日志</h1></div>
                 <div class="col-md-12 column" style="margin-left: 5px">
                     <ul id="logul">
@@ -219,6 +217,33 @@
 <script>
 
     $(function () {
+        $("[rel=drevil]").popover({
+            trigger:'manual',
+            placement : 'right', //placement of the popover. also can use top, bottom, left or right
+            title : '<div style="text-align:center; color:red; text-decoration:underline; font-size:14px;"> Muah ha ha</div>', //this is the top title bar of the popover. add some basic css
+            html: 'true', //needed to show html of course
+            //content : '<div id="popOverBox"><img src="http://www.hd-report.com/wp-content/uploads/2008/08/mr-evil.jpg" width="251" height="201" /></div>', //this is the content of the html box. add the image here or anything you want really.
+            animation: false
+        }).on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(this).siblings(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide")
+                }
+            }, 100);
+        });
+
+         $("[data-toggle='tooltip']").tooltip();
+
+         $('[data-toggle="popover"]').popover();
+        $("#example").popover();
+
         if (${loginErrorInfoFR!=null}) {
             alert('${loginErrorInfoFR}');
         }
