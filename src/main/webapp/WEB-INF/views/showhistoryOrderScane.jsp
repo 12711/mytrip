@@ -38,7 +38,9 @@
             <hr style="width: 150px;margin-left: 0px"/>
             <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByidStatus/${userInfo.uid}">审批预约</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
-            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史预约记录</a></li>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史处理记录</a></li>
+            <hr style="width: 150px;margin-left: 0px"/>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPageykid/${userInfo.uid}">历史申请记录</a></li>
 
         </ul>
     </div>
@@ -62,6 +64,7 @@
                                 <caption>预约审核</caption>
                                 <thead>
                                 <tr>
+                                    <th>编号</th>
                                     <th>景点名</th>
                                     <th>游玩日期</th>
                                     <th>预定日期</th>
@@ -74,6 +77,7 @@
                                 <c:forEach items="${orderScanes}" var="orderScane">
 
                                 <tr>
+                                    <td>${orderScane.order_id}</td>
                                     <td>${orderScane.userScane.sName}</td>
                                     <td>${orderScane.travleTime}</td>
                                     <td>${orderScane.posttime}</td>

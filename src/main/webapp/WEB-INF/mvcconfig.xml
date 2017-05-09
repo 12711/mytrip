@@ -12,6 +12,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.lsm.trip.controllers"/>
+    <context:component-scan base-package="com.lsm.trip.WebSocket" />
 
     <!-- 静态资源处理 -->
     <mvc:default-servlet-handler />

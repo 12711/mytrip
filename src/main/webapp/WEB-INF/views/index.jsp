@@ -17,7 +17,7 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="${pageContext.request.contextPath}/js/sweetalert.min.js"></script>
-
+    <script src="${pageContext.request.contextPath}/js/sockjs.js"></script>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
@@ -70,6 +70,30 @@
             line-height: 32px;
             margin-left: -20px;
             text-align: center;
+        }
+        #showOrderInfo{
+            font-size: 10px;
+            position: absolute;
+            top: 50px;
+            left: 23px;
+            min-width: 8px;
+            height: 20px;
+            line-height: 20px;
+            margin-top: -11px;
+            padding: 0 6px;
+            font-weight: normal;
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+            background: #e23442;
+            border: 1px solid #911f28;
+            border-radius: 11px;
+            background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
+            background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
+            background-image: -o-linear-gradient(top, #e8616c, #dd202f);
+            background-image: linear-gradient(to bottom, #e8616c, #dd202f);
+            -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+            box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
         }
     </style>
 </head>
@@ -147,7 +171,7 @@
             </div>
         <div class="modal fade" id="modal-container-964764" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content" style="width:500px ">
+                <div class="modal-content" style="width:600px ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title" id="myModalLabel">
@@ -210,7 +234,27 @@
                 <a href="${pageContext.request.contextPath}/scane/inter/getScanes" style="color:#AFD9EE "><h1 > <label><span  class="glyphicon glyphicon-new-window"></span></label></h1><h4><span >景点</span></h4></a>
             </li>
             <li>
-                <a href="# " style="color:#AFD9EE "><h1 > <label><span  class="glyphicon glyphicon-comment "></span></label></h1><h4><span >消息</span></h4></a>
+                <a href="#orderinfo" style="color:#AFD9EE " data-toggle="modal"><h1 > <label><span  class="glyphicon glyphicon-comment "></span><span id="showOrderInfo" style="display: none;"></span></label></h1><h4><span >消息</span></h4></a>
+                <div class="modal fade" id="orderinfo" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:500px ">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" >
+                                    <span>消息夹</span>
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="orderinfoList">
+                                  <div class="row">
+                                      <div class="col-sm-10">
+                                      </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/log/inter/logList" style="color:#AFD9EE "><h1 > <label><span  class="glyphicon glyphicon-list-alt "></span></label></h1><h4><span >日志</span></h4></a>
@@ -222,6 +266,147 @@
 
 </div>
 <script>
+
+    var websocket;
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://localhost:8088/webSocketServer");
+    } else if ('MozWebSocket' in window) {
+        websocket = new MozWebSocket("ws://localhost:8088/webSocketServer");
+    } else {
+        websocket = new SockJS("http://localhost:8088/sockjs/webSocketServer");
+    }
+    websocket.onopen = function (evnt) {
+    };
+    websocket.onmessage = function (evnt) {
+
+        var datas=evnt.data.split("&&");
+
+        console.log("-------"+datas[0])
+
+        var a=datas[1];
+        console.log("--evnt.data-"+a.lastIndexOf("="));
+
+        var data=$.parseJSON(datas[0])
+
+        var num=a[5];
+        console.log(typeof data)
+        console.log(data.length==undefined);
+
+        if(typeof data =="object"&&data.length==1){
+            var status="";
+            if(data[0].status=="1"){
+                status="已过期";
+            }else if(data[0].status=="2"){
+                status="已完成";
+            }else if(data[0].status=="4"){
+                status="已拒绝";
+            }else if(data[0].status=="3"){
+                status="已同意";
+            }
+            if(num==1){
+                console.log("是object and num =1");
+                console.log(data)
+                if(data.length==0) {
+                    $("#showOrderInfo").text("");
+                    $("#showOrderInfo").css("display","none");
+                }else {
+                    $("#showOrderInfo").text("1");
+                    $("#showOrderInfo").css("display","block");
+                    $("#orderinfoList").html("");
+                    $("#orderinfoList").append("<div class='row' id='"+data[0].order_id+"'><div class='col-sm-9'>您于<span>"+data[0].posttime+"</span>申请的旅游(申请编号为"+data[0].order_id+")"+status+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data[0].order_id+")'>标记已查看</a></div></div>");
+
+                }
+            }
+
+
+        }else if(typeof data=="object"&&data.length>1){
+            console.log("array and num =1")
+            console.log(data)
+
+            if(data.length==0) {
+                $("#showOrderInfo").text("");
+                $("#showOrderInfo").css("display","none");
+            }else {
+                $("#showOrderInfo").text(data.length);
+                $("#showOrderInfo").css("display","block");
+                $("#orderinfoList").html("");
+                for(var i=0;i<data.length;i++){
+                    var status="";
+                    if(data[i].status=="1"){
+                        status="已过期";
+                    }else if(data[i].status=="2"){
+                        status="已完成";
+                    }else if(data[i].status=="4"){
+                        status="已拒绝";
+                    }else if(data[i].status=="3"){
+                        status="已同意";
+                    }
+                  $("#orderinfoList").append("<div class='row' id='"+data[i].order_id+"'><div class='col-sm-9'>您于<span>"+data[i].posttime+"</span>申请的旅游(申请编号为"+data[i].order_id+")"+status+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data[i].order_id+")'>标记已查看</a></div></div>");
+                }
+            }
+        }else if(typeof data=="object"&&data.length==undefined){
+            $("#showOrderInfo").css("display","block");
+            var status="";
+            if(data.status=="1"){
+                status="已过期";
+            }else if(data.status=="2"){
+                status="已完成";
+            }else if(data.status=="4"){
+                status="已拒绝";
+            }else if(data.status=="3"){
+                status="已同意";
+            }
+            swal("注意", "你有一条新消息", "success");
+            $("#showOrderInfo").css("display", "block");
+            if ($("#showOrderInfo").text() === "") {
+                val = 0;
+            } else {
+                val = $("#showOrderInfo").text() * 1;
+            }
+            var val = val + 1;
+            $("#showOrderInfo").text(val);
+            $("#orderinfoList").append("<div class='row' id='"+data.order_id+"'><div class='col-sm-9'>您于<span>"+data.posttime+"</span>申请的旅游(申请编号为"+data.order_id+")"+status+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data.order_id+")'>标记已查看</a></div></div>");
+
+        }else{
+            $("#showOrderInfo").css("display","none");
+        }
+    };
+    websocket.onerror = function (evnt) {
+    };
+    websocket.onclose = function (evnt) {
+
+    }
+
+
+    //已查看
+    function hasRead(obj) {
+        $.ajax({
+            url:"${pageContext.request.contextPath}/orderScane/updateIsRead/"+obj,
+            type:"post",
+            dataType:'json',
+            success:function(data){
+                if(data==="1"){
+                    swal("success","操作成功","success");
+                    var val=$("#showOrderInfo").text();
+                    if(val===""||val=="0"){
+                        val=0;
+                        $("#showOrderInfo").css("display", "none");
+                    }else if((val*1-1)==0){
+                        $("#showOrderInfo").css("display", "none");
+                    }else{
+                        $("#showOrderInfo").text(val*1-1)
+                    }
+
+
+                    $("#"+obj).remove();
+                }else {
+                    swal("error","操作失败","error");
+                }
+            }
+        });
+    }
+
+
    $(function(){
        //发送验证码
        $("#pass-button-new1").click(function () {

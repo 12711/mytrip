@@ -22,7 +22,7 @@
     </select>
 
     <select id="getOrderScaneByDzidStatus" parameterType="int" resultMap="orderScaneMap">
-        SELECT *FROM order_scane WHERE dz_id=#{uid} AND status=0 OR status=3
+        SELECT *FROM order_scane WHERE dz_id=#{uid} AND status in(0,3)
     </select>
 
     <update id="updateOrderStatus" parameterType="OrderScane">
@@ -30,7 +30,7 @@
     </update>
 
     <select id="count"  resultType="int">
-        SELECT count(*) FROM order_scane WHERE status in(1,2,3)
+        SELECT count(*) FROM order_scane WHERE dz_id=#{dzid} AND status in(1,2,3)
     </select>
     
 
@@ -40,6 +40,31 @@
     
     <select id="gerOrderScanes" resultMap="orderScaneMap" >
          SELECT *FROM order_scane WHERE status=0
+    </select>
+
+    <select id="getOrderScaneByOidandIsread" parameterType="int" resultMap="orderScaneMap">
+        SELECT * FROM order_scane WHERE yk_id=#{oid} and isreadmess=0 AND status in(1,2,3,4)
+    </select>
+    
+    <select id="getOrderScaneByOid" parameterType="int" resultMap="orderScaneMap">
+        SELECT * FROM order_scane WHERE order_id=#{oid}
+    </select>
+
+    <update id="updateOrderScane" parameterType="OrderScane">
+         UPDATE order_scane
+         <set>
+             <if test="status!=null and status!=''">status=#{status},</if>
+             <if test="isReadMess!=null and isReadMess!=''">isreadmess=#{isReadMess},</if>
+         </set>
+        WHERE order_id=#{order_id}
+    </update>
+
+    <select id="getOrderScaneByykId" parameterType="PageHelpPojo" resultMap="orderScaneMap">
+        SELECT *FROM order_scane WHERE yk_id=#{param} limit #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="countByykid" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM order_scane WHERE yk_id=#{ykid}
     </select>
 
  </mapper>

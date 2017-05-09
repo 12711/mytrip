@@ -39,9 +39,10 @@
             <hr style="width: 150px;margin-left: 0px"/>
             <li class="li_style"><a href=#">审批预约</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
-            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史预约记录</a></li>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史处理记录</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
-            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">我的预约记录</a></li>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPageykid/${userInfo.uid}">历史申请记录</a></li>
+
         </ul>
     </div>
     <div class="col-sm-8" style="margin-left: -30px">
@@ -97,16 +98,17 @@
                                            <div class='row'><div class=col-sm-4>固话</div><div class=col-sm-7>${orderScane.ykUser.filexPhone}</div></div>
                                            <div class='row'><div class=col-sm-4>qq</div><div class=col-sm-7>${orderScane.ykUser.qq}</div></div>
                                            <div class='row'><div class=col-sm-4>邮箱</div><div class=col-sm-7>${orderScane.ykUser.mail}</div></div>
+                                           <a href='${pageContext.request.contextPath}/orderScane/test/{yuid}'>点我</a>
 																	">
                                         查看联系方式
                                     </a></td>
                                     <td>
                                         <c:if test="${orderScane.status==0}" >
-                                        <input type="button" class="btn btn-default" value="同意" onclick="argee(${orderScane.order_id},${userInfo.uid})">
-                                        <input type="button" class="btn btn-danger" value="拒绝" onclick="refause(${orderScane.order_id},${userInfo.uid})">
+                                        <input type="button" class="btn btn-default" value="同意" onclick="argee(${orderScane.order_id},${userInfo.uid},${orderScane.ykUser.uid})">
+                                        <input type="button" class="btn btn-danger" value="拒绝" onclick="refause(${orderScane.order_id},${userInfo.uid},${orderScane.ykUser.uid})">
                                         </c:if>
                                         <c:if test="${orderScane.status==3}">
-                                            <input type="button" class="btn btn-default" value="完成旅游" onclick="finsh(${orderScane.order_id},${userInfo.uid})">
+                                            <input type="button" class="btn btn-default" value="完成旅游" onclick="finsh(${orderScane.order_id},${userInfo.uid},${orderScane.ykUser.uid})">
 
                                         </c:if>
                                     </td>
@@ -129,7 +131,7 @@
 <jsp:include page="footer.jsp" flush="true"></jsp:include>
 
 <script>
-    function finsh(obj,uid) {
+    function finsh(obj,uid,yuid) {
         swal({
             title: "注意",
             text: "您确定已完成旅游吗？",
@@ -139,10 +141,10 @@
             confirmButtonText: "是的",
             confirmButtonColor: "#ec6c62"
         }, function() {
-            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/2/a";
+            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/2/"+yuid;
         });
     }
-    function argee(obj,uid) {
+    function argee(obj,uid,yuid) {
         swal({
             title: "注意",
             text: "您确定要通过他的预约吗？",
@@ -152,10 +154,10 @@
             confirmButtonText: "是的",
             confirmButtonColor: "#ec6c62"
         }, function() {
-            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/3/a";
+            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/3/"+yuid;
         });
     }
-    function refause(obj,uid) {
+    function refause(obj,uid,yuid) {
         swal({
             title: "注意",
             text: "您确定要拒绝他的预约吗？",
@@ -165,7 +167,7 @@
             confirmButtonText: "是的",
             confirmButtonColor: "#ec6c62"
         }, function() {
-            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/4/d";
+            location.href="${pageContext.request.contextPath}/orderScane/inter/updateStatus/"+obj+"/"+uid+"/4/"+yuid;
         });
     }
     //当用户选择照片是显示预览图

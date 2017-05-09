@@ -42,8 +42,8 @@ public class OrderScaneServiceImpl implements OrderScaneService {
     }
 
     @Override
-    public Integer count() throws Exception {
-        return orderScaneMapper.count();
+    public Integer count(Integer dzid) throws Exception {
+        return orderScaneMapper.count(dzid);
     }
 
     @Override
@@ -54,5 +54,30 @@ public class OrderScaneServiceImpl implements OrderScaneService {
     @Override
     public List<OrderScane> gerOrderScanes() throws Exception {
         return orderScaneMapper.gerOrderScanes();
+    }
+
+    @Override
+    public List<OrderScane> getOrderScaneByOidandIsread(Integer oid) throws Exception {
+        return orderScaneMapper.getOrderScaneByOidandIsread(oid);
+    }
+
+    @Override
+    public OrderScane getOrderScaneByOid(Integer oid) throws Exception {
+        return orderScaneMapper.getOrderScaneByOid(oid);
+    }
+
+    @Override
+    public void updateScaneOrder(OrderScane orderScane) throws Exception {
+        orderScaneMapper.updateIsRead(orderScane);
+    }
+
+    @Override
+    public List<OrderScane> getOrderScaneByykId(PageHelpPojo pageHelpPojo) throws Exception {
+        return orderScaneMapper.getOrderScaneByykId(pageHelpPojo);
+    }
+
+    @Override
+    public Integer countByykid(Integer ykid) throws Exception {
+        return orderScaneMapper.countByykid(ykid);
     }
 }

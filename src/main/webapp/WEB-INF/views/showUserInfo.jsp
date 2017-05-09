@@ -38,8 +38,9 @@
             <hr style="width: 150px;margin-left: 0px"/>
             <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByidStatus/${userInfo.uid}">审批预约</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
-            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史预约记录</a></li>
-
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史处理记录</a></li>
+            <hr style="width: 150px;margin-left: 0px"/>
+            <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPageykid/${userInfo.uid}">历史申请记录</a></li>
         </ul>
     </div>
     <div class="col-sm-8" style="margin-left: -30px">

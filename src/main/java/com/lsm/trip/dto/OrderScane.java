@@ -14,6 +14,15 @@ public class OrderScane {
     private String travleTime;
     private String posttime;
     private Integer status;
+    private Integer isReadMess;
+
+    public Integer getIsReadMess() {
+        return isReadMess;
+    }
+
+    public void setIsReadMess(Integer isReadMess) {
+        this.isReadMess = isReadMess;
+    }
 
     public String getPosttime() {
         return posttime;

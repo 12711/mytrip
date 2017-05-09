@@ -217,6 +217,7 @@
 </div>
 </div>
 <script>
+
     $(function () {
         if (${loginErrorInfoFR!=null}) {
             alert('${loginErrorInfoFR}');
