@@ -12,6 +12,9 @@
         <result column="traveltime" property="travleTime"></result>
         <result column="posttime" property="posttime"></result>
         <result column="status" property="status"></result>
+        <result column="dz_upload" property="dzUpload"></result>
+        <result column="yk_upload" property="ykUpload"></result>
+        <result column="liabilityname" property="liabilityname"></result>
         <association property="dzUser" column="dz_id" select="com.lsm.trip.mappers.UserMapper.getUserInfo"></association>
         <association property="ykUser" column="yk_id" select="com.lsm.trip.mappers.UserMapper.getUserInfo"></association>
         <association property="userScane" column="s_id" select="com.lsm.trip.mappers.UserScaneMapper.getUserScane"></association>
@@ -55,6 +58,11 @@
          <set>
              <if test="status!=null and status!=''">status=#{status},</if>
              <if test="isReadMess!=null and isReadMess!=''">isreadmess=#{isReadMess},</if>
+             <if test="liabilityname!=null and liabilityname!=''">liabilityname=#{liabilityname},</if>
+             <if test="dzUpload!=null and dzUpload!=''">dz_upload=#{dzUpload},</if>
+             <if test="ykUpload!=null and ykUpload!=''">yk_upload=#{ykUpload},</if>
+             <if test="dzuid!=null and dzuid!=''">dz_id=#{dzuid},</if>
+             <if test="ykuid!=null and ykuid!=''">yk_id=#{ykuid},</if>
          </set>
         WHERE order_id=#{order_id}
     </update>

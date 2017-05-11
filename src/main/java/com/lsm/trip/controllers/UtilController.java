@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
 
 /**
  * Created by lv on 2017/5/3.
@@ -61,4 +61,36 @@ public class UtilController {
         }
 
     }
+
+
+    @RequestMapping("/down")
+    public void down(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        //模拟文件，myfile.txt为需要下载的文件
+        String fileName = request.getSession().getServletContext().getRealPath("zerenshu")+"/家庭互助旅游安全责任书.docx";
+
+        System.out.println("下载文件name---------"+fileName);
+        String [] name=fileName.split("/");
+        System.out.println("下载文件name---------"+name[1]);
+        //获取输入流
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(fileName)));
+        /*//设置文件下载头
+        response.addHeader("Content-Disposition", "attachment;filename="+name[1]);*/
+        if(request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+            response.setHeader("Content-Disposition","attachment;"+ "filename="+ new
+                    String(name[1].getBytes("GBK"),"ISO8859-1"));
+        }else{//firefox、chrome、safari、opera
+            response.setHeader("Content-Disposition","attachment;"+
+                    "filename="+ new String(name[1].getBytes("UTF8"), "ISO8859-1") );
+        }
+        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
+        response.setContentType("multipart/form-data");
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while((len = bis.read()) != -1){
+            out.write(len);
+            out.flush();
+        }
+        out.close();
+    }
 }
+

@@ -15,6 +15,33 @@ public class OrderScane {
     private String posttime;
     private Integer status;
     private Integer isReadMess;
+    private String liabilityname;//存储安全责任书的名字
+    private Integer dzUpload;
+    private Integer ykUpload;
+
+    public String getLiabilityname() {
+        return liabilityname;
+    }
+
+    public void setLiabilityname(String liabilityname) {
+        this.liabilityname = liabilityname;
+    }
+
+    public Integer getDzUpload() {
+        return dzUpload;
+    }
+
+    public void setDzUpload(Integer dzUpload) {
+        this.dzUpload = dzUpload;
+    }
+
+    public Integer getYkUpload() {
+        return ykUpload;
+    }
+
+    public void setYkUpload(Integer ykUpload) {
+        this.ykUpload = ykUpload;
+    }
 
     public Integer getIsReadMess() {
         return isReadMess;

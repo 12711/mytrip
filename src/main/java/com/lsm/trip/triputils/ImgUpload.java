@@ -20,7 +20,6 @@ import java.io.IOException;
  */
 public class ImgUpload {
   public static void uploadImg(String fileName,String realPath,MultipartFile file){
-      File file1=new File("realPath");
       String path=realPath+"\\"+fileName;
 
       try {

@@ -8,11 +8,34 @@
         <result column="id" property="id"></result>
         <result column="imgname" property="name"></result>
         <result column="uploadtime" property="uploadTime"></result>
+        <result column="h_id" property="h_id"></result>
     </resultMap>
 
     <insert id="uploadImg" parameterType="Imges">
-        INSERT INTO imges(imgname,uploadtime,al_id)
-        VALUES (#{name},sysdate(),#{alId})
+        INSERT INTO imges(
+        <trim suffixOverrides=",">
+        imgname,uploadtime,
+        <if test="alId!=null and alId!=''" >
+            al_Id,
+        </if>
+        <if test="h_id!=null and h_id!=''" >
+            h_id,
+        </if>
+        </trim>
+        )
+        VALUES (
+        <trim suffixOverrides=",">
+            #{name},sysdate(),
+            <if test="alId!=null and alId!=''" >
+                #{alId},
+            </if>
+            <if test="h_id!=null and h_id!=''" >
+                #{h_id},
+            </if>
+        </trim>
+
+        )
+
     </insert>
 
     <select id="getImgesById" parameterType="Integer" resultMap="imgMap">
@@ -22,5 +45,9 @@
     <delete id="deleteImgById" parameterType="int">
         DELETE FROM imges where id=#{id}
     </delete>
+
+    <select id="getImgesByHid" parameterType="int" resultMap="imgMap">
+        SELECT *FROM imges where h_id=#{hid}
+    </select>
 
 </mapper>

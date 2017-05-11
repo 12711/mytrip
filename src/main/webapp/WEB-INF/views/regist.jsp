@@ -25,7 +25,7 @@
                        <label class="col-sm-2"></label>
                        <label for="inputEmail3" class="col-sm-2 control-label">用户名:</label>
                        <div class="col-sm-3">
-                           <input type="text" class="form-control" name="userName" id="inputEmail3" />
+                           <input type="text" class="form-control" name="userName" id="inputEmail3" placeholder="输入用户名..." />
                        </div>
                        <label class="col-sm-4" id="nameInfo" style="margin-left: 15px;margin-top: 8px"></label>
                    </div>
@@ -33,7 +33,7 @@
                        <label class="col-sm-2"></label>
                        <label for="inputPassword3" class="col-sm-2 control-label">密码:</label>
                        <div class="col-sm-3">
-                           <input type="password" class="form-control" name="passWord" id="inputPassword3" />
+                           <input type="password" class="form-control" name="passWord" id="inputPassword3" placeholder="输入密码格式为大于6个字符"/>
                        </div>
                        <label class="col-sm-4" id="passwordInfo" style="margin-left: 15px;margin-top: 8px"></label>
                    </div>
@@ -42,7 +42,7 @@
                        <label class="col-sm-2"></label>
                        <label for="rePassword3" class="col-sm-2 control-label">确认密码</label>
                        <div class="col-sm-3">
-                           <input type="password" class="form-control"  id="rePassword3" />
+                           <input type="password" class="form-control"  id="rePassword3" placeholder="确认密码...." />
                        </div>
                        <label class="col-sm-4" id="repasswordInfo" style="margin-left: 15px;margin-top: 8px"></label>
                    </div>
@@ -50,7 +50,7 @@
                        <label class="col-sm-2"></label>
                        <label for="realName" class="col-sm-2 control-label">真实姓名:</label>
                        <div class="col-sm-3">
-                           <input type="text" class="form-control" required name="realName" id="realName13" />
+                           <input type="text" class="form-control" required name="realName" id="realName13" placeholder="输入你的真实姓名" />
                        </div>
                        <label class="col-sm-4" id="realName" style="margin-left: 15px;margin-top: 8px"></label>
                    </div>
@@ -70,7 +70,7 @@
                        <label class="col-sm-2"></label>
                        <label for="phone" class="col-sm-2 control-label">手机</label>
                        <div class="col-sm-3">
-                           <input type="text" class="form-control" name="phone" id="phone" />
+                           <input type="text" class="form-control" name="phone" id="phone" placeholder="输入你的手机号.."/>
                        </div>
                        <label class="col-sm-4" id="phoneInfo" style="margin-left: 15px;margin-top: 8px"></label>
                    </div>

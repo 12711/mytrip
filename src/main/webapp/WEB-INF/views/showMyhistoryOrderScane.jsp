@@ -70,7 +70,7 @@
                                     <th>预定日期</th>
                                     <th>地主</th>
                                     <th>状态</th>
-                                    <th>查看</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -109,6 +109,22 @@
 																	">
                                         查看联系方式
                                     </a></td>
+                                    <td>
+                                        <c:if test="${orderScane.status==3}">
+                                        <div class="row">
+
+                                            <div class="col-sm-2" id="btntoshow">
+                                                <input type="button" class="btn btn-default" value="上传安全协议书" onclick="showUploadbtn(this)">
+                                            </div>
+                                            <div id="showUploadbtn"class="col-sm-6" style="display: none">
+                                                <form id="uploadForm" >
+                                                    <input type="hidden" value="${orderScane.order_id}" name="oid" id="oidval">
+                                                    <input type="file" name="liabilityname" id="liabilityname"><input type="button" value="上传" id="uploadBtn">
+                                                </form>
+                                            <div>
+                                         </div>
+                                        </c:if>
+                                    </td>
 
                                 </tr>
 
@@ -141,6 +157,10 @@
 <jsp:include page="footer.jsp" flush="true"></jsp:include>
 
 <script>
+    function showUploadbtn(obj) {
+        $("#btntoshow").css("display","none");
+        $("#showUploadbtn").css("display","block");
+    }
     function argee(obj,uid) {
         swal({
             title: "注意",
@@ -188,6 +208,27 @@
 
 
     $(function () {
+        $("#uploadBtn").click(function () {
+            var formData = new FormData($("#uploadForm")[0]);
+            $.ajax({
+                url:"${pageContext.request.contextPath}/orderScane/uploadfile/yk",
+                data:formData,
+                type:"post",
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success:function (data) {
+                    if(data==="1"){
+                        swal("success","上传成功","success");
+                    }else if(data=="2"){
+                        swal("error","这次旅游申请的安全协议以上传","error");
+                    }else {
+                        swal("error","服务器错误!","error");
+                    }
+                }
+            });
+        });
         $(".showinfo").popover({html : true });
         var province = $("#province")[0];
         var city = $("#city")[0];

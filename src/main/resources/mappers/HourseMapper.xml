@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lsm.trip.mappers.HourseMapper">
+  <insert id="addHourse" parameterType="Hourse" useGeneratedKeys="true" keyColumn="hid" keyProperty="hid">
+     INSERT INTO hourse(content,u_id)VALUES (#{content},#{uid})
+  </insert>
+
+    <update id="modifyHourse" parameterType="Hourse">
+        UPDATE hourse
+        <set>
+            <if test="content!=null and content !=''" >content=#{content},</if>
+            <if test="uid!=null and uid !=''" >u_id=#{uid},</if>
+            <if test="isOverFlow!=null and isOverFlow !=''" >isoverflow=#{isOverFlow},</if>
+        </set>
+        WHERE hid=#{hid}
+    </update>
+    <resultMap id="hourseMap" type="Hourse">
+        <id column="hid" property="hid"></id>
+        <result column="content" property="content"></result>
+        <result column="u_id" property="uid"></result>
+        <result column="isoverflow" property="isOverFlow"></result>
+        <result column="updateTime" property="updateTime"></result>
+    </resultMap>
+    <select id="getHourseByUid" parameterType="Hourse" resultMap="hourseMap">
+        SELECT *FROM hourse WHERE u_id=#{hid}
+    </select>
+
+</mapper>

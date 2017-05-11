@@ -41,7 +41,7 @@
             <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPage/${userInfo.uid}">历史处理记录</a></li>
             <hr style="width: 150px;margin-left: 0px"/>
             <li class="li_style"><a href="${pageContext.request.contextPath}/orderScane/inter/getOrderScaneByPageykid/${userInfo.uid}">历史申请记录</a></li>
-        </ul>
+           </ul>
     </div>
     <div class="col-sm-8" style="margin-left: -30px">
         <div class="tabbable" id="tabs-637123">
@@ -54,6 +54,9 @@
                 </li>
                 <li>
                     <a href="#panel-568573" data-toggle="tab">修改密码</a>
+                </li>
+                <li>
+                    <a href="#panel-568574" data-toggle="tab">安全责任书下载</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -190,6 +193,12 @@
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <div class="tab-pane" id="panel-568574" style="height: 300px">
+                    <div style="margin-top: 20px;margin-left: 100px">
+                         <a href="${pageContext.request.contextPath}/code/down">点击下载模板</a>
+                    </div>
                 </div>
             </div>
 

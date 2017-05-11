@@ -15,6 +15,15 @@ public class Imges {
     private String name;
     private String uploadTime;
     private Integer alId;
+    private Integer h_id;
+
+    public Integer getH_id() {
+        return h_id;
+    }
+
+    public void setH_id(Integer h_id) {
+        this.h_id = h_id;
+    }
 
     public Integer getId() {
         return id;

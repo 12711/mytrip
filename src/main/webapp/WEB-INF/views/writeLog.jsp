@@ -9,7 +9,7 @@
 <%@ include file="index.jsp"%>
 <html>
 <head>
-    <script src="${pageContext.request.contextPath}/ck/ckeditor/ckeditor.js"></script>
+   <%-- <script src="${pageContext.request.contextPath}/ck/ckeditor/ckeditor.js"></script>--%>
         <%--<script src="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>--%>
    <title>写日志</title>
 

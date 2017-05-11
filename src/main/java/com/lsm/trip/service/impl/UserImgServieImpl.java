@@ -36,4 +36,9 @@ public class UserImgServieImpl implements UserImgService {
     public void deleteByID(Integer id) throws Exception {
         userImgMapper.deleteImgById(id);
     }
+
+    @Override
+    public List<Imges> getImgesByHid(Integer hid) throws Exception {
+        return userImgMapper.getImgesByHid(hid);
+    }
 }

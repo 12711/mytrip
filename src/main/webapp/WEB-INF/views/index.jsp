@@ -18,9 +18,11 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="${pageContext.request.contextPath}/js/sweetalert.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/sockjs.js"></script>
+    <script src="${pageContext.request.contextPath}/ck/ckeditor/ckeditor.js"></script>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+
     <![endif]-->
     <style type="text/css">
         #header {
@@ -171,7 +173,7 @@
             </div>
         <div class="modal fade" id="modal-container-964764" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content" style="width:480px ">
+                <div class="modal-content" style="width:500px ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title" id="myModalLabel">
@@ -196,7 +198,7 @@
                             <div class="form-group" style="width: 450px;display: none" id="codeGroup">
                                         <label  for="code" class="col-sm-2 control-label">验证码</label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="code" id="code">
+                                            <input type="text" style="width: 230px;" class="form-control" name="code" id="code">
                                         </div>
                                         <div  class="col-sm-3" style="margin-left: -17px"><img src="${pageContext.request.contextPath}/code/getCodeImg" onclick="refresh(this)" id="codeIng"></div>
                             </div>
@@ -227,6 +229,42 @@
     </div>
     <div class="col-lg-8 " id="test ">
         <ul class="nav navbar-nav navbar-right " style="margin-right: 60px; ">
+            <c:if test="${userInfo!=null}">
+            <li>
+                <a href="javaScript:void(0)" id="hourseButton" style="color:#AFD9EE "><h1 > <label ><span  class="glyphicon glyphicon-globe"></span></label></h1><h4><span >住房</span></h4></a>
+                <div class="modal fade" id="createHourse" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:500px ">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" >
+                                    <span>发布住房信息</span>
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div >
+                                    <form action="${pageContext.request.contextPath}/hourse/inter/addhourse" method="post">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <textarea id="createhoursetext" name="content"></textarea>
+                                            <script  type="text/javascript">
+                                                var ckeditor= CKEDITOR.replace("createhoursetext");
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <input type="submit" value="发布" >
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            </c:if>
             <li>
                 <a href="${pageContext.request.contextPath}/album/inter/getAlbums" style="color:#AFD9EE "><h1 > <label ><span  class="glyphicon glyphicon-envelope "></span></label></h1><h4><span >相册</span></h4></a>
             </li>
@@ -294,6 +332,7 @@
 
         if(typeof data =="object"&&data.length==1){
             var status="";
+            var moreInfo="";
             if(data[0].status=="1"){
                 status="已过期";
             }else if(data[0].status=="2"){
@@ -302,6 +341,8 @@
                 status="已拒绝";
             }else if(data[0].status=="3"){
                 status="已同意";
+                moreInfo="请尽快进入:个人信息/个人信息/下载安全责任书模板,下载后填写并拍照上传";
+
             }
             if(num==1){
                 console.log("是object and num =1");
@@ -313,7 +354,7 @@
                     $("#showOrderInfo").text("1");
                     $("#showOrderInfo").css("display","block");
                     $("#orderinfoList").html("");
-                    $("#orderinfoList").append("<div class='row' id='"+data[0].order_id+"'><div class='col-sm-9'>您于<span>"+data[0].posttime+"</span>申请的旅游(申请编号为"+data[0].order_id+")"+status+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data[0].order_id+")'>标记已查看</a></div></div>");
+                    $("#orderinfoList").append("<div class='row' id='"+data[0].order_id+"' style='border-bottom: 1px dashed gray;'><div class='col-sm-9'>您于<span>"+data[0].posttime+"</span>申请的旅游(申请编号为"+data[0].order_id+")"+status+"&nbsp;&nbsp;"+moreInfo+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data[0].order_id+")'>标记已查看</a></div></div>");
 
                 }
             }
@@ -332,6 +373,7 @@
                 $("#orderinfoList").html("");
                 for(var i=0;i<data.length;i++){
                     var status="";
+                    var moreInfo="";
                     if(data[i].status=="1"){
                         status="已过期";
                     }else if(data[i].status=="2"){
@@ -340,13 +382,15 @@
                         status="已拒绝";
                     }else if(data[i].status=="3"){
                         status="已同意";
+                        moreInfo="请尽快进入:个人信息/个人信息/下载安全责任书模板,下载后填写并拍照上传";
                     }
-                  $("#orderinfoList").append("<div class='row' id='"+data[i].order_id+"'><div class='col-sm-9'>您于<span>"+data[i].posttime+"</span>申请的旅游(申请编号为"+data[i].order_id+")"+status+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data[i].order_id+")'>标记已查看</a></div></div>");
+                  $("#orderinfoList").append("<div class='row' id='"+data[i].order_id+"' style='border-bottom: 1px dashed gray;'><div class='col-sm-9'>您于<span>"+data[i].posttime+"</span>申请的旅游(申请编号为"+data[i].order_id+")"+status+"&nbsp;&nbsp;"+moreInfo+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data[i].order_id+")'>标记已查看</a></div></div>");
                 }
             }
         }else if(typeof data=="object"&&data.length==undefined){
             $("#showOrderInfo").css("display","block");
             var status="";
+            var moreInfo="";
             if(data.status=="1"){
                 status="已过期";
             }else if(data.status=="2"){
@@ -355,6 +399,8 @@
                 status="已拒绝";
             }else if(data.status=="3"){
                 status="已同意";
+                moreInfo="请尽快进入:个人信息/个人信息/下载安全责任书模板,下载后填写并拍照上传";
+
             }
             swal("注意", "你有一条新消息", "success");
             $("#showOrderInfo").css("display", "block");
@@ -365,7 +411,7 @@
             }
             var val = val + 1;
             $("#showOrderInfo").text(val);
-            $("#orderinfoList").append("<div class='row' id='"+data.order_id+"'><div class='col-sm-9'>您于<span>"+data.posttime+"</span>申请的旅游(申请编号为"+data.order_id+")"+status+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data.order_id+")'>标记已查看</a></div></div>");
+            $("#orderinfoList").append("<div class='row' id='"+data.order_id+"' style='border-bottom: 1px dashed gray;'><div class='col-sm-9'>您于<span>"+data.posttime+"</span>申请的旅游(申请编号为"+data.order_id+")"+status+"&nbsp;&nbsp;"+moreInfo+"</div><div class='col-sm-3'><a href='javascript:void(0)' onclick='hasRead("+data.order_id+")'>标记已查看</a></div></div>");
 
         }else{
             $("#showOrderInfo").css("display","none");
@@ -408,6 +454,35 @@
 
 
    $(function(){
+       $("#hourseButton").click(function () {
+           $.ajax({
+               url:"${pageContext.request.contextPath}/hourse/inter/checkHasHourse",
+               type:"get",
+               success:function (data) {
+
+                   console.log("data----"+data)
+                   if(data==="2"){
+                       location.href="${pageContext.request.contextPath}/hourse/inter/toShowHourse";
+                   }
+                   else if(data==="1"){
+                       swal({
+                           title: "您还未发布住房信息？",
+                           text: "您是否现在发布？",
+                           type: "warning",
+                           showCancelButton: true,
+                           closeOnConfirm: true,
+                           confirmButtonText: "是的，我要发布",
+                           confirmButtonColor: "#ec6c62"
+                       }, function() {
+
+                           $("#createHourse").modal('show');
+                       });
+                   }else{
+                       swal("error","服务器错误","error");
+                   }
+               }
+           });
+       });
        //发送验证码
        $("#pass-button-new1").click(function () {
            var userName=$("#userforgetName").val();

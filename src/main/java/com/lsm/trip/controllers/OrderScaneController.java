@@ -5,10 +5,12 @@ import com.lsm.trip.WebSocket.SystemWebSocketHandler;
 import com.lsm.trip.dto.OrderScane;
 import com.lsm.trip.dto.PageHelpPojo;
 import com.lsm.trip.service.OrderScaneService;
+import com.lsm.trip.triputils.ImgUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.socket.TextMessage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -143,6 +145,49 @@ public class OrderScaneController {
             e.printStackTrace();
         }finally {
             return "showMyhistoryOrderScane";
+        }
+    }
+
+
+    @RequestMapping(value = "/uploadfile/{type}",method = RequestMethod.POST)
+    @ResponseBody
+    public  String uploadfile(@PathVariable("type") String type,@RequestParam("oid") Integer oid,@RequestParam("liabilityname")MultipartFile file,HttpServletRequest request){
+         System.out.println("oid in  upload==="+oid+"==="+type);
+        System.out.println("file.getOriginalFilename() in  upload==="+file.getOriginalFilename());
+        String realFileName=file.getOriginalFilename();
+        String realPath=request.getServletContext().getRealPath("zerenshu");
+        try {
+            ImgUpload.uploadImg(realFileName, realPath, file);
+            OrderScane orderScane=new OrderScane();
+            OrderScane orderScaneFormDb=orderScaneService.getOrderScaneByOid(oid);
+            System.out.println("orderScaneFormDb in  upload==="+orderScaneFormDb.getYkuid());
+            if("dz".equals(type)) {
+                if (orderScaneFormDb.getDzUpload() == 0) {
+                    //此为地主操作
+                    orderScane.setDzUpload(1);
+                    orderScane.setLiabilityname(realFileName);
+                    orderScane.setOrder_id(oid);
+                    orderScaneService.updateScaneOrder(orderScane);
+                    return "1";
+                } else {
+                    return "2";
+                }
+            }else {
+                if (orderScaneFormDb.getYkUpload() == 0) {
+                    //此为地主操作
+                    orderScane.setYkUpload(1);
+                    orderScane.setLiabilityname(realFileName);
+                    orderScane.setOrder_id(oid);
+                    orderScaneService.updateScaneOrder(orderScane);
+                    return "1";
+                } else {
+                    return "2";
+                }
+            }
+
+        }catch (Exception e){
+          e.printStackTrace();
+          return "0";
         }
     }
 

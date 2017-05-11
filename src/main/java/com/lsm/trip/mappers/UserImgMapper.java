@@ -22,4 +22,6 @@ public interface UserImgMapper {
     List<Imges> getImgesById(@Param("id") Integer id)throws Exception;
     //通过ID删除照片
     void deleteImgById(@Param("id")Integer id)throws Exception;
+    //通过房子ID查询房子的图片信息
+    List<Imges> getImgesByHid(@Param("hid") Integer hid)throws Exception;
 }

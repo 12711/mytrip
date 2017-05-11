@@ -68,7 +68,7 @@ public class OrderScaneServiceImpl implements OrderScaneService {
 
     @Override
     public void updateScaneOrder(OrderScane orderScane) throws Exception {
-        orderScaneMapper.updateIsRead(orderScane);
+        orderScaneMapper.updateOrderScane(orderScane);
     }
 
     @Override
