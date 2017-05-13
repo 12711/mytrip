@@ -57,14 +57,52 @@
     <%--日志主题部分--%>
     <div class="row" style="margin-top: 20px;color: #2e6da4;background-color: #fffbe4">
         <div class="col-sm-2" style="margin-left: 50px;"><span style="text-shadow: 1px 1px 1px rgba(0,0,0,.2);font-size: 20px;"><h3>我的房屋信息</h3></span></div>
-        <div class="col-sm-7 .hidden-md"></div>
+        <div class="col-sm-7"><h4 style="margin-top: 20px;">公告:你来我即让你如家一般,但是如果人数较多后面的兄弟可能住宿自理</h4></div>
+       <c:if test="${hourse.uid==userInfo.uid}">
+        <div class="col-sm-2" style="margin-top: 20px"><a  href="#modal-container-update-hourse" id="hourse" data-toggle="modal">修改房屋信息</a></div>
+       </c:if>
+        <div class="modal fade"  id="modal-container-update-hourse" aria-hidden="true" role="dialog" aria-labelledby="myModalLabel2">
+            <div class="modal-dialog">
+                <div class="modal-content" style="min-height: 400px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div >
+                            <form id="updateHourderForm" action="${pageContext.request.contextPath}/hourse/updatehourseinfo" method="post"  onsubmit="return isnull();">
+                                <div  style="margin-left: 20px">
+                                    <div class="form-group" style="margin-top: 20px">
+                                        <label for="updatecontent" class="col-sm-2 control-label">内容</label>
+                                        <div class="col-sm-10">
+                                            <textarea id="hoursecontent" name="content" required id="updatecontent"></textarea>
+                                            <div id="hoursecontentval" style="display: none">${hourse.content}</div>
+                                            <script>
+                                                var ckeditor= CKEDITOR.replace("hoursecontent");
+                                                var content=$("#hoursecontentval").html();
+                                                ckeditor.setData(content);
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="hid" value="${hourse.hid}">
+                                </div>
+                                <div class="modal-footer" style="border-top:none">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="submit" id="hourseupdate" class="btn btn-primary">修改</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div>
         <div class="col-md-12 column">
             <div class="row">
                 <div class="row">
                     <div class="col-md-12 column" style="min-height:200px;">
-                        ${hourse.content}
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-10" style="margin-top: 20px">${hourse.content}</div>
+                        <div class="col-sm-1"></div>
                     </div>
                     <div class="col-md-12">
                         <div >
@@ -87,7 +125,13 @@
                     <div class="panel-group" id="panel-859591">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-859591" href="#panel-element-286058">点击查看详情图片</a>
+                                <div class="row">
+                                <div class="col-sm-2" style="margin-top: 20px"> <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-859591" href="#panel-element-286058">点击查看详情图片</a></div>
+                                <c:if test="${hourse.uid==userInfo.uid}">
+                                    <div class="col-sm-2" style="margin-top: 20px"><a  href="#modal-container-update-hourse"  id="deleteHourseimg">删除图片</a></div>
+                                    <div class="col-sm-2" style="margin-top: 20px"> <a href="${pageContext.request.contextPath}/hourse/inter/toAddHourseImg?hid=${hourse.hid}">添加照片</a></div>
+                                </c:if>
+                                </div>
                             </div>
                             <div id="panel-element-286058" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -96,15 +140,17 @@
 
                                    </c:if>
                                     <c:if test="${!t}" >
-                                    <div >
+                                    <div  class="row" id="showimgdiv">
                                         <c:forEach items="${imges}"  var="img">
-                                           <div class="col-sm-3" style="margin-left: 30px">
+                                           <div class="col-sm-3" style="margin-left: 30px;margin-top: 20px" id="${img.id}">
                                                <div style="width: 300px;height: auto;overflow: hidden;"><img style="margin-top: 0px" src="${pageContext.request.contextPath}/hourse/${img.name}" data-original="${pageContext.request.contextPath}/hourse/${img.name}"></div>
-                                            </div>
+                                               <input type="checkbox" value="${img.id}" style="display: none;position: absolute;z-index: 102;top: 5px;left: 20px" class="imgCheckBox">
+                                           </div>
 
                                         </c:forEach>
 
                                     </div>
+                                        <div id="hourserimgbtn" class="row" style="display: none"><input type="button" value="删除"></div>
                                     </c:if>
                                 </div>
                             </div>
@@ -137,6 +183,68 @@
        localSearch.search(keyword);
    }
 
+
+
+    function isnull() {
+
+            console.log(ckeditor.getData());
+        console.log(ckeditor.getData()=='')
+        if(ckeditor.getData()==''){
+            swal("error","输入不能为空!","error");
+            return false;
+        }
+       return true;
+
+    }
+
+    $(function () {
+        window.hourseflag=false;
+        $("#deleteHourseimg").click(function () {
+            if(!hourseflag){
+            $(".imgCheckBox").css("display","block");
+            $("#hourserimgbtn").css("display","block");
+                hourseflag=true;
+            }else{
+                $(".imgCheckBox").css("display","none");
+                $("#hourserimgbtn").css("display","none");
+                hourseflag=false;
+            }
+        });
+        $("#hourserimgbtn").click(function () {
+            swal({
+                title: "您确定要删除吗？",
+                text: "您确定要删除选中的数据？",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonText: "是的，我要删除",
+                confirmButtonColor: "#ec6c62"
+            }, function() {
+                var imglist=$(".imgCheckBox:checked");
+                console.log(imglist);
+                var ids="";
+                for(var i=0;i<imglist.length;i++){
+                    ids+=$(imglist[i]).val()+",";
+                }
+                console.log(ids)
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/img/delete",
+                    data: {"ids":ids},
+                    type:"post",
+                }).done(function(data) {
+                    console.log(data)
+                    for(var i=0;i<imglist.length;i++){
+                       $(imglist[i]).parent().remove();
+
+                    }
+                    swal("操作成功!", "已成功删除数据！", "success");
+                }).error(function(data) {
+                    swal("OMG", "删除操作失败了!", "error");
+                });
+
+            });
+        });
+    });
 </script>
 </body>
 </html>

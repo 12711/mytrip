@@ -119,7 +119,7 @@
         <div class="col-md-2">
             <div class="spot_info" style="height: 900px">
                 <h3>查看住房信息</h3>
-                <a href="${pageContext.request.contextPath}/hourse/inter/toShowHourse" data-toggle="modal">查看住房信息</a>
+                <a href="${pageContext.request.contextPath}/hourse/inter/toShowHourse/${userScane.uid}" data-toggle="modal">查看住房信息</a>
                 <h3>预约游玩</h3>
                 公告:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于地主可能收到较多的游玩预约,如果你想去此地游玩请提前预约之后等待地主的审核!
                 <c:if test="${userScane.uid!=userInfo.uid}">

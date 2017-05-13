@@ -112,6 +112,9 @@
                                     <td>
                                         <c:if test="${orderScane.status==3}">
                                         <div class="row">
+                                            <div class="col-sm-2" >
+                                                <input type="button" class="btn btn-default" value="购买保险" >
+                                            </div>
 
                                             <div class="col-sm-2" id="btntoshow">
                                                 <input type="button" class="btn btn-default" value="上传安全协议书" onclick="showUploadbtn(this)">

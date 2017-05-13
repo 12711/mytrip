@@ -305,6 +305,17 @@
 </div>
 <script>
 
+    var websocketChat;
+    if('WebSocket' in window){
+        websocketChat=new WebSocket("ws://localhost:8088/webSocketChatServer");
+    }else if ('MozWebSocket' in window) {
+        websocket = new MozWebSocket("ws://localhost:8088/webSocketChatServer");
+    } else {
+        websocket = new SockJS("http://localhost:8088/sockjs/webSocketChatServer");
+    }
+    websocketChat.onopen = function (evnt) {
+        console.log("websocketChat  is  open");
+    };
     var websocket;
     if ('WebSocket' in window) {
         websocket = new WebSocket("ws://localhost:8088/webSocketServer");

@@ -5,14 +5,12 @@ import com.lsm.trip.dto.Imges;
 import com.lsm.trip.dto.UserShowInfo;
 import com.lsm.trip.service.HourseService;
 import com.lsm.trip.service.UserImgService;
+import com.lsm.trip.service.UserService;
 import com.lsm.trip.triputils.ImgUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +27,8 @@ public class HourseController {
     HourseService hourseService;
     @Autowired
     UserImgService userImgService;
+    @Autowired
+    UserService userService;
     @RequestMapping(value = "/inter/checkHasHourse",method = RequestMethod.GET)
     @ResponseBody
     public String checkHasHourse(HttpServletRequest request){
@@ -59,19 +59,20 @@ public class HourseController {
             UserShowInfo userShowInfo=(UserShowInfo)session.getAttribute("userInfo");
             hourse.setUid(userShowInfo.getUid());
             hourseService.addHourse(hourse);
-            return "redirect:/hourse/inter/toShowHourse";
+            return "redirect:/hourse/inter/toShowHourse/"+userShowInfo.getUid();
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/user/index";
         }
 
     }
-    @RequestMapping(value = "/inter/toShowHourse",method = RequestMethod.GET)
-    public String toShowHourse(HttpServletRequest request,ModelMap map){
+    @RequestMapping(value = "/inter/toShowHourse/{uid}",method = RequestMethod.GET)
+    public String toShowHourse(@PathVariable("uid")Integer uid,HttpServletRequest request, ModelMap map){
         HttpSession session=request.getSession();
-        UserShowInfo userShowInfo=(UserShowInfo)session.getAttribute("userInfo");
+
         try {
-            Hourse hourse=hourseService.getHourseByUid(userShowInfo.getUid());
+            UserShowInfo userShowInfo=userService.getUserInfo(uid);
+            Hourse hourse=hourseService.getHourseByUid(uid);
             List<Imges> imges=userImgService.getImgesByHid(hourse.getHid());
             TripController.getRankImg(userShowInfo);
             map.addAttribute("hourse",hourse);
@@ -109,5 +110,19 @@ public class HourseController {
             throw new RuntimeException();
         }
         return "1";
+    }
+
+    //上传住房照片
+    @RequestMapping(value = "/updatehourseinfo",method = RequestMethod.POST)
+    public String updatehourseinfo(Hourse hourse){
+       System.out.println("--updatehourseinfo--"+hourse.getHid());
+        System.out.println("--updatehourseinfo--"+hourse.getContent());
+        try {
+            hourseService.modifyHourse(hourse);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "redirect:/hourse/inter/toShowHourse";
     }
 }
