@@ -49,6 +49,6 @@ public class TestController {
     }
     @RequestMapping(value = "test3",method = RequestMethod.GET)
     public String testTest3(){
-        return "TestMap";
+        return "chat";
     }
 }

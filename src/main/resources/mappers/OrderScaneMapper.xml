@@ -21,7 +21,7 @@
     </resultMap>
 
     <select id="getOrderScaneBySidYkid" parameterType="OrderScane" resultMap="orderScaneMap">
-        SELECT *FROM order_scane WHERE s_id=#{sid} AND yk_id=#{ykuid}
+        SELECT *FROM order_scane WHERE s_id=#{sid} AND yk_id=#{ykuid} AND status in(0,3)
     </select>
 
     <select id="getOrderScaneByDzidStatus" parameterType="int" resultMap="orderScaneMap">

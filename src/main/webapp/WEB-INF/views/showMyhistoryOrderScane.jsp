@@ -112,18 +112,23 @@
                                     <td>
                                         <c:if test="${orderScane.status==3}">
                                         <div class="row">
-                                            <div class="col-sm-2" >
+                                            <div class="col-sm-5" >
                                                 <input type="button" class="btn btn-default" value="购买保险" >
                                             </div>
 
                                             <div class="col-sm-2" id="btntoshow">
+                                                <input type="hidden" value="${orderScane.order_id}" id="idforgetfile">
                                                 <input type="button" class="btn btn-default" value="上传安全协议书" onclick="showUploadbtn(this)">
                                             </div>
-                                            <div id="showUploadbtn"class="col-sm-6" style="display: none">
+                                            <div id="showUploadbtn"class="col-sm-7" style="display: none">
                                                 <form id="uploadForm" >
                                                     <input type="hidden" value="${orderScane.order_id}" name="oid" id="oidval">
                                                     <input type="file" name="liabilityname" id="liabilityname"><input type="button" value="上传" id="uploadBtn">
                                                 </form>
+                                                <a href="${pageContext.request.contextPath}/code/down?filename=${orderScane.liabilityname}" class="btn btn-default" id="downFile">下载安全协议书</a>
+                                            <div>
+                                            <div id="downUploadbtn"class="col-sm-6" style="display: none">
+
                                             <div>
                                          </div>
                                         </c:if>
@@ -161,8 +166,20 @@
 
 <script>
     function showUploadbtn(obj) {
-        $("#btntoshow").css("display","none");
-        $("#showUploadbtn").css("display","block");
+        var oid=$("#idforgetfile").val();
+        $.ajax({
+            url:"${pageContext.request.contextPath}/orderScane/checkdzisupload?oid="+oid,
+            type:"get",
+            success:function (data) {
+                if(data==="1"){
+                    $("#btntoshow").css("display","none");
+                    $("#showUploadbtn").css("display","block");
+                }else {
+                    swal("error","请耐心等待地主上传安全协议","error");
+                }
+            }
+        });
+
     }
     function argee(obj,uid) {
         swal({
@@ -212,25 +229,36 @@
 
     $(function () {
         $("#uploadBtn").click(function () {
-            var formData = new FormData($("#uploadForm")[0]);
-            $.ajax({
-                url:"${pageContext.request.contextPath}/orderScane/uploadfile/yk",
-                data:formData,
-                type:"post",
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success:function (data) {
-                    if(data==="1"){
-                        swal("success","上传成功","success");
-                    }else if(data=="2"){
-                        swal("error","这次旅游申请的安全协议以上传","error");
-                    }else {
-                        swal("error","服务器错误!","error");
+            swal({
+                title: "您确定要上传",
+                text: "请不要上传其他文件,必须是地主签字的协议,否则协议无效!",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonText: "是的",
+                confirmButtonColor: "#ec6c62"
+            }, function() {
+                var formData = new FormData($("#uploadForm")[0]);
+                $.ajax({
+                    url:"${pageContext.request.contextPath}/orderScane/uploadfile/yk",
+                    data:formData,
+                    type:"post",
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success:function (data) {
+                        if(data==="1"){
+                            swal("success","上传成功","success");
+                        }else if(data=="2"){
+                            swal("error","这次旅游申请的安全协议以上传","error");
+                        }else {
+                            swal("error","服务器错误!","error");
+                        }
                     }
-                }
+                });
             });
+
         });
         $(".showinfo").popover({html : true });
         var province = $("#province")[0];

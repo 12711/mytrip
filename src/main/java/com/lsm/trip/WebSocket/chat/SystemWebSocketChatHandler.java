@@ -2,7 +2,9 @@ package com.lsm.trip.WebSocket.chat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lsm.trip.dto.OrderScane;
+import com.lsm.trip.dto.UserShowInfo;
 import com.lsm.trip.service.OrderScaneService;
+import com.lsm.trip.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -19,6 +21,8 @@ public class SystemWebSocketChatHandler implements WebSocketHandler {
 
     @Autowired
     private OrderScaneService orderScaneService;
+    @Autowired
+    private UserService userService;
     private  static  List<WebSocketSession> users;
     static {
         users =new ArrayList<>();
@@ -26,13 +30,31 @@ public class SystemWebSocketChatHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
-
+        users.add(webSocketSession);
+        System.out.println("当前有多少个用户登录---"+users.size());
+        System.out.println("登陆后当前登录id---"+webSocketSession.getAttributes().get("uid"));
 
     }
 
     @Override
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
-     System.out.println("handleMessageChat------");
+     System.out.println("handleMessageChat------"+webSocketMessage.getPayload());
+     String messageInfoString=(String)webSocketMessage.getPayload();
+     String [] messageInfo=messageInfoString.split("&&");
+     Integer touid=Integer.parseInt(messageInfo[1]);
+     Integer myid=Integer.parseInt(messageInfo[2]);
+     UserShowInfo userShowInfo=userService.getUserInfo(myid);
+     TextMessage toUserMassage=new TextMessage(messageInfo[0]+":::"+myid+":::"+userShowInfo.getUserName());
+        System.out.println("当前有多少个用户登录---"+users.size());
+        System.out.println("当前有多少个用户登录---"+userShowInfo.getUserName());
+        System.out.println("当前有多少个用户登录---"+toUserMassage.getPayload());
+     for(WebSocketSession user:users){
+         if(touid==((Integer) user.getAttributes().get("uid"))){
+             user.sendMessage(toUserMassage);
+             System.out.println("给"+user.getAttributes().get("uid")+"发送成功");
+         }
+     }
+
     }
 
     @Override

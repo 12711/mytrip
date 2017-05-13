@@ -196,6 +196,14 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10"
+                             style="border-bottom: 1px dashed gainsboro">
+                            <a href="${pageContext.request.contextPath}/chat/tochat/${userShowInfo.uid}">在线联系他</a>
+                        </div>
+                    </div>
+
                 </div>
                 <%--发布的景点--%>
                 <div class="col-md-9" style="height: 460px;">

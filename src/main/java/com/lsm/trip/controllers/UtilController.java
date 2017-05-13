@@ -1,8 +1,10 @@
 package com.lsm.trip.controllers;
 
 import com.lsm.trip.triputils.Verification;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,9 +66,12 @@ public class UtilController {
 
 
     @RequestMapping("/down")
-    public void down(HttpServletRequest request,HttpServletResponse response) throws Exception{
+    public void down(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "filename",defaultValue = "") String fileName1) throws Exception{
+        if(StringUtils.isBlank(fileName1)){
+            fileName1="家庭互助旅游安全责任书.docx";
+        }
         //模拟文件，myfile.txt为需要下载的文件
-        String fileName = request.getSession().getServletContext().getRealPath("zerenshu")+"/家庭互助旅游安全责任书.docx";
+        String fileName = request.getSession().getServletContext().getRealPath("zerenshu")+"/"+fileName1;
 
         System.out.println("下载文件name---------"+fileName);
         String [] name=fileName.split("/");

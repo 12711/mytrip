@@ -295,7 +295,7 @@
                 </div>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/log/inter/logList" style="color:#AFD9EE "><h1 > <label><span  class="glyphicon glyphicon-list-alt "></span></label></h1><h4><span >日志</span></h4></a>
+                <a  href="${pageContext.request.contextPath}/log/inter/logList" style="color:#AFD9EE "><h1 > <label><span  class="glyphicon glyphicon-list-alt "></span></label></h1><h4><span >日志</span></h4></a>
             </li>
         </ul>
 
@@ -316,6 +316,24 @@
     websocketChat.onopen = function (evnt) {
         console.log("websocketChat  is  open");
     };
+    websocketChat.onmessage=function (evnt) {
+       var infos= evnt.data.split(":::");
+        console.log("--------------------------")
+       console.log(infos)
+        var num=0;
+        if($("#showOrderInfo").text()===''){
+            num=0;
+        }
+        var content1=infos[0]+":::"+infos[1]
+        console.log("-----------content1---------------"+content1)
+        num=$("#showOrderInfo").text()*1+1;
+        $("#showOrderInfo").text(num);
+        $("#showOrderInfo").css("display","block");
+        $("#orderinfoList").append("<div class='row' id='chat"+infos[2]+"' style='border-bottom: 1px dashed gray;'><a  href='javascript:void(0)'style='margin-left: 18px;' onclick='toshowmeassage("+infos[2]+",this)' >"+infos[3]+"给你发你发来一条消息</a><input type='hidden' value='"+content1+"'></div>");
+
+    }
+
+
     var websocket;
     if ('WebSocket' in window) {
         websocket = new WebSocket("ws://localhost:8088/webSocketServer");
@@ -473,7 +491,7 @@
 
                    console.log("data----"+data)
                    if(data==="2"){
-                       location.href="${pageContext.request.contextPath}/hourse/inter/toShowHourse";
+                       location.href="${pageContext.request.contextPath}/hourse/inter/toShowHourse/${userInfo.uid}";
                    }
                    else if(data==="1"){
                        swal({
@@ -664,7 +682,19 @@
             }
       });
    });
+  function toshowmeassage(obj,content1) {
+      $("#chat"+obj).remove();
+      $("#orderinfo").modal('hide');
+      var num=0;
+      if($("#showOrderInfo").text()==='1'){
+          $("#showOrderInfo").css("display","none");
+      }else {
+          num=$("#showOrderInfo").text()*1-1;
+      }
 
+      $("#showOrderInfo").text(num);
+      window.open("${pageContext.request.contextPath}/chat/tochat/"+obj+"?content="+$(content1).next().val())
+  }
 
    function refresh(obj) {
        console.log(obj);

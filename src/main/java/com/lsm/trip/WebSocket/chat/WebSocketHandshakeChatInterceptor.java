@@ -17,7 +17,7 @@ public class WebSocketHandshakeChatInterceptor implements HandshakeInterceptor {
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
 
-        System.out.println("--WebSocketHandshakeInChatterceptor--ju" );
+        System.out.println("--WebSocketHandshakeInChatterceptor--" );
 
         ServletServerHttpRequest request= (ServletServerHttpRequest)serverHttpRequest;
           //拿到session对象获取用户

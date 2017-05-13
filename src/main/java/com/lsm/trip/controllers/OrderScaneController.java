@@ -174,7 +174,6 @@ public class OrderScaneController {
                 }
             }else {
                 if (orderScaneFormDb.getYkUpload() == 0) {
-                    //此为地主操作
                     orderScane.setYkUpload(1);
                     orderScane.setLiabilityname(realFileName);
                     orderScane.setOrder_id(oid);
@@ -188,6 +187,21 @@ public class OrderScaneController {
         }catch (Exception e){
           e.printStackTrace();
           return "0";
+        }
+    }
+    @RequestMapping(value = "/checkdzisupload",method = RequestMethod.GET)
+    @ResponseBody
+    public String checkdzisupload(@RequestParam("oid")Integer oid){
+        try {
+            OrderScane orderScaneFormDb=orderScaneService.getOrderScaneByOid(oid);
+            //如果地主已上传则返回1
+            if(orderScaneFormDb.getDzUpload()==1){
+               return "1";
+            }
+            return "0";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "0";
         }
     }
 
