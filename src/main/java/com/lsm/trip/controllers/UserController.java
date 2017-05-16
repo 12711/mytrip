@@ -149,7 +149,7 @@ public class UserController {
             e.printStackTrace();
         }
 
-      /*获取用户id以便于插入一条心的userinfo记录*/
+      /*获取用户id以便于插入一条新的userinfo记录*/
         Integer uid = user.getUid();
         UserInfo userInfo = new UserInfo();
         userInfo.setRealName(userShowInfo.getRealName());

@@ -121,6 +121,7 @@
                         </script>
                     </div>
                 </div>
+
                 <div class="row" style="margin-top: 20px">
                     <div class="panel-group" id="panel-859591">
                         <div class="panel panel-default">
@@ -141,17 +142,23 @@
                                    </c:if>
                                     <c:if test="${!t}" >
                                     <div  class="row" id="showimgdiv">
-                                        <c:forEach items="${imges}"  var="img">
-                                           <div class="col-sm-3" style="margin-left: 30px;margin-top: 20px" id="${img.id}">
-                                               <div style="width: 300px;height: auto;overflow: hidden;"><img style="margin-top: 0px" src="${pageContext.request.contextPath}/hourse/${img.name}" data-original="${pageContext.request.contextPath}/hourse/${img.name}"></div>
-                                               <input type="checkbox" value="${img.id}" style="display: none;position: absolute;z-index: 102;top: 5px;left: 20px" class="imgCheckBox">
-                                           </div>
+                                        <ul class="docs-pictures clearfix">
+                                            <c:forEach items="${imges}"  var="img">
+                                                <div class="col-sm-3" style="margin-left: 30px;margin-top: 20px" id="${img.id}">
+                                                    <div style="width: 300px;height: auto;overflow: hidden;">
+                                                        <li><img data-original="${pageContext.request.contextPath}/hourse/${img.name}" src="${pageContext.request.contextPath}/hourse/${img.name}"></li>
 
-                                        </c:forEach>
+                                                        </div>
+                                                    <input type="checkbox" value="${img.id}" style="display: none;position: absolute;z-index: 102;top: 5px;left: 20px" class="imgCheckBox">
+                                                </div>
+                                            </c:forEach>
+                                            </ul>
+
 
                                     </div>
                                         <div id="hourserimgbtn" class="row" style="display: none"><input type="button" value="删除"></div>
                                     </c:if>
+
                                 </div>
                             </div>
                         </div>
@@ -163,10 +170,15 @@
 </div>
 <%@include file="footer.jsp"%>
 <script >
+
+
+
+
     var localSearch = new BMap.LocalSearch(map);
     localSearch.enableAutoViewport(); //允许自动调节窗体大小
     $(function () {
         search('${showRank.city}');
+        $(".images").viewer('move', 0, -10);
     })
 
    function searchByStationName(){

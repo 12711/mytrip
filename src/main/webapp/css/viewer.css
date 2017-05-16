@@ -143,9 +143,8 @@
 
 .viewer-canvas {
   position: absolute;
-  top: 0;
   right: 0;
-  bottom: 0;
+  bottom:15%;
   left: 0;
   overflow: hidden;
 }

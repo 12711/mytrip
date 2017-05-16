@@ -108,7 +108,7 @@
             </div>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-md-3"
-                     style="background-color:white;height: 400px;padding-left: 0px">
+                     style="background-color:white;height: 450px;;padding-left: 0px">
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10"

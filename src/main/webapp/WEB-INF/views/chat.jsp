@@ -3,7 +3,7 @@
 <html>
 <head>
 
-    <title>图片上传示例</title>
+    <title>在线聊天</title>
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/upload/webuploader.css">
     <link href="${pageContext.request.contextPath}/css/style.css"
@@ -53,7 +53,7 @@
 <div class="container">
        <div class="row">
            <div style="width:100%;height:420px; overflow :auto; border:1px solid;">
-               <div class="row">正在聊天</div>
+               <div class="row">你正在和<span id="toname"></span>聊天</div>
                <div class="row" >
 
                    <div class="col-sm-12">
@@ -65,12 +65,10 @@
            </div>
        </div>
     <div class="row">
-        ------${touid}
-        <input class="form-control" type="text" id="messageInfo">
+        <input class="form-control" type="text" id="messageInfo" placeholder="请输入你的内容。。。">
         <input type="hidden" value="${touid}" id="toid">
         <input class="form-control" type="button" value="发送" id="messageInfoBtn">
     </div>
-
 
 </div>
 
@@ -80,6 +78,10 @@
     //接受数据出发函数
     websocketChat.onmessage=function (event) {
         console.log("e====="+event.data)
+        if(event.data==='-1'){
+            swal("error","对方不在线，请稍后联系","error");
+        }
+
         var infos=event.data.split(":::");
         var datePost=infos[0];
         console.log("t====="+datePost)
@@ -88,9 +90,9 @@
         console.log(infos[2]==='${touid}');
         if(infos[2]==='${touid}') {
             $("#infoList").append("<div class='row' style='width: 100%;margin-left: 20px;'>" +
-                "<div style='position: relative;float: right;right: 50px;'><label class='row' style='max-width: none'>" + datePost + "</label>" +
-                "<div class='send' style='position: relative;width: auto;height: 35px;background: #eadede;border-radius: 5px;margin: 30px auto 0;left: 20px;'>" +
-                "<span style='color: black'>" + info + "</span><div class='arrow' style='position: absolute;top: 5px;right: -16px;width: 0;height: 0;font-size: 0;border: solid 8px;border-color: #fff  #fff #ffffff #eadede;'></div>" +
+                "<div style='position: relative;float: left;right: 50px;'><label class='row' style='max-width: none;margin-left: 50px'>" + datePost + "</label>" +
+                "<div class='send' style='position: relative;width: auto;height: 35px;background: #eadede;border-radius: 5px;margin: 30px auto 0;left: 50px;'>" +
+                "<span style='color: black'>" + info + "</span><div class='arrow' style='position: absolute;top: 5px;left: -16px;width: 0;height: 0;font-size: 0;border: solid 8px;border-color: #fff #eadede #fff #ffffff ;'></div>" +
                 "</div> </div> </div>");
         }
     }
@@ -104,10 +106,11 @@
            var infoss=dataInfo.split(":::");
 
            $("#infoList").append("<div class='row' style='width: 100%;margin-left: 20px;'>" +
-               "<div style='position: relative;float: right;right: 50px;'><label class='row' style='max-width: none'>" + infoss[0] + "</label>" +
-               "<div class='send' style='position: relative;width: auto;height: 35px;background: #eadede;border-radius: 5px;margin: 30px auto 0;left: 20px;'>" +
-               "<span style='color: black'>" + infoss[1] + "</span><div class='arrow' style='position: absolute;top: 5px;right: -16px;width: 0;height: 0;font-size: 0;border: solid 8px;border-color: #fff  #fff #ffffff #eadede;'></div>" +
+               "<div style='position: relative;float: left;right: 50px;'><label class='row' style='max-width: none;margin-left: 50px'>" + infoss[0] + "</label>" +
+               "<div class='send' style='position: relative;width: auto;height: 35px;background: #eadede;border-radius: 5px;margin: 30px auto 0;left: 50px;'>" +
+               "<span style='color: black'>" + infoss[1] + "</span><div class='arrow' style='position: absolute;top: 5px;left: -16px;width: 0;height: 0;font-size: 0;border: solid 8px;border-color: #fff #eadede #fff #ffffff ;'></div>" +
                "</div> </div> </div>");
+           $("#toname").text(infoss[2]);
        }
 
         $("#messageInfoBtn").click(function () {
@@ -115,11 +118,13 @@
             var toid=$("#toid").val();
             var datenow=formatDateTime(new Date());
             $("#infoList").append("<div class='row' style='width: 100%;margin-left: 20px;'>"+
-                "<div style='position: relative;float: left;'><label class='row' style='max-width: none'>2017-5-13 9:37</label>"+
-                "<div class='send' style='position: relative;width: auto;height: 35px;background: #eadede;border-radius: 5px;margin: 30px auto 0;left: 20px;'>"+
-                "<span style='color: black'>"+messageInfo+"</span><div class='arrow' style='position: absolute;top: 5px;left: -16px;width: 0;height: 0;font-size: 0;border: solid 8px;border-color: #fff #eadede #fff #ffffff;'></div>"+
+                "<div style='position: relative;float: right;'><label class='row' style='max-width: none;margin-right: 50px'>"+datenow+"</label>"+
+                "<div class='send' style='position: relative;width: auto;height: 35px;background: #eadede;border-radius: 5px;margin: 30px auto 0;right: 50px;'>"+
+                "<span style='color: black'>"+messageInfo+"</span><div class='arrow' style='position: absolute;top: 5px;right: -16px;width: 0;height: 0;font-size: 0;border: solid 8px;border-color: #fff  #fff #ffffff #eadede;'></div>"+
                 "</div> </div> </div>");
             websocketChat.send(datenow+":::"+messageInfo+"&&"+toid+"&&"+'${userInfo.uid}');
+            $("#messageInfo").val("");
+
         });
     })
   //格式化日期

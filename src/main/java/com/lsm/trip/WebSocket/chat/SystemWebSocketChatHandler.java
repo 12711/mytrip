@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by lv on 2017/5/9.
@@ -46,14 +45,29 @@ public class SystemWebSocketChatHandler implements WebSocketHandler {
      UserShowInfo userShowInfo=userService.getUserInfo(myid);
      TextMessage toUserMassage=new TextMessage(messageInfo[0]+":::"+myid+":::"+userShowInfo.getUserName());
         System.out.println("当前有多少个用户登录---"+users.size());
-        System.out.println("当前有多少个用户登录---"+userShowInfo.getUserName());
-        System.out.println("当前有多少个用户登录---"+toUserMassage.getPayload());
-     for(WebSocketSession user:users){
-         if(touid==((Integer) user.getAttributes().get("uid"))){
-             user.sendMessage(toUserMassage);
-             System.out.println("给"+user.getAttributes().get("uid")+"发送成功");
-         }
-     }
+        if((int)webSocketSession.getAttributes().get("flag")==0){
+            for(WebSocketSession user:users){
+                Integer touidForms=(Integer)user.getAttributes().get("uid");
+                if(touidForms.equals(touid)){
+                    user.sendMessage(toUserMassage);
+                    webSocketSession.getAttributes().put("flag",1);
+                    return;
+                }
+            }
+        }else{
+            for(WebSocketSession user:users){
+                if((int)user.getAttributes().get("to")==myid&&(int)user.getAttributes().get("uid")==touid){
+                    user.sendMessage(toUserMassage);
+                    return;
+                }
+            }
+        }
+        for(WebSocketSession user:users){
+            if(myid==((Integer) user.getAttributes().get("uid"))){
+                user.sendMessage(new TextMessage("-1"));
+                return;
+            }
+        }
 
     }
 

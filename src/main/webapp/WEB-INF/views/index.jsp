@@ -295,26 +295,26 @@
                 </div>
             </li>
             <li>
+
                 <a  href="${pageContext.request.contextPath}/log/inter/logList" style="color:#AFD9EE "><h1 > <label><span  class="glyphicon glyphicon-list-alt "></span></label></h1><h4><span >日志</span></h4></a>
             </li>
         </ul>
-
     </div>
 </div>
 
 </div>
 <script>
-
+    var host=window.location.host;
     var websocketChat;
     if('WebSocket' in window){
-        websocketChat=new WebSocket("ws://localhost:8088/webSocketChatServer");
+        websocketChat=new WebSocket("ws://"+host+"/webSocketChatServer?touid=${touid}");
     }else if ('MozWebSocket' in window) {
-        websocket = new MozWebSocket("ws://localhost:8088/webSocketChatServer");
+        websocket = new MozWebSocket("ws://"+host+"/webSocketChatServer");
     } else {
-        websocket = new SockJS("http://localhost:8088/sockjs/webSocketChatServer");
+        websocket = new SockJS("http://"+host+"/sockjs/webSocketChatServer");
     }
     websocketChat.onopen = function (evnt) {
-        console.log("websocketChat  is  open");
+        console.log("websocketChat  is  open---"+window.location.pathname);
     };
     websocketChat.onmessage=function (evnt) {
        var infos= evnt.data.split(":::");
@@ -336,11 +336,11 @@
 
     var websocket;
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://localhost:8088/webSocketServer");
+        websocket = new WebSocket("ws://"+host+"/webSocketServer");
     } else if ('MozWebSocket' in window) {
-        websocket = new MozWebSocket("ws://localhost:8088/webSocketServer");
+        websocket = new MozWebSocket("ws://"+host+"/webSocketServer");
     } else {
-        websocket = new SockJS("http://localhost:8088/sockjs/webSocketServer");
+        websocket = new SockJS("http://"+host+"/sockjs/webSocketServer");
     }
     websocket.onopen = function (evnt) {
     };

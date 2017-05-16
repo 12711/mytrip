@@ -114,15 +114,17 @@ public class HourseController {
 
     //上传住房照片
     @RequestMapping(value = "/updatehourseinfo",method = RequestMethod.POST)
-    public String updatehourseinfo(Hourse hourse){
+    public String updatehourseinfo(Hourse hourse,HttpServletRequest request){
        System.out.println("--updatehourseinfo--"+hourse.getHid());
         System.out.println("--updatehourseinfo--"+hourse.getContent());
+        HttpSession session=request.getSession();
+        UserShowInfo user=(UserShowInfo)session.getAttribute("userInfo");
         try {
             hourseService.modifyHourse(hourse);
         } catch (Exception e) {
             e.printStackTrace();
 
         }
-        return "redirect:/hourse/inter/toShowHourse";
+        return "redirect:/hourse/inter/toShowHourse/"+user.getUid();
     }
 }
