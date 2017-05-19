@@ -104,29 +104,40 @@
                  ids+=id+",";
              }
              console.log("ids==="+ids)
-             $.ajax({
-                 url:"${pageContext.request.contextPath}/scane/batchDeleteScane",
-                 data:{ids:ids},
-                 dataType:"json",
-                 type:"post",
-                 success:function(data){
-                     console.log(data);
-                     if(data[1]==="0"){
-                         alert("删除出现问题,部分景点已被删除!")
-                     }else{
-                         var idss=data[0].split(",");
-                         console.log(idss);
-                         for(var id in idss){
-                             var aid=idss[id];
-                             console.log("aid=="+aid);
-                             console.log($("#"+aid));
-                             $("#"+aid).remove();
+             swal({
+                 title: "您确定要删除吗？",
+                 text: "您确定要删除这个景点？",
+                 type: "warning",
+                 showCancelButton: true,
+                 closeOnConfirm: true,
+                 confirmButtonText: "是的，我要删除",
+                 confirmButtonColor: "#ec6c62"
+             }, function() {
+                 $.ajax({
+                     url:"${pageContext.request.contextPath}/scane/batchDeleteScane",
+                     data:{ids:ids},
+                     dataType:"json",
+                     type:"post",
+                     success:function(data){
+                         console.log(data);
+                         if(data[1]==="0"){
+                             alert("删除出现问题,部分景点已被删除!")
+                         }else{
+                             var idss=data[0].split(",");
+                             console.log(idss);
+                             for(var id in idss){
+                                 var aid=idss[id];
+                                 console.log("aid=="+aid);
+                                 console.log($("#"+aid));
+                                 $("#"+aid).remove();
+                             }
+
+
                          }
-
-
                      }
-                 }
+                 });
              });
+
          });
 
 

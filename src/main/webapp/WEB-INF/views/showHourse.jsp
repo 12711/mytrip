@@ -128,7 +128,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                 <div class="col-sm-2" style="margin-top: 20px"> <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-859591" href="#panel-element-286058">点击查看详情图片</a></div>
-                                <c:if test="${hourse.uid==userInfo.uid}">
+                                    <c:if test="${hourse.uid==userInfo.uid}">
                                     <div class="col-sm-2" style="margin-top: 20px"><a  href="#modal-container-update-hourse"  id="deleteHourseimg">删除图片</a></div>
                                     <div class="col-sm-2" style="margin-top: 20px"> <a href="${pageContext.request.contextPath}/hourse/inter/toAddHourseImg?hid=${hourse.hid}">添加照片</a></div>
                                 </c:if>

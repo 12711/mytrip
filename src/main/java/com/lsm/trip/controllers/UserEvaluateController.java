@@ -32,7 +32,10 @@ public class UserEvaluateController {
 
 
     @RequestMapping(value = "/inter/addevaluate")
-    public String addEvaluate(UserEvaluate userEvaluate, HttpServletRequest request, ModelMap modelMap) {
+    public String addEvaluate(@RequestParam("uid")Integer uid,@RequestParam("contentComment")String content ,HttpServletRequest request, ModelMap modelMap) {
+        UserEvaluate userEvaluate=new UserEvaluate();
+        userEvaluate.setUid(uid);
+        userEvaluate.setContent(content);
         HttpSession session = request.getSession();
         UserShowInfo user = (UserShowInfo) session.getAttribute("userInfo");
         userEvaluate.setAuthor(user.getUserName());

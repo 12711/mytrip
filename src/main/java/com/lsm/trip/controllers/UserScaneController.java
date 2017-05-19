@@ -10,6 +10,7 @@ import com.lsm.trip.dto.UserShowInfo;
 import com.lsm.trip.service.RadiersService;
 import com.lsm.trip.service.UserScaneService;
 import com.lsm.trip.triputils.ImgUpload;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -129,8 +130,10 @@ public class UserScaneController {
         String realPath=request.getServletContext().getRealPath("img");
 
         try {
-            ImgUpload.uploadImg(fileName,realPath,file);
-            scane.setsImg(fileName);
+            if(!StringUtils.isBlank(fileName)) {
+                ImgUpload.uploadImg(fileName, realPath, file);
+                scane.setsImg(fileName);
+            }
             userScaneForException = userScaneService.getUserScaneById(scane.getSid());
             userScaneService.updateScane(scane);
             return "redirect:/scane/inter/getScanes";

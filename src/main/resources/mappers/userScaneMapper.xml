@@ -40,9 +40,18 @@
     </delete>
 
     <update id="updateScane" parameterType="UserScane">
-        UPDATE userscane SET s_name=#{sName},introduce=#{introduce},s_img=#{sImg},
-        address=#{address},ticket=#{ticket},favourable=#{favourable},opentime=#{opentime},
-        shortDesc=#{shortDesc} WHERE s_id=#{sid}
+        UPDATE userscane
+        <set>
+            <if test="sName!=null and sName!=''">s_name=#{sName},</if>
+            <if test="introduce!=null and introduce!=''">introduce=#{introduce},</if>
+            <if test="sImg!=null and sImg!=''">s_img=#{sImg},</if>
+            <if test="address!=null and address!=''">address=#{address},</if>
+            <if test="ticket!=null and ticket!=''">ticket=#{ticket},</if>
+            <if test="favourable!=null and favourable!=''">favourable=#{favourable},</if>
+            <if test="opentime!=null and opentime!=''">opentime=#{opentime},</if>
+            <if test="shortDesc!=null and shortDesc!=''">shortDesc=#{shortDesc}</if>
+       </set>
+        WHERE s_id=#{sid}
     </update>
 
 </mapper>

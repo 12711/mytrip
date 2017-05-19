@@ -224,10 +224,10 @@
                                 <div class="modal-body">
                                     <form action="${pageContext.request.contextPath}/evaluate/inter/addevaluate">
                                         <input type="hidden" value="${uid}" name="uid">
-                                        <textarea id="editor" name="content">
+                                        <textarea id="editor" name="contentComment">
                                         </textarea>
                                     <script type="text/javascript">
-                                        var ckeditor= CKEDITOR.replace("content");
+                                        var ckeditor= CKEDITOR.replace("contentComment");
                                     </script>
                                         <input class="btn btn-danger" value="提交" type="submit">
                                     </form>
@@ -273,15 +273,14 @@
                                                 </div>
                                             </div>
                                             </c:forEach>
-
                                             <div class="row">
                                                 <div class="col-sm-2"></div>
                                                 <div class="col-sm-5">
                                                   <ul class="pagination">
-                                                    <li><a href="javaScript:void(0);" onclick="prepage()">上一页</a></li>
+                                                    <li><a href="javaScript:void(0)" onclick="prepage()">上一页</a></li>
                                                     <li class="active"><span id="pageIndex">${pageIndex}</span></li>
                                                     <li><span id="totle">共${totle}页</span></li>
-                                                    <li><a href="javaScript:void(0);" onclick="nextpage()">下一页</a></li>
+                                                    <li><a href="javaScript:void(0)" onclick="nextpage()">下一页</a></li>
                                                   </ul>
                                                 </div>
                                             </div>
@@ -300,13 +299,15 @@
     </div>
 </div>
 <script>
-    function prepage(obj) {
+    function prepage() {
 
         var pageIndex=$("#pageIndex").text();
+        console.log(typeof pageIndex);
+        console.log(pageIndex);
         if(pageIndex===null||pageIndex===''||pageIndex==='1'){
             return;
         }else{
-            location.href='${pageContext.request.contextPath}/evaluate/getEvaluateByPage?pageIndex=${pageIndex-1}'
+            location.href="${pageContext.request.contextPath}/evaluate/getEvaluateByPage?pageIndex=${pageIndex-1}";
         }
     }
 

@@ -122,25 +122,17 @@
 
             });
 
-            /*密码输入实时校验位数*/
-           $("#inputPassword3").keyup(function(){
-               var password=$("#inputPassword3").val();
-               if(password.length<6){
-                   $("#passwordInfo").text("密码不能小于6位,请重新输入!");
-                   $("#passwordInfo").css("color","red");
-               }else{
-                   $("#passwordInfo").text("密码格式正确!");
-                   $("#passwordInfo").css("color","green");
-               }
-           });
            /*防止密码为空*/
-           $("#inputPassword3").blur(function(){
+           $("#inputPassword3").change(function(){
                if($("#inputPassword3").val()===""){
-                   alert("密码不能为空,请输入密码!");
+                   swal("error","密码不能为空,请输入密码!","error");
                }else if($("#inputPassword3").val().length<6){
+                   console.log("<6")
                    $("#passwordInfo").text("密码不能小于6位,请重新输入!");
-                   $("#passwordInfo").css("color","red");
+                   $("#inputPassword3").css("border-color","red");
                }else{
+                   console.log("success")
+                   $("#inputPassword3").css("border-color","green");
                    /*保存密码用来做密码确认*/
                    window.oldpassword=$("#inputPassword3").val();
                }
