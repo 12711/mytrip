@@ -483,6 +483,7 @@
 
 
    $(function(){
+
        $("#hourseButton").click(function () {
            $.ajax({
                url:"${pageContext.request.contextPath}/hourse/inter/checkHasHourse",

@@ -136,7 +136,7 @@
                             </div>
                             <div id="panel-element-286058" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                   <c:if test="${imges.size()==0}" var="t">
+                                   <c:if test="${imges.size()==0&&hourse.uid==userInfo.uid}" var="t">
                                        <h1>你还没有添加图片!<a href="${pageContext.request.contextPath}/hourse/inter/toAddHourseImg?hid=${hourse.hid}">是否现在添加?</a></h1>
 
                                    </c:if>

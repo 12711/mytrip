@@ -112,13 +112,13 @@
                                             <div class="col-sm-4">
                                                 <input type="button" class="btn btn-default" value="完成旅游" onclick="finsh(${orderScane.order_id},${userInfo.uid},${orderScane.ykUser.uid})">
                                             </div>
-                                            <div class="col-sm-2" id="btntoshow">
-                                                <input type="button" class="btn btn-default" value="上传安全协议书" onclick="showUploadbtn(this)">
+                                            <div class="col-sm-2" id="btntoshow${orderScane.order_id}">
+                                                <input type="button" class="btn btn-default" value="上传安全协议书" onclick="showUploadbtn(${orderScane.order_id})">
                                             </div>
-                                            <div id="showUploadbtn"class="col-sm-6" style="display: none">
+                                            <div id="showUploadbtn${orderScane.order_id}"class="col-sm-6" style="display: none">
                                                 <form id="uploadForm" >
                                                      <input type="hidden" value="${orderScane.order_id}" name="oid" id="oidval">
-                                                     <input type="file" name="liabilityname" id="liabilityname"><input type="button" value="上传" id="uploadBtn">
+                                                     <input type="file" name="liabilityname" id="liabilityname"><input type="button" value="上传" id="uploadBtn" onclick="submitFile(this)">
                                                 </form>
                                              <div>
                                         </div>
@@ -145,8 +145,8 @@
 
 <script>
     function showUploadbtn(obj) {
-        $("#btntoshow").css("display","none");
-        $("#showUploadbtn").css("display","block");
+        $("#btntoshow"+obj).css("display","none");
+        $("#showUploadbtn"+obj).css("display","block");
     }
     function finsh(obj,uid,yuid) {
         swal({
@@ -205,31 +205,36 @@
         language: 'zh-CN',
         todayBtn: true
     });
-
+    function submitFile(obj){
+         var formdataForm=$(obj).parent()[0];
+         console.log(formdataForm)
+        var formData = new FormData(formdataForm);
+        $.ajax({
+            url:"${pageContext.request.contextPath}/orderScane/uploadfile/dz",
+            data:formData,
+            type:"post",
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function (data) {
+                if(data==="1"){
+                    swal("success","上传成功","success");
+                }else if(data=="2"){
+                    swal("error","这次旅游申请的安全协议以上传","error");
+                }else {
+                    swal("error","服务器错误!","error");
+                }
+            }
+        });
+    }
 
     $(function () {
-        $("#uploadBtn").click(function () {
-            var formData = new FormData($("#uploadForm")[0]);
-            $.ajax({
-                url:"${pageContext.request.contextPath}/orderScane/uploadfile/dz",
-                data:formData,
-                type:"post",
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success:function (data) {
-                 if(data==="1"){
-                     swal("success","上传成功","success");
-                 }else if(data=="2"){
-                     swal("error","这次旅游申请的安全协议以上传","error");
-                 }else {
-                     swal("error","服务器错误!","error");
-                 }
-                }
-            });
-        });
-        
+
+
+
+
+
         
         $(".showinfo").popover({html : true });
         var province = $("#province")[0];
