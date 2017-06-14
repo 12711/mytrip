@@ -43,7 +43,8 @@ public class SystemWebSocketChatHandler implements WebSocketHandler {
      Integer touid=Integer.parseInt(messageInfo[1]);
      Integer myid=Integer.parseInt(messageInfo[2]);
      UserShowInfo userShowInfo=userService.getUserInfo(myid);
-     TextMessage toUserMassage=new TextMessage(messageInfo[0]+":::"+myid+":::"+userShowInfo.getUserName());
+     TextMessage toUserMassage=new TextMessage(messageInfo[0]+":::"+myid+":::"+
+             userShowInfo.getUserName());
         System.out.println("当前有多少个用户登录---"+users.size());
         if((int)webSocketSession.getAttributes().get("flag")==0){
             for(WebSocketSession user:users){
@@ -56,7 +57,8 @@ public class SystemWebSocketChatHandler implements WebSocketHandler {
             }
         }else{
             for(WebSocketSession user:users){
-                if((int)user.getAttributes().get("to")==myid&&(int)user.getAttributes().get("uid")==touid){
+                if((int)user.getAttributes().get("to")==myid&&(int)user.getAttributes().
+                        get("uid")==touid){
                     user.sendMessage(toUserMassage);
                     return;
                 }

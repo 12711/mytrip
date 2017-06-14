@@ -24,9 +24,11 @@ public class WebSocketChatConfig extends WebMvcConfigurerAdapter implements WebS
     WebSocketHandler systemWebSocketChatHandler;
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(systemWebSocketChatHandler,"/webSocketChatServer").addInterceptors(new WebSocketHandshakeChatInterceptor());
+        registry.addHandler(systemWebSocketChatHandler,"/webSocketChatServer").
+                addInterceptors(new WebSocketHandshakeChatInterceptor());
 
-        registry.addHandler(systemWebSocketChatHandler, "/sockjs/webSocketChatServer").addInterceptors(new WebSocketHandshakeChatInterceptor())
+        registry.addHandler(systemWebSocketChatHandler, "/sockjs/webSocketChatServer").
+                addInterceptors(new WebSocketHandshakeChatInterceptor())
                 .withSockJS();
     }
 
